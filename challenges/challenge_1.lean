@@ -43,13 +43,15 @@ structure Minor (H : SimpleGraph W) (G : SimpleGraph V) where
   exists_mem_branchSet_of_adj ⦃w₁ w₂ : W⦄ :
     H.Adj w₁ w₂ → ∃ v₁ ∈ branchSet w₁, ∃ v₂ ∈ branchSet w₂, G.Adj v₁ v₂
 
--- The challenge parameter
-def r : ℕ := 2
-
 -- The Hadwiger number of a graph is the largest r such that K_r is a minor of G.
 noncomputable def hadwigerNumber (G : SimpleGraph V) : ℕ := by
   classical
   exact Nat.findGreatest (fun r => Nonempty (Minor (completeGraph (Fin r)) G)) (Fintype.card V)
+
+/- Do not modify above this line. -/
+
+-- The challenge parameter
+def r : ℕ := 2
 
 -- hadwigerNumber G ≤ r → G.Colorable (r + 1) := by
 theorem challenge_1 (G : SimpleGraph V) :
