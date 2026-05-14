@@ -1,10 +1,9 @@
 name = "hadwiger-challenge"
 version = "0.1.0"
 keywords = ["math"]
-defaultTargets = ["HadwigerChallenge"]
 
 [leanOptions]
-pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+pp.unicode.fun = true
 relaxedAutoImplicit = false
 weak.linter.mathlibStandardSet = true
 maxSynthPendingDepth = 3
@@ -17,3 +16,5 @@ rev = "v4.30.0-rc2"
 [[lean_lib]]
 name = "Defs_and_Lems"
 
+[[lean_lib]]
+name = "Challange"
