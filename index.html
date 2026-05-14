@@ -492,7 +492,7 @@
         <form id="submitForm" onsubmit="handleSubmit(event)">
           <div class="form-row">
             <div class="form-group">
-              <label for="subNickname">Nickname *</label>
+              <label for="subNickname">Nickname*</label>
               <input type="text" id="subNickname" name="nickname" placeholder="e.g. lean_enjoyer" required>
             </div>
             <div class="form-group">
@@ -503,13 +503,13 @@
 
           <div class="form-row three-col">
             <div class="form-group">
-              <label for="subProblem">Problem *</label>
+              <label for="subProblem">Problem*</label>
               <select id="subProblem" name="problem" required>
                 <option value="">Select a problem...</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="subClaim">Claim *</label>
+              <label for="subClaim">Claim*</label>
               <select id="subClaim" name="claim" required>
                 <option value="">Prove or Disprove...</option>
                 <option value="prove">Prove</option>
@@ -517,13 +517,13 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="subParameter">Largest parameter proved *</label>
+              <label for="subParameter"> Chosen parameter*</label>
               <input type="text" id="subParameter" name="parameter" placeholder="e.g. r = 3" required>
             </div>
           </div>
 
           <div class="form-group">
-            <label>Lean 4 Files *</label>
+            <label>Lean 4 Files*</label>
             <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
               <input type="file" id="fileInput" class="file-upload-input" multiple accept=".lean" onchange="handleFileSelect(event)">
               <span class="file-upload-hint" id="uploadHint">Click to select .lean files (one must be challenge_1.lean)</span>
