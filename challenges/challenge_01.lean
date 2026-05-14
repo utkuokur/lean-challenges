@@ -1,22 +1,11 @@
 /-
-# Hadwiger Number Challenge
+## Introduction
+This file challenges you to prove a special case for `r` of the Hadwiger's Conjecture (1943).
 
-A Lean 4 formalization challenge. Fill in the sorries below.
-
-## The Problem
-
-The Hadwiger number `h(G)` of a graph `G` is the largest integer `t`
-such that the complete graph `K_t` is a minor of `G`.
-
-Hadwiger's Conjecture (1943): every graph with no `K_t` minor is `(t-1)`-colorable.
-
-This file challenges you to prove a special case for `k = 2`.
-
-## What you need to do
-
-2. Replace `sorry` in `hadwiger_challenge` with a complete proof.
-
-No other `sorry` tactics are permitted in your submission.
+## Instructions
+1. Replace `sorry` in `parameter_1` with a natural number.
+2. Replace `sorry` in `challenge_1` with a complete proof, without changing the statement.
+You may produce more files and import them.
 -/
 
 import Mathlib.Combinatorics.SimpleGraph.Coloring.VertexColoring
@@ -50,10 +39,8 @@ noncomputable def hadwigerNumber (G : SimpleGraph V) : ℕ := by
 
 /- Do not modify above this line. -/
 
--- The challenge parameter
-def r : ℕ := 2
+def r : ℕ := sorry -- The challenge parameter
 
--- hadwigerNumber G ≤ r → G.Colorable (r + 1) := by
 theorem challenge_1 (G : SimpleGraph V) :
-  hadwigerNumber G ≤ r → G.Colorable (r + 1) := by
-  sorry
+  -- hadwigerNumber G ≤ r → G.Colorable (r + 1) := by
+  0=0 := sorry -- The proof
