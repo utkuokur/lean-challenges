@@ -846,48 +846,72 @@
       renderFileList();
     }
 
-    // ===== Form Submission =====
-    function handleSubmit(event) {
-      event.preventDefault();
 
-      var nickname = document.getElementById('subNickname').value.trim();
-      var problem = document.getElementById('subProblem').value;
-      var claim = document.getElementById('subClaim').value;
-      var parameter = document.getElementById('subParameter').value.trim();
+function handleSubmit(event) {
+  event.preventDefault();
 
-      if (!nickname) {
-        alert('Please enter a nickname.');
-        return;
-      }
-      if (!problem) {
-        alert('Please select a problem.');
-        return;
-      }
-      if (!claim) {
-        alert('Please select whether you are proving or disproving.');
-        return;
-      }
-      if (!parameter) {
-        alert('Please enter the largest parameter you proved.');
-        return;
-      }
-      if (selectedFiles.length === 0) {
-        alert('Please upload at least one .lean file.');
-        return;
-      }
+  var nickname = document.getElementById('subNickname').value.trim();
+  var problem = document.getElementById('subProblem').value;
+  var claim = document.getElementById('subClaim').value;
+  var parameter = document.getElementById('subParameter').value.trim();
+  var name = document.getElementById('subName').value.trim();
 
-      var hasChallengeFile = selectedFiles.some(function(f) { return f.name === 'challenge_1.lean'; });
-      if (!hasChallengeFile) {
-        alert('Your submission must include a file named challenge_1.lean containing the theorem challenge_1.');
-        return;
-      }
+  if (!nickname) { alert('Please enter a nickname.'); return; }
+  if (!problem) { alert('Please select a problem.'); return; }
+  if (!claim) { alert('Please select prove or disprove.'); return; }
+  if (!parameter) { alert('Please enter the parameter.'); return; }
+  if (selectedFiles.length === 0) { alert('Please upload at least one .lean file.'); return; }
 
-      var claimText = claim === 'prove' ? 'Prove' : 'Disprove';
-      var problemName = document.getElementById('subProblem').options[document.getElementById('subProblem').selectedIndex].text;
-      var fileNames = selectedFiles.map(function(f) { return f.name; }).join(', ');
-      alert('Thank you, ' + nickname + '. Your submission to ' + claimText + ' "' + problemName + '" for parameter ' + parameter + ' has been received. Files: ' + fileNames);
+  var validChallengeRe = /^challenge_(0[1-9]|10)\.lean$/;
+  var hasChallengeFile = selectedFiles.some(function(f) { return validChallengeRe.test(f.name); });
+  if (!hasChallengeFile) {
+    alert('Your submission must include exactly one file named challenge_01.lean, challenge_02.lean, ..., or challenge_10.lean.');
+    return;
+  }
+
+  var readPromises = selectedFiles.map(function(file) {
+    return new Promise(function(resolve) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var base64 = e.target.result.split(',')[1];
+        resolve({ name: file.name, content: base64 });
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+
+  Promise.all(readPromises).then(function(files) {
+    var problemName = document.getElementById('subProblem').options[document.getElementById('subProblem').selectedIndex].text;
+
+    fetch('http://localhost:3000/api/trpc/submission.create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nickname: nickname,
+        name: name || undefined,
+        problemId: problem,
+        problemTitle: problemName,
+        claim: claim,
+        parameter: parameter,
+        files: files
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      var result = data.result ? data.result.data : data;
+      if (result.status === 'accepted') {
+        alert('✅ Submission accepted! ' + result.message);
+      } else {
+        alert('❌ Submission rejected: ' + result.message);
+      }
       resetForm();
-    }
+    })
+    .catch(function(err) {
+      alert('Network error: ' + err.message);
+    });
+  });
+}
+
 
     // Allow drag and drop on file upload area
     var dropArea = document.getElementById('fileUploadArea');

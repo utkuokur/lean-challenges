@@ -17,4 +17,4 @@ rev = "v4.30.0-rc2"
 name = "Defs_and_Lems"
 
 [[lean_lib]]
-name = "Challange"
+name = "Challenges"

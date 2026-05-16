@@ -6,11 +6,12 @@ import { promisify } from "util";
 const execAsync = promisify(exec);
 
 const WORKSPACE_DIR = path.resolve(process.cwd(), "uploads");
-
-// Configuration: adjust these paths to match your WSL setup
 const LEAN_PROJECT_DIR =
-  process.env.LEAN_PROJECT_DIR || path.resolve(process.cwd(), "../lean-checker");
-const LAKE_TIMEOUT_MS = parseInt(process.env.LAKE_TIMEOUT_MS || "300000"); // 5 minutes default
+  process.env.LEAN_PROJECT_DIR || "/home/uokur/hadwiger-challenge";
+const CHALLENGES_DIR = path.join(LEAN_PROJECT_DIR, "Challenges");
+const LAKE_TIMEOUT_MS = parseInt(process.env.LAKE_TIMEOUT_MS || "300000");
+
+const VALID_CHALLENGE_RE = /^challenge_(0[1-9]|10)\.lean$/;
 
 interface LeanCheckResult {
   status: "accepted" | "rejected";
@@ -27,7 +28,7 @@ interface LeanCheckResult {
 }
 
 const ORIGINAL_THEOREM_SIGNATURE =
-  "theorem challenge_1 (G : SimpleGraph V) :\n  -- hadwigerNumber G ≤ r → G.Colorable (r + 1) := by\n  0=0 := by";
+  "theorem challenge_1 (G : SimpleGraph V) :\n  0=0 := by";
 
 export async function ensureWorkspace(): Promise<void> {
   try {
@@ -56,42 +57,38 @@ export async function saveSubmissionFiles(
 async function copyFilesToLeanProject(
   submissionDir: string,
   files: Array<{ name: string }>
-): Promise<string> {
-  // Copy uploaded files into the lean-checker project
+): Promise<void> {
   for (const file of files) {
     const srcPath = path.join(submissionDir, file.name);
-    const dstPath = path.join(LEAN_PROJECT_DIR, file.name);
-
-    try {
-      const content = await fs.readFile(srcPath, "utf-8");
-      await fs.writeFile(dstPath, content, "utf-8");
-    } catch {
-      // File might be in a subdirectory
-      try {
-        const content = await fs.readFile(srcPath, "utf-8");
-        await fs.mkdir(path.dirname(dstPath), { recursive: true });
-        await fs.writeFile(dstPath, content, "utf-8");
-      } catch (err) {
-        throw new Error(`Failed to copy ${file.name} to project: ${err}`);
-      }
-    }
+    const dstPath = path.join(CHALLENGES_DIR, file.name);
+    await fs.mkdir(path.dirname(dstPath), { recursive: true });
+    const content = await fs.readFile(srcPath, "utf-8");
+    await fs.writeFile(dstPath, content, "utf-8");
   }
-
-  return LEAN_PROJECT_DIR;
 }
 
-async function runLakeBuild(): Promise<{
+async function cleanUpLeanProject(files: Array<{ name: string }>): Promise<void> {
+  for (const file of files) {
+    const dstPath = path.join(CHALLENGES_DIR, file.name);
+    try {
+      await fs.unlink(dstPath);
+    } catch {
+      // ignore
+    }
+  }
+}
+
+async function runLakeBuild(moduleName: string): Promise<{
   exitCode: number | null;
   stdout: string;
   stderr: string;
 }> {
   try {
-    const { stdout, stderr } = await execAsync("lake build", {
+    const { stdout, stderr } = await execAsync(`lake build ${moduleName}`, {
       cwd: LEAN_PROJECT_DIR,
       timeout: LAKE_TIMEOUT_MS,
       env: {
         ...process.env,
-        // Ensure elan is in PATH
         PATH: `${process.env.HOME}/.elan/bin:${process.env.PATH}`,
       },
     });
@@ -125,7 +122,6 @@ export async function checkSubmission(
     compilationExitCode: null as number | null,
   };
 
-  // 1. Check all .lean files for sorry
   const leanFiles = files.filter((f) => f.name.endsWith(".lean"));
   details.filesChecked = leanFiles.length;
 
@@ -147,24 +143,25 @@ export async function checkSubmission(
   if (details.sorryCount > 0) {
     return {
       status: "rejected",
-      message: `Found ${details.sorryCount} occurrence(s) of 'sorry' in your files. All proofs must be complete.`,
+      message: `Found ${details.sorryCount} occurrence(s) of 'sorry'. All proofs must be complete.`,
       details,
     };
   }
 
-  // 2. Find challenge_1.lean and check theorem signature
-  const challengeFile = leanFiles.find(
-    (f) => f.name === "challenge_1.lean"
-  );
+  // Accept only challenge_01.lean ... challenge_10.lean
+  const challengeFile = leanFiles.find((f) => VALID_CHALLENGE_RE.test(f.name));
 
   if (!challengeFile) {
     return {
       status: "rejected",
       message:
-        "Required file 'challenge_1.lean' not found. Your submission must include this file.",
+        "Required file not found. Your submission must include exactly one file named challenge_01.lean, challenge_02.lean, ..., or challenge_10.lean.",
       details,
     };
   }
+
+  // Extract module name, e.g. challenge_01
+  const moduleName = challengeFile.name.replace(".lean", "");
 
   const theoremMatch = challengeFile.content.match(
     /(theorem\s+challenge_1\s*\([^)]*\)\s*:\s*[\s\S]*?)(?=\s*:=\s*by|\s*:=)/
@@ -173,44 +170,24 @@ export async function checkSubmission(
   if (!theoremMatch) {
     return {
       status: "rejected",
-      message:
-        "Could not find theorem 'challenge_1' in challenge_1.lean. The theorem must be present and named exactly 'challenge_1'.",
+      message: "Could not find theorem 'challenge_1' in " + challengeFile.name + ".",
       details,
     };
   }
 
   details.submittedSignature = theoremMatch[1].trim();
-  const submitted = details.submittedSignature;
 
-  if (!submitted.includes("theorem challenge_1")) {
+  if (!details.submittedSignature.includes("0=0")) {
     return {
       status: "rejected",
-      message:
-        "Theorem must be named 'challenge_1'. The statement before := by must not be modified.",
-      details,
-    };
-  }
-
-  const statementBody = submitted
-    .replace(/theorem\s+challenge_1\s*\([^)]*\)\s*:\s*/, "")
-    .trim();
-
-  const hasOriginalStatement = statementBody.includes("0=0");
-
-  if (!hasOriginalStatement) {
-    return {
-      status: "rejected",
-      message:
-        "The theorem statement has been modified. You must not change what the theorem claims — only replace sorry with a complete proof.",
+      message: "The theorem statement has been modified.",
       details,
     };
   }
 
   details.theoremSignatureMatch = true;
 
-  // 3. Save files and run lake build
   try {
-    // Save files to a temporary workspace
     const timestamp = Date.now();
     const submissionDir = path.join(WORKSPACE_DIR, String(timestamp));
     await fs.mkdir(submissionDir, { recursive: true });
@@ -221,30 +198,29 @@ export async function checkSubmission(
       await fs.writeFile(filePath, file.content, "utf-8");
     }
 
-    // Copy files into the lean-checker project
     await copyFilesToLeanProject(submissionDir, files);
 
-    // Run lake build
-    const buildResult = await runLakeBuild();
+    const buildResult = await runLakeBuild(`Challenges.${moduleName}`);
     details.compilationExitCode = buildResult.exitCode;
-    details.compilationOutput =
-      buildResult.stdout + "\n" + buildResult.stderr;
+    details.compilationOutput = buildResult.stdout + "\n" + buildResult.stderr;
+
+    await cleanUpLeanProject(files);
 
     if (buildResult.exitCode !== 0) {
-      // Truncate output for storage
-      const truncatedOutput =
+      const truncated =
         details.compilationOutput.length > 2000
           ? details.compilationOutput.substring(0, 2000) + "..."
           : details.compilationOutput;
 
       return {
         status: "rejected",
-        message: `Compilation failed. lake build exited with code ${buildResult.exitCode}. Error: ${truncatedOutput}`,
+        message: `Compilation failed (exit ${buildResult.exitCode}): ${truncated}`,
         details,
       };
     }
   } catch (err) {
     const errorMsg = err instanceof Error ? err.message : String(err);
+    await cleanUpLeanProject(files).catch(() => {});
     return {
       status: "rejected",
       message: `Failed to compile: ${errorMsg}`,
@@ -254,8 +230,7 @@ export async function checkSubmission(
 
   return {
     status: "accepted",
-    message:
-      "Submission verified: no sorry found, theorem statement preserved, compilation successful.",
+    message: "Submission verified and compiled successfully.",
     details,
   };
 }

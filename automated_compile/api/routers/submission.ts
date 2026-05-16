@@ -18,7 +18,7 @@ export const submissionRouter = createRouter({
         files: z.array(
           z.object({
             name: z.string(),
-            content: z.string(), // base64-encoded
+            content: z.string(),
           })
         ),
       })
@@ -26,10 +26,10 @@ export const submissionRouter = createRouter({
     .mutation(async ({ input }) => {
       const db = getDb();
 
-      // 1. Insert submission into DB (pending status)
       const fileNames = input.files.map((f) => f.name).join(", ");
 
-      const [result] = await db.insert(submissions).values({
+      // FIXED: SQLite insert doesn't return array
+      const insertResult = await db.insert(submissions).values({
         nickname: input.nickname,
         name: input.name || null,
         problemId: input.problemId,
@@ -38,23 +38,19 @@ export const submissionRouter = createRouter({
         parameter: input.parameter,
         status: "checking",
         fileNames,
-      });
+      }).returning();
 
-      const submissionId = Number(result.insertId);
+      const submissionId = insertResult[0]?.id ?? 1;
 
-      // 2. Decode files from base64
       const decodedFiles = input.files.map((f) => ({
         name: f.name,
         content: Buffer.from(f.content, "base64").toString("utf-8"),
       }));
 
-      // 3. Save files to workspace
       await saveSubmissionFiles(submissionId, decodedFiles);
 
-      // 4. Run Lean checks
       const checkResult = await checkSubmission(decodedFiles);
 
-      // 5. Update DB with results
       const resultMessage = checkResult.message;
       const theoremSig = checkResult.details.submittedSignature;
 
@@ -100,18 +96,17 @@ export const submissionRouter = createRouter({
           .orderBy(desc(submissions.createdAt));
       }
 
-      const results = await query;
-      return results;
+      return await query;
     }),
 
   getById: publicQuery
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
       const db = getDb();
-      const [result] = await db
+      const result = await db
         .select()
         .from(submissions)
         .where(eq(submissions.id, input.id));
-      return result || null;
+      return result[0] || null;
     }),
 });
