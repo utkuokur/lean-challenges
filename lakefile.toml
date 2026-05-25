@@ -9,6 +9,12 @@ weak.linter.mathlibStandardSet = true
 maxSynthPendingDepth = 3
 
 [[require]]
+name = "Matroid"
+git = "https://github.com/utkuokur/Matroid.git"
+branch = "main"
+rev = "a17ac77"
+
+[[require]]
 name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.30.0-rc2"
@@ -18,3 +24,4 @@ name = "Defs_and_Lems"
 
 [[lean_lib]]
 name = "Challenges"
+
