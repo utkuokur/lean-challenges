@@ -4,14 +4,14 @@ import Mathlib.FieldTheory.Finite.GaloisField
 
 open Function Matroid
 
-variable {α : Type*} (M : Matroid α) (X : Set α)
+variable {α : Type*}
 
-/-- A matroid is GF(p^r)-representable if it can be represented over
-the Galois field of order p^r. -/
+/-- A matroid is GF(pᵐ)-representable if it can be represented over the
+Galois field of order `p^m` (where `p` is prime). -/
 def IsGFRepresentable
-    (p r : ℕ) [Fact p.Prime] (M : Matroid α) : Prop :=
-  ∃ (W : Type) (_ : AddCommGroup W) (_ : Module (GaloisField p r) W),
-    Nonempty (M.Rep (GaloisField p r) W)
+    (p m : ℕ) [Fact p.Prime] (M : Matroid α) : Prop :=
+  ∃ (W : Type) (_ : AddCommGroup W) (_ : Module (GaloisField p m) W),
+    Nonempty (M.Rep (GaloisField p m) W)
 
 /-- N is an excluded minor for the property P if N does not have P,
 but every proper minor of N does. -/
@@ -23,21 +23,13 @@ P has some element of L as a minor. -/
 def CompleteExcludedMinorList (P : Matroid α → Prop) (L : Set (Matroid α)) : Prop :=
   ∀ M : Matroid α, ¬ P M → ∃ N ∈ L, N ≤m M
 
-/-- The prime characteristic used in this challenge instance. By default
-we fix `p = 2`; users targeting other primes can override this and
-prove for their chosen `p`. -/
-def p : ℕ := 2
-
-instance : Fact p.Prime := ⟨by unfold p; decide⟩
-
-/-- The challenge parameter: the exponent in the field size, so the
-field is GF(p^r). -/
+/-- The challenge parameter: the field size. Must be a prime power for
+the conclusion to make sense — that requirement is part of the
+theorem's hypothesis, not encoded into `r` itself. -/
 def r : ℕ := sorry
 
-/-- **The challenge.** Provide a list `L` of matroids and prove it is a
-complete list of excluded minors for GF(p^r)-representability.
-
-For r = 1 this is the classical excluded-minor problem for representability
-over the prime field GF(p); for r > 1 it remains broadly open. -/
-theorem challenge_2 :
-    ∃ L : Set (Matroid α), CompleteExcludedMinorList (IsGFRepresentable p r) L := sorry
+/-- **The challenge.** For the chosen field size `r`, given any prime `p`
+and exponent `m` with `r = pᵐ`, provide a complete list of excluded
+minors for GF(pᵐ)-representability. -/
+theorem challenge_2 (p m : ℕ) [Fact p.Prime] (hr : r = p ^ m) :
+    ∃ L : Set (Matroid α), CompleteExcludedMinorList (IsGFRepresentable p m) L := sorry
