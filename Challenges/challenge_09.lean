@@ -61,6 +61,10 @@ def RyserConjectureFor (r : Nat) : Prop :=
 
 ----- Do not change the code before (and including) this line.
 
+end Hypergraph
+
+end Challenge09
+
 /- The challenge parameter. -/
 def r : ℕ := sorry
 
@@ -68,9 +72,5 @@ def r : ℕ := sorry
 Ryser's hypergraph conjecture:
 every `r`-partite `r`-uniform hypergraph satisfies `tau <= (r - 1) * nu`.
 -/
-theorem challenge_9 : RyserConjectureFor.{u} r := by
+theorem challenge_9 : Challenge09.Hypergraph.RyserConjectureFor.{u} r := by
   sorry
-
-end Hypergraph
-
-end Challenge09

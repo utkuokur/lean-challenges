@@ -28,6 +28,9 @@ def Nondegenerate (F : Finset (Finset U)) : Prop :=
   F ≠ ∅ /\ F ≠ {∅}
 
 ------ Do not change the code above this line.
+
+end Challenge10
+
 /-- The challenge parameter. -/
 def r : Nat := sorry
 
@@ -36,10 +39,9 @@ Scaled union-closed sets conjecture:
 for every nondegenerate finite union-closed family, some element has density at
 least `1 / 2 - 1 / r`.
 -/
-theorem challenge_10
+theorem challenge_10 {U : Type u} [DecidableEq U]
     (hr : 2 < r) {F : Finset (Finset U)}
-    (h_union_closed : IsUnionClosed F) (h_nontrivial : Nondegenerate F) :
-    exists x, InGround F x /\ density F x >= (1 / 2 : Rat) - 1 / (r : Rat) := by
+    (h_union_closed : Challenge10.IsUnionClosed F)
+    (h_nontrivial : Challenge10.Nondegenerate F) :
+    exists x, Challenge10.InGround F x /\ Challenge10.density F x >= (1 / 2 : Rat) - 1 / (r : Rat) := by
   sorry
-
-end Challenge10

@@ -21,8 +21,5 @@ def ErdosHajnalConjectureFor [Fintype W] : Prop :=
 
 def r : ℕ := sorry  -- The challenge parameter
 
-/-- The path version: for every r, the EH conjecture holds for P_r. -/
-def ErdosHajnalConjectureForPaths : Prop := ErdosHajnalConjectureFor (pathGraph r)
-
 /-- The Erdős–Hajnal conjecture for the path graph P_r. -/
-theorem challenge_5 : ErdosHajnalConjectureForPaths := sorry
+theorem challenge_5 : ErdosHajnalConjectureFor (pathGraph r) := sorry
