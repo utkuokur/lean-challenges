@@ -14,7 +14,7 @@ This universal version asks you to prove or disprove the conjecture for ALL r.
 
 universe u
 
-variable {V : Type u}
+variable {V : Type u} [DecidableEq V]
 
 namespace Challenge08
 

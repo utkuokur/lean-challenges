@@ -18,7 +18,7 @@ namespace Challenge09
 
 open Finset
 
-variable (U : Type) [Fintype U] [DecidableEq U]
+variable {U : Type} [Fintype U] [DecidableEq U]
 
 /-- A family F over universe U. -/
 def InGround (F : Finset (Finset U)) (x : U) : Prop :=

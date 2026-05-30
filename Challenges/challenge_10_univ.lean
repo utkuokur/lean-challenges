@@ -20,17 +20,17 @@ namespace Challenge10
 
 open Finset
 
-variable {V : Type} [Fintype V] [DecidableEq V]
-
-/-- A partition (A, B) of a Finset V. -/
-structure Partition where
+/-- A partition (A, B) of `Finset.univ : Finset V`. -/
+structure Partition (V : Type) [Fintype V] [DecidableEq V] where
   A : Finset V
   B : Finset V
   partition_property : A ∪ B = Finset.univ ∧ A ∩ B = ∅
 
 /-- A partition is unfriendly if every vertex has at least as many neighbours
     in the opposite part as in its own part. -/
-def IsUnfriendly (G : SimpleGraph V) (P : Partition) : Prop :=
+noncomputable def IsUnfriendly {V : Type} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) (P : Partition V) : Prop :=
+  letI := Classical.decRel G.Adj
   ∀ v : V,
     (Finset.filter (G.Adj v) (if v ∈ P.A then P.B else P.A)).card ≥
     (Finset.filter (G.Adj v) (if v ∈ P.A then P.A else P.B)).card
@@ -39,7 +39,8 @@ def IsUnfriendly (G : SimpleGraph V) (P : Partition) : Prop :=
     This universal version asks you to prove or disprove it for ALL graphs
     (no parameter needed — it's a universal binary question). -/
 theorem challenge_10 :
-    ∀ (G : SimpleGraph V), ∃ P : Partition, IsUnfriendly G P := by
+    ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V),
+      ∃ P : Partition V, IsUnfriendly G P := by
   sorry
 
 end Challenge10

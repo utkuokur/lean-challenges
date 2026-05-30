@@ -11,6 +11,8 @@ but the general statement remains open. This universal version asks for
 a proof or disproof for all `n`.
 -/
 
+open Function Matroid
+
 variable {α : Type} [Fintype α]
 
 /-- `IsFamilyOfDisjointBases M B` witnesses that `B` is a family of `Fin n → Set α`
@@ -23,7 +25,7 @@ Rota's basis conjecture (universal):
 for all n, given n disjoint bases in a rank-n matroid, there exist n disjoint
 rainbow bases.
 -/
-theorem challenge_7 : ∀ (n : ℕ), ∀ {M : Matroid α} (hrank : M.rank = n) {B : Fin n → Set α},
+theorem challenge_7 : ∀ (n : ℕ), ∀ {M : Matroid α} (hrank : M.eRank = (n : ℕ∞)) {B : Fin n → Set α},
     IsFamilyOfDisjointBases M B →
     ∃ C : Fin n → Set α, IsFamilyOfDisjointBases M C ∧
       ∀ (i j : Fin n), (B i ∩ C j).ncard = 1 := by
