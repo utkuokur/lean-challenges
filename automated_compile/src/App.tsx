@@ -63,49 +63,8 @@ function App() {
           <p style={{ fontSize: 15, color: "#333", marginBottom: 20 }}>
             Click a problem to view its statement and details.
           </p>
-          <h3 style={{ marginTop: 24, marginBottom: 12, color: "#555" }}>Parametrized Challenges</h3>
           <div>
-            {problems.filter((p) => !p.isUniversal).map((p) => (
-              <div key={p.id}>
-                <div
-                  className={`problem-item ${openProblemId === p.id ? "active" : ""}`}
-                  onClick={() => toggleProblem(p.id)}
-                >
-                  <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
-                    <span style={{ fontSize: 16, fontWeight: "bold" }}>{p.title}</span>
-                    <span style={{ fontSize: 13, color: "#555", fontFamily: '"Courier New", Courier, monospace' }}>
-                      largest r so far: {p.largestParameterKnown}
-                    </span>
-                  </div>
-                  <p style={{ marginTop: 8, fontSize: 15, color: "#333", lineHeight: 1.6 }}>
-                    {p.shortDesc}
-                  </p>
-                </div>
-                <div className={`detail-panel ${openProblemId === p.id ? "active" : ""}`}>
-                  <span
-                    style={{ fontSize: 13, color: "#555", cursor: "pointer", marginBottom: 16, display: "inline-block", fontFamily: '"Courier New", Courier, monospace' }}
-                    onClick={(e) => { e.stopPropagation(); setOpenProblemId(null); }}
-                  >
-                    &larr; back to list
-                  </span>
-                  <h3>{p.title}</h3>
-                  <iframe
-                    src={p.pdfPath}
-                    style={{ width: "100%", height: "500px", border: "1px solid #ddd", borderRadius: "4px", marginBottom: "12px" }}
-                    title={`${p.title} – full problem statement`}
-                  />
-                  <div className="info-box">
-                    <div className="info-box-label">Status in Mathlib4</div>
-                    <p><strong>{p.status}</strong></p>
-                    <p style={{ fontSize: 14 }}>{p.info}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <h3 style={{ marginTop: 40, marginBottom: 12, color: "#555" }}>Universal Challenges (∀r)</h3>
-          <div>
-            {problems.filter((p) => p.isUniversal).map((p) => (
+            {problems.map((p) => (
               <div key={p.id}>
                 <div
                   className={`problem-item ${openProblemId === p.id ? "active" : ""}`}
@@ -267,10 +226,10 @@ function App() {
             </div>
 
             <p style={{ fontSize: 13, color: "#888", marginTop: 16, fontStyle: "italic" }}>
-              {problems.length} problem{problems.length === 1 ? "" : "s"} available
-              ({problems.filter((p) => !p.isUniversal).length} parametrized,{" "}
-              {problems.filter((p) => p.isUniversal).length} universal).
-              Pick one from the dropdown in the issue form.
+              {problems.length} problems shown. The issue form's dropdown also
+              includes universal (&forall;r) variants for each problem &mdash;
+              pick <code>challenge_N_univ</code> there to submit a proof of the
+              full conjecture.
             </p>
           </div>
         </section>

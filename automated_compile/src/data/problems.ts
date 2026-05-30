@@ -7,8 +7,6 @@ export interface Problem {
   status: string;
   info: string;
   pdfPath: string;
-  /** Whether this is a universal (∀r) statement — no parameter needed */
-  isUniversal?: boolean;
 }
 
 export const problems: Problem[] = [
@@ -111,83 +109,5 @@ export const problems: Problem[] = [
     status: "Not yet formalized in Mathlib4.",
     info: "Partition problems in graph theory are not yet formalized. Basic neighbourhood and degree definitions exist in Mathlib4.",
     pdfPath: "/content/pdf/challenge_10.pdf",
-  },
-  // ── Universal (∀r) challenges ──
-  {
-    id: "challenge_1_univ",
-    title: "The Hadwiger Conjecture (Universal)",
-    shortDesc: "∀r: does every graph with hadwigerNumber ≤ r admit an (r+1)-coloring? Prove or disprove the Hadwiger Conjecture for ALL r.",
-    largestParameterKnown: "open",
-    description: `This is the universal form of the Hadwiger Conjecture: prove (or disprove) that for EVERY r, if a graph G has Hadwiger number ≤ r, then G is (r+1)-colorable.\n\nThis is the statement Hadwiger originally conjectured in 1943. It remains among the most famous open problems in graph theory.`,
-    status: "Not yet formalized in Mathlib4.",
-    info: "The full universal conjecture (∀r) is open. Proving or disproving it would settle the Hadwiger Conjecture.",
-    pdfPath: "/content/pdf/challenge_01.pdf",
-    isUniversal: true,
-  },
-  {
-    id: "challenge_3_univ",
-    title: "Ramsey Numbers (Universal)",
-    shortDesc: "∀r: do exponential Ramsey bounds hold for arbitrarily large cliques? Find d₁,d₂ ∈ ℝ such that d₁ᵗ ≤ R(t) ≤ d₂ᵗ for all large t.",
-    largestParameterKnown: "open",
-    description: `This is the universal form of the Ramsey bound problem: prove or disprove that for ALL choices of r, there exist constants d₁,d₂ with |d₁-d₂| ≤ (4-√2)·(0.9)ʳ such that the Ramsey number R(t) grows between d₁ᵗ and d₂ᵗ.\n\nEven R(5) remains unknown.`,
-    status: "Partially formalized in Mathlib4.",
-    info: "Basic Ramsey theory results exist in Mathlib4, but exact bounds for all t remain open.",
-    pdfPath: "/content/pdf/challenge_03.pdf",
-    isUniversal: true,
-  },
-  {
-    id: "challenge_5_univ",
-    title: "Erdős–Hajnal Conjecture (Universal)",
-    shortDesc: "∀r: does the Erdős–Hajnal conjecture hold for the path graph P_r? For every r, is there c>0 such that P_r-free graphs have large homogeneous sets?",
-    largestParameterKnown: "open",
-    description: `The universal Erdős–Hajnal conjecture for paths: prove or disprove that for EVERY r, every P_r-free graph on n vertices has a clique or independent set of size ≥ n^c for some c(r) > 0.\n\nThe conjecture is known for only a handful of graphs.`,
-    status: "Not yet formalized in Mathlib4.",
-    info: "The EH conjecture for paths is a special case of the full conjecture; still open.",
-    pdfPath: "/content/pdf/challenge_05.pdf",
-    isUniversal: true,
-  },
-  {
-    id: "challenge_7_univ",
-    title: "Rota's Basis Conjecture (Universal)",
-    shortDesc: "∀n: given n bases in a rank-n matroid, can their union always be partitioned into n rainbow bases?",
-    largestParameterKnown: "open",
-    description: `Rota's basis conjecture (universal): for ALL n, given n disjoint bases in a rank-n matroid, there exist n disjoint rainbow bases (each taking exactly one element from each original basis).\n\nKnown for n ≤ 3. The general case was recently settled for large n, but the full statement for all n remains of interest.`,
-    status: "Not yet formalized in Mathlib4.",
-    info: "Matroid basis theory exists in Mathlib4 at a basic level.",
-    pdfPath: "/content/pdf/challenge_07.pdf",
-    isUniversal: true,
-  },
-  {
-    id: "challenge_8_univ",
-    title: "Ryser's Hypergraph Conjecture (Universal)",
-    shortDesc: "∀r: in every r-partite r-uniform hypergraph, τ ≤ (r-1)·ν. The general case remains open.",
-    largestParameterKnown: "open",
-    description: `Ryser's hypergraph conjecture (universal): prove or disprove that for ALL r, every r-partite r-uniform hypergraph satisfies τ ≤ (r-1)·ν.\n\nFor r=2 this is König's theorem. For r=3 it was proved by Aharoni (2001). The general case remains a major open problem in extremal combinatorics.`,
-    status: "Not yet formalized in Mathlib4.",
-    info: "Hypergraph theory is largely unformalized. Matching and covering results for graphs exist as foundations.",
-    pdfPath: "/content/pdf/challenge_08.pdf",
-    isUniversal: true,
-  },
-  {
-    id: "challenge_9_univ",
-    title: "Union-Closed Sets Conjecture (Universal)",
-    shortDesc: "∀r>2: does every nondegenerate finite union-closed family have an element with density ≥ 1/2 - 1/r?",
-    largestParameterKnown: "open",
-    description: `The universal union-closed sets conjecture (scaled): prove or disprove that for ALL r > 2, every nondegenerate finite union-closed family contains an element belonging to at least a fraction 1/2 - 1/r of the sets.\n\nAs r → ∞, this approaches the full Frankl conjecture (density ≥ 1/2). A proof or counterexample for any fixed r would be a major breakthrough.`,
-    status: "Not yet formalized in Mathlib4.",
-    info: "Set family combinatorics and extremal set theory are not yet formalized in Mathlib4.",
-    pdfPath: "/content/pdf/challenge_09.pdf",
-    isUniversal: true,
-  },
-  {
-    id: "challenge_10_univ",
-    title: "The Unfriendly Partition Conjecture (Universal)",
-    shortDesc: "Does EVERY countable graph admit an unfriendly partition? The conjecture is a yes/no question about ALL countable graphs.",
-    largestParameterKnown: "open",
-    description: `The unfriendly partition conjecture (universal): prove or disprove that EVERY countable graph admits a partition of its vertices into two sets such that each vertex has at least as many neighbors in the other set as in its own.\n\nKnown for locally finite graphs. The uncountable case is independent of ZFC. The countable case remains open.`,
-    status: "Not yet formalized in Mathlib4.",
-    info: "Partition problems in graph theory are not yet formalized. Basic neighbourhood and degree definitions exist in Mathlib4.",
-    pdfPath: "/content/pdf/challenge_10.pdf",
-    isUniversal: true,
   },
 ];
