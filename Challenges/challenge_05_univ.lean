@@ -21,4 +21,4 @@ def ErdosHajnalConjectureFor [Fintype W] : Prop :=
 
 /-- The universal Erdős–Hajnal conjecture for paths:
     for every r, the EH conjecture holds for P_r. -/
-theorem erdos_hajnal_conjecture_for_paths : ∀ r : ℕ, ErdosHajnalConjectureFor (pathGraph r) := sorry
+theorem challenge_5 : ∀ r : ℕ, ErdosHajnalConjectureFor (pathGraph r) := sorry

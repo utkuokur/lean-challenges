@@ -39,7 +39,7 @@ def Nondegenerate (F : Finset (Finset U)) : Prop :=
 /-- The universal union-closed sets conjecture:
     for every r > 2, every nondegenerate finite union-closed family
     has an element with density at least 1/2 - 1/r. -/
-theorem union_closed_sets_conjecture :
+theorem challenge_9 :
     ∀ (r : Nat) (_ : 2 < r) {F : Finset (Finset U)}
     (_ : IsUnionClosed F) (_ : Nondegenerate F),
     ∃ x, InGround F x ∧ density F x ≥ (1 / 2 : Rat) - 1 / (r : Rat) := by

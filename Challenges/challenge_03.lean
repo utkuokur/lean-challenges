@@ -14,9 +14,9 @@ noncomputable def ramseyNumber (t : ℕ) : ℕ :=
     (∃ s : Finset (Fin n), G.IsNClique t s) ∨
     (∃ s : Finset (Fin n), (Gᶜ).IsNClique t s)}
 
-def r : ℕ := 1
+def r : ℕ := sorry  -- The challenge parameter
 
-theorem ramsey_bounds : ∃ d₁ d₂ : ℝ, |d₁ - d₂| ≤ (4 - √2) * (0.9 : ℝ)^r ∧
+theorem challenge_3 : ∃ d₁ d₂ : ℝ, |d₁ - d₂| ≤ (4 - √2) * (0.9 : ℝ)^r ∧
  ∀ᶠ t in atTop, d₁ ^ t ≤ ramseyNumber t ∧ ramseyNumber t ≤ d₂ ^ t := sorry
 
 

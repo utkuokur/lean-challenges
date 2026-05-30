@@ -23,7 +23,7 @@ Rota's basis conjecture (universal):
 for all n, given n disjoint bases in a rank-n matroid, there exist n disjoint
 rainbow bases.
 -/
-theorem rotas_basis_conjecture : ∀ (n : ℕ), ∀ {M : Matroid α} (hrank : M.rank = n) {B : Fin n → Set α},
+theorem challenge_7 : ∀ (n : ℕ), ∀ {M : Matroid α} (hrank : M.rank = n) {B : Fin n → Set α},
     IsFamilyOfDisjointBases M B →
     ∃ C : Fin n → Set α, IsFamilyOfDisjointBases M C ∧
       ∀ (i j : Fin n), (B i ∩ C j).ncard = 1 := by

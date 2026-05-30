@@ -38,7 +38,7 @@ def IsUnfriendly (G : SimpleGraph V) (P : Partition) : Prop :=
 /-- The unfriendly partition conjecture: every graph has an unfriendly partition.
     This universal version asks you to prove or disprove it for ALL graphs
     (no parameter needed — it's a universal binary question). -/
-theorem unfriendly_partition_conjecture :
+theorem challenge_10 :
     ∀ (G : SimpleGraph V), ∃ P : Partition, IsUnfriendly G P := by
   sorry
 

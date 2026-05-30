@@ -125,3 +125,10 @@ theorem RyserConjectureFor_of_RyserHypergraphConjecture
   hRyser r
 
 end Hypergraph
+
+/-- The challenge parameter. -/
+def r : ℕ := sorry
+
+/-- Ryser's hypergraph conjecture for the chosen value of r. -/
+theorem challenge_8 : Hypergraph.RyserConjectureFor.{u} r := by
+  sorry

@@ -77,7 +77,7 @@ def RyserHypergraphConjecture : Prop :=
   ∀ r : ℕ, RyserConjectureFor.{u} (r := r)
 
 /-- The universal challenge: prove or disprove Ryser's conjecture for ALL r. -/
-theorem ryser_hypergraph_conjecture : RyserHypergraphConjecture.{u} := by
+theorem challenge_8 : RyserHypergraphConjecture.{u} := by
   sorry
 
 end Challenge08
