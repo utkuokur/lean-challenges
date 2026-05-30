@@ -9,8 +9,13 @@ function required(name: string): string {
 }
 
 export const env = {
-  appId: required("APP_ID"),
-  appSecret: required("APP_SECRET"),
   isProduction: process.env.NODE_ENV === "production",
-  databaseUrl: required("DATABASE_URL"),
+  // Submissions are now opened directly as GitHub issues by users
+  // (no server-side bot token required). The constants below are the
+  // only ones still consumed by the React app and the leaderboard read
+  // path in api/routers/submission.ts.
+  submissionsRepo: process.env.SUBMISSIONS_REPO ?? "utkuokur/lean-challenges-submissions",
+  leaderboardUrl:
+    process.env.LEADERBOARD_URL ??
+    "https://raw.githubusercontent.com/utkuokur/lean-challenges-submissions/main/site-data/leaderboard.json",
 };

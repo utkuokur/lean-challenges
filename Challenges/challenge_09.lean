@@ -1,45 +1,76 @@
 import Mathlib.Data.Finset.Card
-import Mathlib.Algebra.Order.Field.Rat
 
 universe u
 
-namespace Challenge10
+namespace Challenge09
 
-variable {U : Type u} [DecidableEq U]
+structure Hypergraph (V : Type u) [DecidableEq V] where
+  vertices : Finset V
+  edges : Finset (Finset V)
+  edge_subset_vertices : forall {e : Finset V}, e ∈ edges -> e ⊆ vertices
 
-/-- A finite family of finite sets is union-closed. -/
-def IsUnionClosed (F : Finset (Finset U)) : Prop :=
-  forall A, A ∈ F -> forall B, B ∈ F -> A ∪ B ∈ F
+namespace Hypergraph
 
-/-- An element belongs to the ground set covered by the family. -/
-def InGround (F : Finset (Finset U)) (x : U) : Prop :=
-  exists A, A ∈ F /\ x ∈ A
+variable {V : Type u} [DecidableEq V]
 
-/-- The number of members of the family containing `x`. -/
-def occurrences (F : Finset (Finset U)) (x : U) : Nat :=
-  (F.filter fun A => x ∈ A).card
-
-/-- The density of an element with respect to a finite family. -/
-noncomputable def density (F : Finset (Finset U)) (x : U) : Rat :=
-  (occurrences F x : Rat) / F.card
-
-/-- The two degenerate families excluded from the union-closed sets conjecture. -/
-def Nondegenerate (F : Finset (Finset U)) : Prop :=
-  F ≠ ∅ /\ F ≠ {∅}
-
------- Do not change the code above this line.
-/-- The challenge parameter. -/
-def r : Nat := sorry
+/-- An `r`-uniform hypergraph has every edge of cardinality `r`. -/
+def IsUniform (H : Hypergraph V) (r : Nat) : Prop :=
+  forall {e : Finset V}, e ∈ H.edges -> e.card = r
 
 /--
-Scaled union-closed sets conjecture:
-for every nondegenerate finite union-closed family, some element has density at
-least `1 / 2 - 1 / r`.
+An `r`-partite hypergraph has its vertices partitioned into `r` parts, and
+every edge meets every part in exactly one vertex.
 -/
-theorem challenge_10
-    (hr : 2 < r) {F : Finset (Finset U)}
-    (h_union_closed : IsUnionClosed F) (h_nontrivial : Nondegenerate F) :
-    exists x, InGround F x /\ density F x >= (1 / 2 : Rat) - 1 / (r : Rat) := by
-  sorry
+def IsPartite (H : Hypergraph V) (r : Nat) : Prop :=
+  exists parts : Fin r -> Finset V,
+    (forall v : V, v ∈ H.vertices <-> exists i : Fin r, v ∈ parts i) /\
+      (forall i j : Fin r, i != j -> Disjoint (parts i) (parts j)) /\
+        (forall {e : Finset V}, e ∈ H.edges ->
+          forall i : Fin r, ((parts i) ∩ e).card = 1)
 
-end Challenge10
+/-- A vertex cover is a set of vertices meeting every edge. -/
+def IsVertexCover (H : Hypergraph V) (C : Finset V) : Prop :=
+  C ⊆ H.vertices /\
+    forall {e : Finset V}, e ∈ H.edges -> exists v : V, v ∈ C /\ v ∈ e
+
+/-- A matching is a finite set of pairwise disjoint edges. -/
+def IsMatching (H : Hypergraph V) (M : Finset (Finset V)) : Prop :=
+  (forall {e : Finset V}, e ∈ M -> e ∈ H.edges) /\
+    forall {e1 : Finset V}, e1 ∈ M ->
+      forall {e2 : Finset V}, e2 ∈ M -> e1 != e2 -> Disjoint e1 e2
+
+/-- `tau` is the vertex-cover number of `H`, stated relationally. -/
+def IsCoverNumber (H : Hypergraph V) (tau : Nat) : Prop :=
+  (exists C : Finset V, H.IsVertexCover C /\ C.card = tau) /\
+    forall C : Finset V, H.IsVertexCover C -> tau <= C.card
+
+/-- `nu` is the matching number of `H`, stated relationally. -/
+def IsMatchingNumber (H : Hypergraph V) (nu : Nat) : Prop :=
+  (exists M : Finset (Finset V), H.IsMatching M /\ M.card = nu) /\
+    forall M : Finset (Finset V), H.IsMatching M -> M.card <= nu
+
+/-- Ryser's hypergraph conjecture for a fixed value of `r`. -/
+def RyserConjectureFor (r : Nat) : Prop :=
+  forall (V : Type u) [DecidableEq V], forall H : Hypergraph V,
+    H.IsUniform r ->
+      H.IsPartite r ->
+        forall tau nu : Nat,
+          H.IsCoverNumber tau ->
+            H.IsMatchingNumber nu ->
+              tau <= (r - 1) * nu
+
+----- Do not change the code before (and including) this line.
+
+end Hypergraph
+
+end Challenge09
+
+/- The challenge parameter. -/
+def r : ℕ := sorry
+
+/-
+Ryser's hypergraph conjecture:
+every `r`-partite `r`-uniform hypergraph satisfies `tau <= (r - 1) * nu`.
+-/
+theorem challenge_9 : Challenge09.Hypergraph.RyserConjectureFor.{u} r := by
+  sorry

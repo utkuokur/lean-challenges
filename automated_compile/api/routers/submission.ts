@@ -1,76 +1,52 @@
 import { z } from "zod";
 import { createRouter, publicQuery } from "../middleware";
-import { getDb } from "../queries/connection";
-import { submissions } from "@db/schema";
-import { desc, eq } from "drizzle-orm";
-import { checkSubmission, saveSubmissionFiles } from "../lib/lean-checker";
+import { env } from "../lib/env";
+
+interface LeaderboardEntry {
+  rank: number;
+  nickname: string;
+  name: string;
+  problem: string;
+  claim: string;
+  parameter: string;
+  date: string;
+  issue?: number;
+  source_url?: string;
+}
+
+interface LeaderboardData {
+  entries: LeaderboardEntry[];
+}
+
+/**
+ * Fetch the leaderboard JSON from the submissions repo's raw URL.
+ *
+ * The file is maintained by the CI workflow on
+ * `utkuokur/lean-challenges-submissions` — every accepted submission
+ * issue appends one entry. A 404 (file not yet created) is treated as
+ * an empty leaderboard so the UI degrades gracefully during bootstrap.
+ */
+async function fetchLeaderboard(): Promise<LeaderboardData> {
+  try {
+    const response = await fetch(env.leaderboardUrl, {
+      headers: { Accept: "application/vnd.github.v3.raw" },
+    });
+
+    if (response.ok) {
+      return (await response.json()) as LeaderboardData;
+    }
+    if (response.status === 404) {
+      return { entries: [] };
+    }
+    console.error("Failed to fetch leaderboard:", response.status);
+    return { entries: [] };
+  } catch (err) {
+    console.error("Error fetching leaderboard:", err);
+    return { entries: [] };
+  }
+}
 
 export const submissionRouter = createRouter({
-  create: publicQuery
-    .input(
-      z.object({
-        nickname: z.string().min(1).max(255),
-        name: z.string().max(255).optional(),
-        problemId: z.string().min(1),
-        problemTitle: z.string().min(1),
-        claim: z.enum(["prove", "disprove"]),
-        parameter: z.string().min(1).max(50),
-        files: z.array(
-          z.object({
-            name: z.string(),
-            content: z.string(),
-          })
-        ),
-      })
-    )
-    .mutation(async ({ input }) => {
-      const db = getDb();
-
-      const fileNames = input.files.map((f) => f.name).join(", ");
-
-      // FIXED: SQLite insert doesn't return array
-      const insertResult = await db.insert(submissions).values({
-        nickname: input.nickname,
-        name: input.name || null,
-        problemId: input.problemId,
-        problemTitle: input.problemTitle,
-        claim: input.claim,
-        parameter: input.parameter,
-        status: "checking",
-        fileNames,
-      }).returning();
-
-      const submissionId = insertResult[0]?.id ?? 1;
-
-      const decodedFiles = input.files.map((f) => ({
-        name: f.name,
-        content: Buffer.from(f.content, "base64").toString("utf-8"),
-      }));
-
-      await saveSubmissionFiles(submissionId, decodedFiles);
-
-      const checkResult = await checkSubmission(decodedFiles);
-
-      const resultMessage = checkResult.message;
-      const theoremSig = checkResult.details.submittedSignature;
-
-      await db
-        .update(submissions)
-        .set({
-          status: checkResult.status,
-          resultMessage,
-          theoremSignature: theoremSig,
-        })
-        .where(eq(submissions.id, submissionId));
-
-      return {
-        id: submissionId,
-        status: checkResult.status,
-        message: resultMessage,
-        details: checkResult.details,
-      };
-    }),
-
   list: publicQuery
     .input(
       z
@@ -80,33 +56,11 @@ export const submissionRouter = createRouter({
         .optional()
     )
     .query(async ({ input }) => {
-      const db = getDb();
-
-      let query;
+      const lb = await fetchLeaderboard();
+      let entries = lb.entries;
       if (input?.problemId && input.problemId !== "all") {
-        query = db
-          .select()
-          .from(submissions)
-          .where(eq(submissions.problemId, input.problemId))
-          .orderBy(desc(submissions.createdAt));
-      } else {
-        query = db
-          .select()
-          .from(submissions)
-          .orderBy(desc(submissions.createdAt));
+        entries = entries.filter((e) => e.problem === input.problemId);
       }
-
-      return await query;
-    }),
-
-  getById: publicQuery
-    .input(z.object({ id: z.number() }))
-    .query(async ({ input }) => {
-      const db = getDb();
-      const result = await db
-        .select()
-        .from(submissions)
-        .where(eq(submissions.id, input.id));
-      return result[0] || null;
+      return entries;
     }),
 });

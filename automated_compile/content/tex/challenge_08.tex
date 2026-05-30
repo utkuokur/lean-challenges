@@ -1,0 +1,55 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+\usepackage[margin=1in]{geometry}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{example}{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{openproblem}[theorem]{Open Problem}
+\newcommand{\ev}[1]{( #1 )} 
+\newcommand{\ew}[1]{\left( #1 \right)} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\let\underbrace\LaTeXunderbrace
+\let\overbrace\LaTeXoverbrace
+\begin{document}
+\section*{Challenge 8: Ryser's Hypergraph Conjecture}
+\refstepcounter{section}
+
+\begin{definition}[$r$-partite]
+Given $r\in \mathbb{N}$, an $r$-uniform hypergraph $\mathcal{H}$ is \emph{$r$-partite} if there is a partition
+$$
+V\ev{\mathcal{H}} = \bigcup_{i=1}^{r} P_i
+$$
+of the vertex set of $\mathcal{H}$ such that $|P_i \cap e| = 1$, for each $e\in E\ev{\mathcal{H}}$ and $i\in [r]$. 
+\end{definition}
+
+\begin{definition}[Cover number]
+Given a hypergraph $\mathcal{H}$, a
+set $C$ of vertices of $\mathcal{H}$ is a \textit{vertex cover} if it contains a vertex of every edge. The smallest cardinality of a vertex cover of $\mathcal{H}$ is called the \textit{cover number} of $\mathcal{H}$. It is denoted by $\tau(\mathcal{H})$.
+\end{definition}
+
+\begin{definition}[Matching number]
+The \textit{matching number} of a hypergraph $\mathcal{H}$ is the largest cardinality of a set of pairwise disjoint edges of $\mathcal{H}$. It is denoted by $\nu\ev{\mathcal{H}}$.
+\end{definition}
+
+\begin{conjecture}[Ryser's Conjecture]
+Let $r\in \mathbb{N}$.
+Every $r$-partite $r$-uniform hypergraph $\mathcal{H}$ satisfies:
+$$
+\tau\ev{\mathcal{H}} \leq \ev{r-1} \cdot \nu\ev{\mathcal{H}}
+$$
+\end{conjecture}
+
+For $r=2$, it is a classical theorem of K\H{o}nig, and for $r=3$ it was proved by Aharoni using the topological method.
+
+\end{document}

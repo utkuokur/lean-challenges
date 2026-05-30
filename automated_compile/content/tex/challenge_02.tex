@@ -1,0 +1,64 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+\usepackage[margin=1in]{geometry}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{example}{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{openproblem}[theorem]{Open Problem}
+\newcommand{\ev}[1]{( #1 )} 
+\newcommand{\ew}[1]{\left( #1 \right)} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\let\underbrace\LaTeXunderbrace
+\let\overbrace\LaTeXoverbrace
+\begin{document}
+\section*{Challenge 2: Excluded Minors of $\mathrm{GF}(p^r)$-representable matroids}
+\refstepcounter{section}
+
+\begin{definition}[Matroid]
+A \emph{matroid} is a pair $M=(E,\mathcal I)$ consisting of a finite set $E$ and a collection $\mathcal I$ of subsets of $E$, called the \emph{independent sets}, such that:
+\begin{enumerate}
+\item $\emptyset \in \mathcal I$;
+\item if $I\in \mathcal I$ and $J\subseteq I$, then $J\in \mathcal I$;
+\item if $I,J\in \mathcal I$ and $|I|<|J|$, then there is some $x\in J\setminus I$ such that $I\cup \{x\}\in \mathcal I$.
+\end{enumerate}
+The maximal independent sets of $M$ are called the \emph{bases} of $M$.
+\end{definition}
+
+\begin{definition}[$\mathrm{GF}(p^r)$-representable matroid]
+Let $p$ be a prime number. Let $r$ be a positive integer. Let $\mathrm{GF}(p^r)$ denote the finite field with $p^r$ elements. A matroid $M$ is \emph{$\mathrm{GF}(p^r)$-representable} if there is a matrix $A$ over $\mathrm{GF}(p^r)$ such that the independent sets of $M$ are exactly the sets of columns of $A$ which are linearly independent over $\mathrm{GF}(p^r)$.
+\end{definition}
+
+\begin{definition}[Matroid minor]
+Let $M$ be a matroid with ground set $E$. The \textit{dual} of $M$, denoted $M^*$, is the matroid with the same ground set, where the bases are the complements of the bases of $M$. Given a subset $D \subseteq E$, the \emph{deletion} of $D$ from $M$, denoted $M\setminus D$, is the restriction of $M$ to $E\setminus D$. Given a subset $C\subseteq E$, the \emph{contraction} of $M$ onto $E-C$ is the matroid $M/C := (M^* \setminus C)^*$, with ground set $E\setminus C$. 
+
+Given matroids $M,N$, then $N$ is a \emph{minor} of $M$ if there exist sets $C$ and $D$ such that $N = M/C \setminus D$.
+\end{definition}
+
+\begin{definition}[Excluded minor]
+Let $\mathcal C$ be a class of matroids closed under minors. A matroid $M$ is an \emph{excluded minor} for $\mathcal C$ if $M\notin \mathcal C$, but every proper minor of $M$ belongs to $\mathcal C$.
+\end{definition}
+
+The class of $\mathrm{GF}(p^r)$-representable matroids is closed under taking minors. Thus, it is natural to ask for minimal matroids which fail to be representable over $\mathrm{GF}(p^r)$.
+
+\begin{openproblem}
+Let $p$ be a prime number. Let $r$ be a positive integer. List the minimal excluded minors for the class of $\mathrm{GF}(p^r)$-representable matroids and prove that the given list is complete up to isomorphism.
+\end{openproblem}
+
+For $p^r=2$, the excluded minor list is known: a matroid is representable over $\mathrm{GF}(2)$ if and only if it has no minor isomorphic to $U_{2,4}$.
+
+For $p^r=3$, there is also a finite explicit list: a matroid is representable over $\mathrm{GF}(3)$ if and only if it has no minor isomorphic to $U_{2,5}$, $U_{3,5}$, $F_7$, or $F_7^*$.
+
+In general, Rota's excluded-minor conjecture, proven by Geelen, Gerards and Whittle, says that for every finite field $\mathrm{GF}(p^r)$ there are only finitely many excluded minors for the class of $\mathrm{GF}(p^r)$-representable matroids.
+
+\end{document}

@@ -2,12 +2,27 @@ import Matroid.Representation.Basic
 import Mathlib.Data.Complex.Basic
 import Mathlib.FieldTheory.Finite.GaloisField
 
+/-!
+# Excluded Minors of GF(pᵐ)-representable Matroids — Universal Statement
+
+For every prime power `r = pᵐ`, characterize the excluded minors for
+representability over the finite field `GF(pᵐ)`.
+
+For `r = 2` (binary matroids), the only excluded minor is `U₂,₄` (Tutte 1958).
+For `r = 3` (ternary matroids), the excluded minors are `U₂,₅`, `U₃,₅`, `F₇`,
+and `F₇*` (Rota's theorem). Beyond that, the problem remains broadly open.
+
+This universal version asks for a complete list of excluded minors that
+works for ALL prime-power field sizes — i.e., for every `r` accompanied
+by a witness `(p, m)` such that `p` is prime and `r = pᵐ`.
+-/
+
 open Function Matroid
 
 variable {α : Type*}
 
 /-- A matroid is GF(pᵐ)-representable if it can be represented over the
-Galois field of order `p^m` (where `p` is prime). -/
+Galois field of order `p^m`. -/
 def IsGFRepresentable
     (p m : ℕ) [Fact p.Prime] (M : Matroid α) : Prop :=
   ∃ (W : Type) (_ : AddCommGroup W) (_ : Module (GaloisField p m) W),
@@ -23,13 +38,8 @@ P has some element of L as a minor. -/
 def CompleteExcludedMinorList (P : Matroid α → Prop) (L : Set (Matroid α)) : Prop :=
   ∀ M : Matroid α, ¬ P M → ∃ N ∈ L, N ≤m M
 
-/-- The challenge parameter: the field size. Must be a prime power for
-the conclusion to make sense — that requirement is part of the
-theorem's hypothesis, not encoded into `r` itself. -/
-def r : ℕ := sorry
-
-/-- **The challenge.** For the chosen field size `r`, given any prime `p`
-and exponent `m` with `r = pᵐ`, provide a complete list of excluded
-minors for GF(pᵐ)-representability. -/
-theorem challenge_2 (p m : ℕ) [Fact p.Prime] (hr : r = p ^ m) :
+/-- The universal challenge: for every field size `r` that is a prime
+power (witnessed by some prime `p` and exponent `m` with `r = pᵐ`),
+provide a complete list of excluded minors for GF(pᵐ)-representability. -/
+theorem challenge_2 (r p m : ℕ) [Fact p.Prime] (hr : r = p ^ m) :
     ∃ L : Set (Matroid α), CompleteExcludedMinorList (IsGFRepresentable p m) L := sorry

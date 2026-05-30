@@ -19,7 +19,6 @@ def ErdosHajnalConjectureFor [Fintype W] : Prop :=
       (G.IsNClique n s ∨ Gᶜ.IsNClique n s) ∧
       (n : ℝ) ≥ (Fintype.card V : ℝ) ^ (c : ℝ)
 
-def r : ℕ := sorry  -- The challenge parameter
-
-/-- The Erdős–Hajnal conjecture for the path graph P_r. -/
-theorem challenge_5 : ErdosHajnalConjectureFor (pathGraph r) := sorry
+/-- The universal Erdős–Hajnal conjecture for paths:
+    for every r, the EH conjecture holds for P_r. -/
+theorem challenge_5 : ∀ r : ℕ, ErdosHajnalConjectureFor (pathGraph r) := sorry
