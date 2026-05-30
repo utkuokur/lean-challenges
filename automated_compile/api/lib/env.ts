@@ -9,8 +9,12 @@ function required(name: string): string {
 }
 
 export const env = {
-  appId: required("APP_ID"),
-  appSecret: required("APP_SECRET"),
   isProduction: process.env.NODE_ENV === "production",
-  databaseUrl: required("DATABASE_URL"),
+  databaseUrl: process.env.DATABASE_URL ?? "",
+  githubToken: process.env.GITHUB_TOKEN ?? "",
+  submissionsRepo: process.env.SUBMISSIONS_REPO ?? "utkuokur/lean-challenges-submissions",
+  leaderboardUrl:
+    process.env.LEADERBOARD_URL ??
+    "https://raw.githubusercontent.com/utkuokur/lean-challenges-leaderboard/main/site-data/leaderboard.json",
+  solutionsDir: process.env.SOLUTIONS_DIR ?? "./solutions_archive",
 };

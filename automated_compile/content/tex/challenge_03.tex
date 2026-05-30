@@ -1,0 +1,46 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+\usepackage[margin=1in]{geometry}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{example}{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{openproblem}[theorem]{Open Problem}
+\newcommand{\ev}[1]{( #1 )} 
+\newcommand{\ew}[1]{\left( #1 \right)} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\let\underbrace\LaTeXunderbrace
+\let\overbrace\LaTeXoverbrace
+\begin{document}
+\section*{Challenge 3: Ramsey Numbers}
+\refstepcounter{section}
+
+\begin{definition}[Ramsey Number]
+Given $t\in \mathbb{N}$, the \emph{(diagonal) Ramsey number} \( R(t) \) is the smallest $n\in \mathbb{N}\cup \{\infty\}$ such that every simple graph \( G \) on \( n \) vertices contains either a clique of size \( t \) or an independent set of size \( t \).
+\end{definition}
+
+By Ramsey's theorem, $R(t)$ is always an integer, which is upper bounded by $4^t$.
+Erd\H{o}s proved that random graphs $G(n,p)$ give a lower bound of the form $\sqrt{2}^t$ for $t$ sufficiently large. An important problem that can be traced back to Ramsey's original paper is to get good upper and lower bounds for the Ramsey number.
+
+\begin{openproblem}[Scaled Ramsey problem]
+Let $r\in \mathbb{N}$.
+Provide decimal numbers $d_1$ and $d_2$ with $|d_2-d_1|\leq (4-\sqrt{2}) \cdot 0.9^r$ so that for all sufficiently large $t\in \mathbb{N}$
+\[
+d_1^t \leq R(t) \leq d_2^t.
+\]
+\end{openproblem}
+
+The scaled Ramsey problem for $r=1$ follows by combining the above mentioned works of Ramsey and Erd\H{o}s.
+The problem was solved for $r=2$ by Campos, Griffiths, Morris and Sahasrabudhe combined with the better bound from the follow-up paper by Gupta, Ndiaye, Norin and Wei.
+
+\end{document}

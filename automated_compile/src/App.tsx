@@ -1,10 +1,11 @@
 import { useState, useRef, useCallback } from "react";
 import { trpc } from "@/providers/trpc";
-import { problems } from "@/data/problems";
+import { problems, type Problem } from "@/data/problems";
 
 function App() {
   const [openProblemId, setOpenProblemId] = useState<string | null>(null);
   const [activeLbTab, setActiveLbTab] = useState("all");
+  const [selectedProblem, setSelectedProblem] = useState<Problem | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [submitResult, setSubmitResult] = useState<{
     status: string;
@@ -118,7 +119,7 @@ function App() {
       });
 
       setSubmitResult({ status: result.status, message: result.message });
-      if (result.status === "accepted") {
+      if (result.status === "submitted") {
         form.reset();
         setSelectedFiles([]);
       }
@@ -165,19 +166,15 @@ function App() {
     }
   };
 
-  // Leaderboard data processing
-  const lbEntries = (submissions || [])
-    .filter((s) => s.status === "accepted")
-    .map((s, i) => ({
-      rank: i + 1,
-      nickname: s.nickname,
-      name: s.name,
-      problem: s.problemTitle,
-      result: `${s.claim === "prove" ? "holds" : "fails"} for ${s.parameter}`,
-      date: s.createdAt
-        ? new Date(s.createdAt).toISOString().split("T")[0]
-        : "",
-    }));
+  // Leaderboard data processing — entries already come ranked from leaderboard.json
+  const lbEntries = (submissions || []).map((s) => ({
+    rank: s.rank,
+    nickname: s.nickname,
+    name: s.name || "",
+    problem: s.problem,
+    result: `${s.claim === "prove" ? "holds" : "fails"} for ${s.parameter}`,
+    date: s.date || "",
+  }));
 
   const hasChallengeFile = selectedFiles.some((f) => f.name === "challenge_1.lean");
 
@@ -213,8 +210,9 @@ function App() {
           <p style={{ fontSize: 15, color: "#333", marginBottom: 20 }}>
             Click a problem to view its statement and details.
           </p>
+          <h3 style={{ marginTop: 24, marginBottom: 12, color: "#555" }}>Parametrized Challenges</h3>
           <div>
-            {problems.map((p) => (
+            {problems.filter((p) => !p.isUniversal).map((p) => (
               <div key={p.id}>
                 <div
                   className={`problem-item ${openProblemId === p.id ? "active" : ""}`}
@@ -238,11 +236,51 @@ function App() {
                     &larr; back to list
                   </span>
                   <h3>{p.title}</h3>
-                  {p.description.split("\n\n").map((para, i) => (
-                    <p key={i} style={{ marginBottom: 12, fontSize: 15, color: "#222" }}>
-                      {para}
-                    </p>
-                  ))}
+                  <iframe
+                    src={p.pdfPath}
+                    style={{ width: "100%", height: "500px", border: "1px solid #ddd", borderRadius: "4px", marginBottom: "12px" }}
+                    title={`${p.title} – full problem statement`}
+                  />
+                  <div className="info-box">
+                    <div className="info-box-label">Status in Mathlib4</div>
+                    <p><strong>{p.status}</strong></p>
+                    <p style={{ fontSize: 14 }}>{p.info}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <h3 style={{ marginTop: 40, marginBottom: 12, color: "#555" }}>Universal Challenges (∀r)</h3>
+          <div>
+            {problems.filter((p) => p.isUniversal).map((p) => (
+              <div key={p.id}>
+                <div
+                  className={`problem-item ${openProblemId === p.id ? "active" : ""}`}
+                  onClick={() => toggleProblem(p.id)}
+                >
+                  <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
+                    <span style={{ fontSize: 16, fontWeight: "bold" }}>{p.title}</span>
+                    <span style={{ fontSize: 13, color: "#555", fontFamily: '"Courier New", Courier, monospace' }}>
+                      largest r so far: {p.largestParameterKnown}
+                    </span>
+                  </div>
+                  <p style={{ marginTop: 8, fontSize: 15, color: "#333", lineHeight: 1.6 }}>
+                    {p.shortDesc}
+                  </p>
+                </div>
+                <div className={`detail-panel ${openProblemId === p.id ? "active" : ""}`}>
+                  <span
+                    style={{ fontSize: 13, color: "#555", cursor: "pointer", marginBottom: 16, display: "inline-block", fontFamily: '"Courier New", Courier, monospace' }}
+                    onClick={(e) => { e.stopPropagation(); setOpenProblemId(null); }}
+                  >
+                    &larr; back to list
+                  </span>
+                  <h3>{p.title}</h3>
+                  <iframe
+                    src={p.pdfPath}
+                    style={{ width: "100%", height: "500px", border: "1px solid #ddd", borderRadius: "4px", marginBottom: "12px" }}
+                    title={`${p.title} – full problem statement`}
+                  />
                   <div className="info-box">
                     <div className="info-box-label">Status in Mathlib4</div>
                     <p><strong>{p.status}</strong></p>
@@ -349,11 +387,27 @@ function App() {
               <div className="form-row three-col">
                 <div className="form-group">
                   <label className="form-label">Problem *</label>
-                  <select className="form-input" name="problem" required defaultValue="">
+                  <select
+                    className="form-input"
+                    name="problem"
+                    required
+                    defaultValue=""
+                    onChange={(e) => {
+                      const found = problems.find((p) => p.id === e.target.value);
+                      setSelectedProblem(found || null);
+                    }}
+                  >
                     <option value="">Select a problem...</option>
-                    {problems.map((p) => (
-                      <option key={p.id} value={p.id}>{p.title}</option>
-                    ))}
+                    <optgroup label="Parametrized (choose r)">
+                      {problems.filter((p) => !p.isUniversal).map((p) => (
+                        <option key={p.id} value={p.id}>{p.title}</option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="Universal (prove/disprove for ALL r)">
+                      {problems.filter((p) => p.isUniversal).map((p) => (
+                        <option key={p.id} value={p.id}>{p.title}</option>
+                      ))}
+                    </optgroup>
                   </select>
                 </div>
                 <div className="form-group">
@@ -364,10 +418,19 @@ function App() {
                     <option value="disprove">Disprove</option>
                   </select>
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Chosen parameter *</label>
-                  <input className="form-input" type="text" name="parameter" placeholder="e.g. 5" required />
-                </div>
+                {!selectedProblem?.isUniversal && (
+                  <div className="form-group">
+                    <label className="form-label">Chosen parameter *</label>
+                    <input className="form-input" type="text" name="parameter" placeholder="e.g. 5" required />
+                  </div>
+                )}
+                {selectedProblem?.isUniversal && (
+                  <div className="form-group">
+                    <label className="form-label">Parameter</label>
+                    <input className="form-input" type="text" name="parameter" value="universal" readOnly style={{ background: "#f5f5f5", color: "#888" }} />
+                    <span style={{ fontSize: 11, color: "#888", fontStyle: "italic" }}>Universal statements don't need a parameter — prove or disprove for ALL r.</span>
+                  </div>
+                )}
               </div>
 
               <div className="form-group">
@@ -453,8 +516,12 @@ function App() {
               </div>
 
               {submitResult && (
-                <div className={`result-box ${submitResult.status}`}>
-                  <strong>{submitResult.status === "accepted" ? "\u2713 Accepted" : "\u2717 Rejected"}</strong>
+                <div className={`result-box ${submitResult.status === "submitted" ? "accepted" : "rejected"}`}>
+                  <strong>
+                    {submitResult.status === "submitted"
+                      ? "\u2713 Submitted"
+                      : "\u2717 Error"}
+                  </strong>
                   <br />
                   {submitResult.message}
                 </div>

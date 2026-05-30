@@ -1,0 +1,58 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+\usepackage[margin=1in]{geometry}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{example}{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{openproblem}[theorem]{Open Problem}
+\newcommand{\ev}[1]{( #1 )} 
+\newcommand{\ew}[1]{\left( #1 \right)} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\let\underbrace\LaTeXunderbrace
+\let\overbrace\LaTeXoverbrace
+\begin{document}
+\section*{Challenge 1: The Hadwiger Conjecture}
+\refstepcounter{section}
+
+\begin{definition}[Graph Minor] 
+Given simple graphs $X$ and $G$, we say that $X$ is a \emph{minor} of $G$ if there is a function assigning to each vertex $x$ of $X$ a nonempty vertex set $V_x\subseteq V(G)$ such that 
+\begin{enumerate}
+\item the subgraph $G[V_x]$ induced by $G$ on $V_x$ is connected for each $x$;
+\item for different vertices  $x,y\in V\ev{X}$, the sets $V_x$ and $V_y$ are disjoint;
+\item for any two adjacent vertices $x,y\in V\ev{X}$, there are adjacent vertices $a\in V_x$ and $b\in V_y$ of $G$. 
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Hadwiger Number]
+Given a graph $G$, the \textit{Hadwiger number} of $G$ is the largest integer $n$ such that $K_n$ is a minor of $G$; here $K_n$ denotes the complete graph on $n$ vertices. 
+We denote the Hadwiger number by $h\ev{G}$.
+\end{definition}
+
+\begin{definition}[Chromatic number]
+Given a graph $G$  and $n\in \mathbb{N}$, 
+a \textit{proper coloring} of $G$ with $n$ colours is a function $f:[n] \rightarrow V\ev{G}$ so that adjacent vertices receive different $f$-values. The \textit{chromatic number} of $G$ is the minimum number $n$ such that there is a proper coloring of $G$ with $n$ colours. 
+\end{definition}
+
+\begin{conjecture}[Hadwiger's Conjecture]\label{hadw}
+Let $r\in \mathbb{N}$.
+For every finite simple graph $G$, we have:
+$$
+r \leq \chi\ev{G} \ \Longrightarrow \  r \leq h\ev{G} 
+$$
+\end{conjecture}
+
+While Conjecture \ref{hadw} is not difficult for every small values of $r$, already for $r=4$ it is equivalent to the 4-colour theorem. 
+Robertson, Seymour and Thomas proved the above for $r= 5$.
+
+\end{document}

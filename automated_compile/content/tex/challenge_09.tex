@@ -1,0 +1,50 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+\usepackage[margin=1in]{geometry}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{example}{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{openproblem}[theorem]{Open Problem}
+\newcommand{\ev}[1]{( #1 )} 
+\newcommand{\ew}[1]{\left( #1 \right)} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\let\underbrace\LaTeXunderbrace
+\let\overbrace\LaTeXoverbrace
+\begin{document}
+\section*{Challenge 9: Union-Closed Sets Conjecture}
+\refstepcounter{section}
+
+\begin{definition}[Union-closed set]
+A set $\mathcal{F}$ of sets is \textit{union-closed} if for any two sets in $\mathcal{F}$, their union is also in $\mathcal{F}$. 
+For a nonempty finite set $\Fcal$, the \emph{density} of an element $x$ with respect to $\Fcal$ is defined
+to be 
+\[
+\frac{|\{ F \in \mathcal{F} : x \in F \}|}{|\Fcal|}
+\]
+\end{definition}
+
+\begin{conjecture}[Union-closed sets conjecture]
+For every finite union-closed set $\mathcal{F}\notin\{\emptyset, \{\emptyset\}\}$, there exists an element $x$ of density at least one half.
+\end{conjecture}
+
+We are interested in the following parametrized version of the conjecture.
+
+\begin{conjecture}[Scaled union-closed sets conjecture]
+Let $r\in \mathbb{N}_{>2}$.
+For every finite union-closed set $\mathcal{F}\notin\{\emptyset, \{\emptyset\}\}$, there exists an element $x$ of density at least $\frac{1}{2}-\frac{1}{r}$.
+\end{conjecture}
+
+The above conjecture is open for all values of $r>2$.
+
+\end{document}

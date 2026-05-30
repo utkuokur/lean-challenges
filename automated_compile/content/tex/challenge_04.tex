@@ -1,0 +1,64 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+\usepackage[margin=1in]{geometry}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{example}{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{openproblem}[theorem]{Open Problem}
+\newcommand{\ev}[1]{( #1 )} 
+\newcommand{\ew}[1]{\left( #1 \right)} 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\let\underbrace\LaTeXunderbrace
+\let\overbrace\LaTeXoverbrace
+\begin{document}
+\section*{Challenge 4: Sidorenko Conjecture for Half-Graphs}
+\refstepcounter{section}
+
+\begin{definition}[Graph homomorphism density]
+Let $G$ and $H$ be simple graphs. 
+\begin{enumerate}
+\item A function $f: V\ev{H} \rightarrow V\ev{G}$ is a \textit{graph homomorphism} from $H$ to $G$ if for each edge $uv \in E\ev{H}$, we have $f\ev{u}f\ev{v} \in E\ev{G}$. 
+
+\item Let $\mathrm{hom}\ev{H,G}$ be the number of graph homomorphisms $H \rightarrow G$. 
+
+\item The \textit{homomorphism density} of $H$ in $G$ is the fraction
+$$
+t_{H}\ev{G} := \dfrac{\mathrm{hom}\ev{H,G}}{|V\ev{G}|^{|V\ev{H}|}}
+$$
+\end{enumerate}
+\end{definition}
+
+\begin{conjecture}[Sidorenko's Conjecture]
+For every bipartite graph $H$ and for any graph $G$, we have:
+$$
+t_H\ev{G} \geq t_{K_2}\ev{G}^{|E\ev{H}|}
+$$
+\end{conjecture}
+
+\begin{definition}[Half-graph]
+Let $A_r = \{ a_1,\ldots, a_r \}$ and $B_r = \{ b_1,\ldots, b_r \} $ be disjoint sets of size $r$. 
+A \emph{half-graph} is the bipartite graph on the vertex set $A_r\cup B_r$ with the following edges present: $E = \{ a_i b_j : i \leq j \}$
+(Note that these are about `half' of the possible edges between $A_r$ and $B_r$, hence the name). 
+\end{definition}
+
+We are interested in the special case of the conjecture, where $H = H_r$ is a half-graph with $2r$ vertices.
+
+\begin{conjecture}[Scaled weakening of Sidorenko's Conjecture]
+Let $r \in \N$. For any graph $G$, we have:
+$$
+t_{H_r}\ev{G} \geq t_{K_2}\ev{G}^{(r^2+r)/2}
+$$
+\end{conjecture}
+
+\end{document}
