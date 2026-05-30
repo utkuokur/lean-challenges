@@ -1,2 +1,6 @@
 /.lake
 .aider*
+
+# CI-generated files for signature-shim verification; should never be committed.
+Challenges/Submission.lean
+Challenges/Check.lean
