@@ -1,8 +1,21 @@
-import { useState } from "react";
-import { trpc } from "@/providers/trpc";
+import { useEffect, useState } from "react";
 import { problems } from "@/data/problems";
 
 const SUBMISSIONS_REPO = "utkuokur/lean-challenges-submissions";
+
+/** Public raw URL of the leaderboard JSON maintained by the submissions repo CI. */
+const LEADERBOARD_URL =
+  "https://raw.githubusercontent.com/utkuokur/lean-challenges-submissions/main/site-data/leaderboard.json";
+
+interface LeaderboardEntry {
+  rank: number;
+  nickname: string;
+  name?: string;
+  problem: string;
+  claim: string;
+  parameter: string;
+  date?: string;
+}
 
 /** Compose the issue-template URL for a specific-r submission. */
 function buildSpecificUrl(args: {
@@ -50,24 +63,33 @@ function App() {
   const [univProblem, setUnivProblem] = useState("");
   const [univClaim, setUnivClaim] = useState("");
 
-  // tRPC
-  const { data: submissions } = trpc.submission.list.useQuery(
-    activeLbTab === "all" ? undefined : { problemId: activeLbTab }
-  );
+  // Leaderboard is read directly from the submissions repo's public JSON —
+  // no backend required, so the site can be served as a static page.
+  const [submissions, setSubmissions] = useState<LeaderboardEntry[]>([]);
+  useEffect(() => {
+    fetch(LEADERBOARD_URL)
+      .then((res) => (res.ok ? res.json() : { entries: [] }))
+      .then((data: { entries?: LeaderboardEntry[] }) =>
+        setSubmissions(data.entries ?? [])
+      )
+      .catch(() => setSubmissions([]));
+  }, []);
 
   const toggleProblem = (id: string) => {
     setOpenProblemId((prev) => (prev === id ? null : id));
   };
 
   // Leaderboard data processing — entries already come ranked from leaderboard.json
-  const lbEntries = (submissions || []).map((s) => ({
-    rank: s.rank,
-    nickname: s.nickname,
-    name: s.name || "",
-    problem: s.problem,
-    result: `${s.claim === "prove" ? "holds" : "fails"} for r = ${s.parameter}`,
-    date: s.date || "",
-  }));
+  const lbEntries = submissions
+    .filter((s) => activeLbTab === "all" || s.problem === activeLbTab)
+    .map((s) => ({
+      rank: s.rank,
+      nickname: s.nickname,
+      name: s.name || "",
+      problem: s.problem,
+      result: `${s.claim === "prove" ? "holds" : "fails"} for r = ${s.parameter}`,
+      date: s.date || "",
+    }));
 
   const specificGitHubUrl = buildSpecificUrl({
     problemId: specProblem,
@@ -231,9 +253,30 @@ function App() {
         {/* Submit */}
         <section id="submit">
           <h2 className="section-heading">Submit Your Solution</h2>
-          <p style={{ fontSize: 15, color: "#333", marginBottom: 20 }}>
-            Choose how you want to contribute:
-          </p>
+          <div style={{ fontSize: 15, color: "#333", marginBottom: 24, maxWidth: 720, lineHeight: 1.7 }}>
+            <p style={{ marginBottom: 12 }}>
+              Pick the option below that matches your proof and fill in the short form — it opens a
+              pre-filled GitHub issue where you provide your proof source. On that issue, fill in{" "}
+              <strong>exactly one</strong> of <em>Submission URL</em> or <em>Repository URL</em>:
+            </p>
+            <ul style={{ margin: "0 0 12px 20px", padding: 0 }}>
+              <li style={{ marginBottom: 8 }}>
+                <strong>Submission URL</strong> — a single <code>.lean</code> file at a public raw
+                URL (a gist, or a <code>raw.githubusercontent.com/…</code> link).
+              </li>
+              <li>
+                <strong>Repository URL</strong> — a multi-file submission in a public GitHub repo.
+                Your repo must contain <code>Submission/Main.lean</code> (with the relevant{" "}
+                <code>r</code> and <code>theorem challenge_N</code> inside{" "}
+                <code>namespace Submission</code>), plus any helpers as{" "}
+                <code>Submission/&lt;Name&gt;.lean</code>.
+              </li>
+            </ul>
+            <p>
+              AI-assisted, human, or hybrid proofs are all fine — we don't ask how the proof was
+              produced.
+            </p>
+          </div>
 
           {/* Option 1: Prove special case (specific r) */}
           <div className="submit-section">
