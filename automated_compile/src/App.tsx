@@ -2,60 +2,53 @@ import { useState } from "react";
 import { trpc } from "@/providers/trpc";
 import { problems } from "@/data/problems";
 
-// Submissions are filed as GitHub Issues on the submissions repo
-// (see api/lib/env.ts -> submissionsRepo). The form fields below are
-// cosmetic: clicking "Submit on GitHub" constructs a pre-filled URL to
-// the issue template using the same field ids, but the user can still
-// edit/clear the prefilled values on the GitHub side before submitting.
 const SUBMISSIONS_REPO = "utkuokur/lean-challenges-submissions";
-const ISSUE_TEMPLATE_BASE = `https://github.com/${SUBMISSIONS_REPO}/issues/new?template=submit.yml`;
 
-/**
- * Map (problem_id chosen in the React form, claim) -> the actual
- * problem id in the issue-template dropdown.
- *
- * Parametrized problems (challenge_1..challenge_10) don't have a
- * separate disprove slot, so claim is ignored for them. Universal
- * problems (challenge_N_univ) have a `_disprove` companion in the
- * dropdown, selected when claim === "disprove".
- */
-function resolveProblemDropdownId(problemId: string, claim: string): string {
-  if (problemId.endsWith("_univ") && claim === "disprove") {
-    return `${problemId}_disprove`;
-  }
-  return problemId;
-}
-
-/** Compose the issue template URL with prefilled values. */
-function buildPrefilledUrl(args: {
+/** Compose the issue-template URL for a specific-r submission. */
+function buildSpecificUrl(args: {
   problemId: string;
-  claim: string;
   parameter: string;
   nickname: string;
   fullName: string;
 }): string {
-  const resolved = resolveProblemDropdownId(args.problemId, args.claim);
   const params = new URLSearchParams();
-  if (resolved) params.set("problem_id", resolved);
-  if (args.claim) params.set("claim", args.claim);
-  if (args.parameter) params.set("parameter", args.parameter);
-  if (args.nickname) params.set("nickname", args.nickname);
+  params.set("problem_id", args.problemId);
+  params.set("parameter", args.parameter);
+  params.set("nickname", args.nickname);
   if (args.fullName) params.set("full_name", args.fullName);
-  return `${ISSUE_TEMPLATE_BASE}&${params.toString()}`;
+  return `https://github.com/${SUBMISSIONS_REPO}/issues/new?template=submit-specific.yml&${params.toString()}`;
+}
+
+/** Compose the issue-template URL for a universal (∀r) submission. */
+function buildUniversalUrl(args: {
+  problemId: string;
+  claim: string;
+  nickname: string;
+  fullName: string;
+}): string {
+  const params = new URLSearchParams();
+  params.set("problem_id", args.problemId);
+  params.set("claim", args.claim);
+  params.set("nickname", args.nickname);
+  if (args.fullName) params.set("full_name", args.fullName);
+  return `https://github.com/${SUBMISSIONS_REPO}/issues/new?template=submit-universal.yml&${params.toString()}`;
 }
 
 function App() {
   const [openProblemId, setOpenProblemId] = useState<string | null>(null);
   const [activeLbTab, setActiveLbTab] = useState("all");
 
-  // Cosmetic submission-form state. These don't actually submit
-  // anything; they only seed the GitHub issue template via URL query
-  // parameters when the user clicks "Submit on GitHub".
-  const [subNickname, setSubNickname] = useState("");
-  const [subName, setSubName] = useState("");
-  const [subProblem, setSubProblem] = useState("");
-  const [subClaim, setSubClaim] = useState("");
-  const [subParameter, setSubParameter] = useState("");
+  // State for the "Prove special case (specific r)" form
+  const [specNickname, setSpecNickname] = useState("");
+  const [specName, setSpecName] = useState("");
+  const [specProblem, setSpecProblem] = useState("");
+  const [specParameter, setSpecParameter] = useState("");
+
+  // State for the "Prove or disprove full conjecture" form
+  const [univNickname, setUnivNickname] = useState("");
+  const [univName, setUnivName] = useState("");
+  const [univProblem, setUnivProblem] = useState("");
+  const [univClaim, setUnivClaim] = useState("");
 
   // tRPC
   const { data: submissions } = trpc.submission.list.useQuery(
@@ -76,12 +69,18 @@ function App() {
     date: s.date || "",
   }));
 
-  const githubUrl = buildPrefilledUrl({
-    problemId: subProblem,
-    claim: subClaim,
-    parameter: subParameter,
-    nickname: subNickname,
-    fullName: subName,
+  const specificGitHubUrl = buildSpecificUrl({
+    problemId: specProblem,
+    parameter: specParameter,
+    nickname: specNickname,
+    fullName: specName,
+  });
+
+  const universalGitHubUrl = buildUniversalUrl({
+    problemId: univProblem,
+    claim: univClaim,
+    nickname: univNickname,
+    fullName: univName,
   });
 
   return (
@@ -233,29 +232,31 @@ function App() {
         <section id="submit">
           <h2 className="section-heading">Submit Your Solution</h2>
           <p style={{ fontSize: 15, color: "#333", marginBottom: 20 }}>
-            Fill in the form below and click <strong>Submit on GitHub</strong>.
-            That opens a pre-filled issue on the submissions repo where you
-            paste the public URL of your <code>challenge_NN.lean</code> file
-            (a GitHub-hosted file or a public gist). CI runs <code>lake build</code>{" "}
-            against the pinned toolchain and posts the verdict back on the issue.
+            Choose how you want to contribute:
           </p>
 
+          {/* Option 1: Prove special case (specific r) */}
           <div className="submit-section">
+            <h3 style={{ fontSize: 17, marginBottom: 8 }}>Prove special case</h3>
+            <p style={{ fontSize: 14, color: "#555", marginBottom: 20 }}>
+              Submit a proof for a <strong>specific value</strong> of the parameter <code>r</code>.
+              For example, prove the bound holds for <code>r = 5</code>.
+            </p>
+
             <div className="form-row">
               <div className="form-group">
                 <label className="form-label">Nickname *</label>
                 <input
                   className="form-input"
                   type="text"
-                  name="nickname"
-                  value={subNickname}
-                  onChange={(e) => setSubNickname(e.target.value)}
+                  value={specNickname}
+                  onChange={(e) => setSpecNickname(e.target.value)}
                   placeholder="e.g. lean_enjoyer"
                 />
               </div>
               <div className="form-group">
                 <label className="form-label">
-                  Name &amp; Surname{" "}
+                  Name & Surname{" "}
                   <span style={{ color: "#888", textTransform: "none", letterSpacing: 0, fontSize: 11 }}>
                     (optional)
                   </span>
@@ -263,9 +264,8 @@ function App() {
                 <input
                   className="form-input"
                   type="text"
-                  name="name"
-                  value={subName}
-                  onChange={(e) => setSubName(e.target.value)}
+                  value={specName}
+                  onChange={(e) => setSpecName(e.target.value)}
                   placeholder=""
                 />
               </div>
@@ -276,47 +276,23 @@ function App() {
                 <label className="form-label">Problem *</label>
                 <select
                   className="form-input"
-                  name="problem"
-                  value={subProblem}
-                  onChange={(e) => setSubProblem(e.target.value)}
+                  value={specProblem}
+                  onChange={(e) => setSpecProblem(e.target.value)}
                 >
                   <option value="">Select a problem...</option>
-                  <optgroup label="Parametrized (choose r)">
-                    {problems.map((p) => (
-                      <option key={p.id} value={p.id}>{p.title}</option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="Universal (∀ r)">
-                    {problems.map((p) => (
-                      <option key={`${p.id}_univ`} value={`${p.id}_univ`}>
-                        {p.title} (universal)
-                      </option>
-                    ))}
-                  </optgroup>
+                  {problems.map((p, i) => (
+                    <option key={p.id} value={p.id}>{`${i + 1}. ${p.title}`}</option>
+                  ))}
                 </select>
               </div>
               <div className="form-group">
-                <label className="form-label">Claim *</label>
-                <select
-                  className="form-input"
-                  name="claim"
-                  value={subClaim}
-                  onChange={(e) => setSubClaim(e.target.value)}
-                >
-                  <option value="">Prove or Disprove...</option>
-                  <option value="prove">Prove</option>
-                  <option value="disprove">Disprove</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Chosen parameter *</label>
+                <label className="form-label">Chosen parameter r *</label>
                 <input
                   className="form-input"
                   type="text"
-                  name="parameter"
-                  value={subParameter}
-                  onChange={(e) => setSubParameter(e.target.value)}
-                  placeholder="e.g. 5 (or 'universal')"
+                  value={specParameter}
+                  onChange={(e) => setSpecParameter(e.target.value)}
+                  placeholder="e.g. 5"
                 />
               </div>
             </div>
@@ -324,7 +300,84 @@ function App() {
             <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
               <a
                 className="btn"
-                href={githubUrl}
+                href={specificGitHubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Submit on GitHub &rarr;
+              </a>
+            </div>
+          </div>
+
+          {/* Option 2: Prove or disprove full conjecture (universal) */}
+          <div className="submit-section" style={{ marginTop: 32 }}>
+            <h3 style={{ fontSize: 17, marginBottom: 8 }}>Prove or disprove full conjecture</h3>
+            <p style={{ fontSize: 14, color: "#555", marginBottom: 20 }}>
+              Settle the <strong>universal</strong> (&forall;r) version of a challenge —
+              either prove the conjecture holds for all parameters, or disprove it by exhibiting a
+              counterexample.
+            </p>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label className="form-label">Nickname *</label>
+                <input
+                  className="form-input"
+                  type="text"
+                  value={univNickname}
+                  onChange={(e) => setUnivNickname(e.target.value)}
+                  placeholder="e.g. lean_enjoyer"
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">
+                  Name & Surname{" "}
+                  <span style={{ color: "#888", textTransform: "none", letterSpacing: 0, fontSize: 11 }}>
+                    (optional)
+                  </span>
+                </label>
+                <input
+                  className="form-input"
+                  type="text"
+                  value={univName}
+                  onChange={(e) => setUnivName(e.target.value)}
+                  placeholder=""
+                />
+              </div>
+            </div>
+
+            <div className="form-row three-col">
+              <div className="form-group">
+                <label className="form-label">Problem *</label>
+                <select
+                  className="form-input"
+                  value={univProblem}
+                  onChange={(e) => setUnivProblem(e.target.value)}
+                >
+                  <option value="">Select a problem...</option>
+                  {problems.map((p, i) => (
+                    <option key={p.id} value={p.id}>{`${i + 1}. ${p.title}`}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Claim *</label>
+                <select
+                  className="form-input"
+                  value={univClaim}
+                  onChange={(e) => setUnivClaim(e.target.value)}
+                >
+                  <option value="">Prove or Disprove...</option>
+                  <option value="prove">Prove</option>
+                  <option value="disprove">Disprove</option>
+                </select>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
+              <a
+                className="btn"
+                href={universalGitHubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
