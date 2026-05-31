@@ -28,6 +28,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Enable GitHub Pages (source = GitHub Actions) from the workflow itself,
+      # so a fresh repo doesn't 404 waiting for the Settings → Pages toggle.
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
