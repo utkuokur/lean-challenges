@@ -3,14 +3,59 @@ import { trpc } from "@/providers/trpc";
 import { problems } from "@/data/problems";
 
 // Submissions are filed as GitHub Issues on the submissions repo
-// (see api/lib/env.ts -> submissionsRepo). The link below opens the
-// issue form pre-filled.
+// (see api/lib/env.ts -> submissionsRepo). The form fields below are
+// cosmetic: clicking "Submit on GitHub" constructs a pre-filled URL to
+// the issue template using the same field ids, but the user can still
+// edit/clear the prefilled values on the GitHub side before submitting.
 const SUBMISSIONS_REPO = "utkuokur/lean-challenges-submissions";
-const NEW_ISSUE_URL = `https://github.com/${SUBMISSIONS_REPO}/issues/new?template=submit.yml`;
+const ISSUE_TEMPLATE_BASE = `https://github.com/${SUBMISSIONS_REPO}/issues/new?template=submit.yml`;
+
+/**
+ * Map (problem_id chosen in the React form, claim) -> the actual
+ * problem id in the issue-template dropdown.
+ *
+ * Parametrized problems (challenge_1..challenge_10) don't have a
+ * separate disprove slot, so claim is ignored for them. Universal
+ * problems (challenge_N_univ) have a `_disprove` companion in the
+ * dropdown, selected when claim === "disprove".
+ */
+function resolveProblemDropdownId(problemId: string, claim: string): string {
+  if (problemId.endsWith("_univ") && claim === "disprove") {
+    return `${problemId}_disprove`;
+  }
+  return problemId;
+}
+
+/** Compose the issue template URL with prefilled values. */
+function buildPrefilledUrl(args: {
+  problemId: string;
+  claim: string;
+  parameter: string;
+  nickname: string;
+  fullName: string;
+}): string {
+  const resolved = resolveProblemDropdownId(args.problemId, args.claim);
+  const params = new URLSearchParams();
+  if (resolved) params.set("problem_id", resolved);
+  if (args.claim) params.set("claim", args.claim);
+  if (args.parameter) params.set("parameter", args.parameter);
+  if (args.nickname) params.set("nickname", args.nickname);
+  if (args.fullName) params.set("full_name", args.fullName);
+  return `${ISSUE_TEMPLATE_BASE}&${params.toString()}`;
+}
 
 function App() {
   const [openProblemId, setOpenProblemId] = useState<string | null>(null);
   const [activeLbTab, setActiveLbTab] = useState("all");
+
+  // Cosmetic submission-form state. These don't actually submit
+  // anything; they only seed the GitHub issue template via URL query
+  // parameters when the user clicks "Submit on GitHub".
+  const [subNickname, setSubNickname] = useState("");
+  const [subName, setSubName] = useState("");
+  const [subProblem, setSubProblem] = useState("");
+  const [subClaim, setSubClaim] = useState("");
+  const [subParameter, setSubParameter] = useState("");
 
   // tRPC
   const { data: submissions } = trpc.submission.list.useQuery(
@@ -27,9 +72,17 @@ function App() {
     nickname: s.nickname,
     name: s.name || "",
     problem: s.problem,
-    result: `${s.claim === "prove" ? "holds" : "fails"} for ${s.parameter}`,
+    result: `${s.claim === "prove" ? "holds" : "fails"} for r = ${s.parameter}`,
     date: s.date || "",
   }));
+
+  const githubUrl = buildPrefilledUrl({
+    problemId: subProblem,
+    claim: subClaim,
+    parameter: subParameter,
+    nickname: subNickname,
+    fullName: subName,
+  });
 
   return (
     <>
@@ -179,58 +232,105 @@ function App() {
         {/* Submit */}
         <section id="submit">
           <h2 className="section-heading">Submit Your Solution</h2>
-          <p style={{ fontSize: 15, color: "#333", marginBottom: 16 }}>
-            Submissions are filed as GitHub issues on the{" "}
-            <code>{SUBMISSIONS_REPO}</code> repository. The CI fetches
-            your Lean file, runs <code>lake build</code> against the pinned
-            toolchain, and on success appends your entry to the leaderboard.
+          <p style={{ fontSize: 15, color: "#333", marginBottom: 20 }}>
+            Fill in the form below and click <strong>Submit on GitHub</strong>.
+            That opens a pre-filled issue on the submissions repo where you
+            paste the public URL of your <code>challenge_NN.lean</code> file
+            (a GitHub-hosted file or a public gist). CI runs <code>lake build</code>{" "}
+            against the pinned toolchain and posts the verdict back on the issue.
           </p>
 
           <div className="submit-section">
-            <ol style={{ paddingLeft: 20, fontSize: 15, color: "#333", lineHeight: 1.7 }}>
-              <li>
-                Host your <code>challenge_NN.lean</code> file publicly &mdash;
-                a GitHub repository or a public gist works. The file must
-                contain a complete proof (no <code>sorry</code>).
-              </li>
-              <li>
-                Open a <strong>Submit a proof</strong> issue on the
-                submissions repo using the link below. The form asks for
-                the URL of your file, which problem you&rsquo;re targeting,
-                prove/disprove, your chosen <code>r</code>, and a nickname.
-              </li>
-              <li>
-                Wait a few minutes for the CI to fetch and build. The bot
-                comments on the issue with the result and, on success,
-                you appear on the leaderboard above.
-              </li>
-            </ol>
+            <div className="form-row">
+              <div className="form-group">
+                <label className="form-label">Nickname *</label>
+                <input
+                  className="form-input"
+                  type="text"
+                  name="nickname"
+                  value={subNickname}
+                  onChange={(e) => setSubNickname(e.target.value)}
+                  placeholder="e.g. lean_enjoyer"
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">
+                  Name &amp; Surname{" "}
+                  <span style={{ color: "#888", textTransform: "none", letterSpacing: 0, fontSize: 11 }}>
+                    (optional)
+                  </span>
+                </label>
+                <input
+                  className="form-input"
+                  type="text"
+                  name="name"
+                  value={subName}
+                  onChange={(e) => setSubName(e.target.value)}
+                  placeholder=""
+                />
+              </div>
+            </div>
 
-            <div style={{ display: "flex", gap: 12, marginTop: 24, flexWrap: "wrap" }}>
+            <div className="form-row three-col">
+              <div className="form-group">
+                <label className="form-label">Problem *</label>
+                <select
+                  className="form-input"
+                  name="problem"
+                  value={subProblem}
+                  onChange={(e) => setSubProblem(e.target.value)}
+                >
+                  <option value="">Select a problem...</option>
+                  <optgroup label="Parametrized (choose r)">
+                    {problems.map((p) => (
+                      <option key={p.id} value={p.id}>{p.title}</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Universal (∀ r)">
+                    {problems.map((p) => (
+                      <option key={`${p.id}_univ`} value={`${p.id}_univ`}>
+                        {p.title} (universal)
+                      </option>
+                    ))}
+                  </optgroup>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Claim *</label>
+                <select
+                  className="form-input"
+                  name="claim"
+                  value={subClaim}
+                  onChange={(e) => setSubClaim(e.target.value)}
+                >
+                  <option value="">Prove or Disprove...</option>
+                  <option value="prove">Prove</option>
+                  <option value="disprove">Disprove</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Chosen parameter *</label>
+                <input
+                  className="form-input"
+                  type="text"
+                  name="parameter"
+                  value={subParameter}
+                  onChange={(e) => setSubParameter(e.target.value)}
+                  placeholder="e.g. 5 (or 'universal')"
+                />
+              </div>
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
               <a
                 className="btn"
-                href={NEW_ISSUE_URL}
+                href={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Submit on GitHub &rarr;
               </a>
-              <a
-                className="btn btn-secondary"
-                href={`https://github.com/${SUBMISSIONS_REPO}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Browse submissions repo
-              </a>
             </div>
-
-            <p style={{ fontSize: 13, color: "#888", marginTop: 16, fontStyle: "italic" }}>
-              {problems.length} problems shown. The issue form's dropdown also
-              includes universal (&forall;r) variants for each problem &mdash;
-              pick <code>challenge_N_univ</code> there to submit a proof of the
-              full conjecture.
-            </p>
           </div>
         </section>
       </main>
