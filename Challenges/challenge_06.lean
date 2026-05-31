@@ -1,5 +1,6 @@
 import Mathlib.Combinatorics.SimpleGraph.Basic
 import Mathlib.Order.WellFoundedSet
+import Defs_and_Lems.Minor
 
 /-!
 # Better-Quasi-Ordering of Finite Graphs under Minor Relation
@@ -32,12 +33,10 @@ def IsBQO {α : Type*} (le : α → α → Prop) : Prop :=
   -- TODO(maintainer): replace with the proper barrier-based BQO definition.
   ∀ f : ℕ → α, ¬ IsBadSequence le f
 
-/-- Subgraph-minor relation between two finite simple graphs on the same vertex
-set. Placeholder; the full minor relation requires the `Minor` structure from
-challenge_01.lean or a stronger formalization. -/
+/-- `H` is a minor of `G`: there exists a branch-set model (the shared `Minor`
+structure from `Defs_and_Lems/Minor.lean`, also used by challenge_01). -/
 def IsMinor {n m : ℕ} (H : SimpleGraph (Fin n)) (G : SimpleGraph (Fin m)) : Prop :=
-  -- TODO(maintainer): wire to the canonical minor structure.
-  sorry
+  Nonempty (Minor H G)
 
 /-- The challenge parameter (intended use: vertex-count bound). -/
 def r : ℕ := sorry

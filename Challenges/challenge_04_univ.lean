@@ -1,5 +1,6 @@
 import Mathlib.Combinatorics.SimpleGraph.Basic
 import Mathlib.Combinatorics.SimpleGraph.Maps
+import Defs_and_Lems.Sidorenko
 
 /-!
 # Sidorenko's Conjecture for Half-Graphs — Universal Statement
@@ -12,22 +13,13 @@ Sidorenko's conjecture states that for every bipartite `H` and every `G`,
 
 This universal version asks for a proof or disproof for ALL r.
 
-**Maintainer**: the definitions below are placeholders so the file
-compiles; the actual Sidorenko statement (normalized homomorphism density)
-needs to be formalized properly.
+`halfGraph`, `homDensity`, and `SidorenkoFor` live in
+`Defs_and_Lems/Sidorenko.lean`, shared with `challenge_04`.
 -/
 
 open SimpleGraph
 
 variable {V : Type*} [Fintype V]
-
-/-- The half-graph `H_r` on `Fin r ⊕ Fin r`. **Placeholder**. -/
-noncomputable def halfGraph (r : ℕ) : SimpleGraph (Sum (Fin r) (Fin r)) :=
-  sorry
-
-/-- Sidorenko's inequality for `H` over `G`. **Placeholder**. -/
-def SidorenkoFor {W : Type*} (H : SimpleGraph W) (G : SimpleGraph V) : Prop :=
-  sorry
 
 /-- Sidorenko's conjecture for all half-graphs. -/
 theorem challenge_4 : ∀ r, ∀ (G : SimpleGraph V), SidorenkoFor (halfGraph r) G := sorry

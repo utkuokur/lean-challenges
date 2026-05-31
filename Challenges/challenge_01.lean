@@ -11,26 +11,14 @@ You may produce more files and import them.
 import Mathlib.Combinatorics.SimpleGraph.Coloring.VertexColoring
 import Mathlib.Order.Filter.Defs
 import Defs_and_Lems.VertexConnected
+import Defs_and_Lems.Minor
 
 variable {V W : Type*} [Fintype V]
 
 open SimpleGraph
 
-/-- The data witnessing that `H` is a minor of `G`, as simple graphs. -/
-structure Minor (H : SimpleGraph W) (G : SimpleGraph V) where
-  /-- The branch sets of the minor.
-
-  Seeing the minor as a quotient graph, `branchSet w` is exactly the fiber of `w` under the quotient
-  map. -/
-  branchSet : W → Set V
-  /-- The branch sets are pairwise disjoint. -/
-  pairwise_disjoint_branchSet : Pairwise fun w₁ w₂ ↦ Disjoint (branchSet w₁) (branchSet w₂)
-  /-- Each branch set is connected (in particular nonempty). -/
-  connectedOn_branchSet (w : W) : G.ConnectedOn (branchSet w)
-  /-- Adjacency in the minor induce adjacency between some points of the corresponding branch set.
-  -/
-  exists_mem_branchSet_of_adj ⦃w₁ w₂ : W⦄ :
-    H.Adj w₁ w₂ → ∃ v₁ ∈ branchSet w₁, ∃ v₂ ∈ branchSet w₂, G.Adj v₁ v₂
+-- The `Minor` structure lives in `Defs_and_Lems/Minor.lean` so it can be
+-- shared with challenge_06 (the BQO-under-minor problem).
 
 -- The Hadwiger number of a graph is the largest r such that K_r is a minor of G.
 noncomputable def hadwigerNumber (G : SimpleGraph V) : ℕ := by
