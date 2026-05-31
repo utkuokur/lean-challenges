@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lean-challenges",
+  "compatibility_date": "2026-05-31",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "automated_compile"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}

@@ -4,3 +4,10 @@
 # CI-generated files for signature-shim verification; should never be committed.
 Challenges/Submission.lean
 Challenges/Check.lean
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
