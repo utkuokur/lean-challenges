@@ -1,6 +1,28 @@
+
 \documentclass[12pt]{article}
 \usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+
+\usepackage{minimalJ}
+
+\numberwithin{equation}{section}
+
+\usepackage[style=numeric,sorting=none,giveninits=true]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{etoolbox}
 \usepackage[margin=1in]{geometry}
+
+\DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
+
+%\usepackage[colorlinks, allcolors=blue, hypertexnames=false]{hyperref}
+%\usepackage[noabbrev, nameinlink]{cleveref}
+
+\usepackage{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Theorem Environments            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -12,18 +34,37 @@
 \newtheorem{example}{Example}
 \newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{openproblem}[theorem]{Open Problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               New Commands            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand{\ev}[1]{( #1 )} 
 \newcommand{\ew}[1]{\left( #1 \right)} 
+
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Document                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \let\underbrace\LaTeXunderbrace
 \let\overbrace\LaTeXoverbrace
+
+
 \begin{document}
+
 \section*{Challenge 1: The Hadwiger Conjecture}
 \refstepcounter{section}
+
+
+%Let $G= \ev{V,E}$ be a finite simple graph.
 
 \begin{definition}[Graph Minor] 
 Given simple graphs $X$ and $G$, we say that $X$ is a \emph{minor} of $G$ if there is a function assigning to each vertex $x$ of $X$ a nonempty vertex set $V_x\subseteq V(G)$ such that 
@@ -33,6 +74,8 @@ Given simple graphs $X$ and $G$, we say that $X$ is a \emph{minor} of $G$ if the
 \item for any two adjacent vertices $x,y\in V\ev{X}$, there are adjacent vertices $a\in V_x$ and $b\in V_y$ of $G$. 
 \end{enumerate}
 \end{definition}
+
+COMMENT FROM NATHAN: maybe we can skip the definitions of minor and chromatic number
 
 \begin{definition}[Hadwiger Number]
 Given a graph $G$, the \textit{Hadwiger number} of $G$ is the largest integer $n$ such that $K_n$ is a minor of $G$; here $K_n$ denotes the complete graph on $n$ vertices. 
@@ -44,7 +87,9 @@ Given a graph $G$  and $n\in \mathbb{N}$,
 a \textit{proper coloring} of $G$ with $n$ colours is a function $f:[n] \rightarrow V\ev{G}$ so that adjacent vertices receive different $f$-values. The \textit{chromatic number} of $G$ is the minimum number $n$ such that there is a proper coloring of $G$ with $n$ colours. 
 \end{definition}
 
-\begin{conjecture}[Hadwiger's Conjecture]\label{hadw}
+
+\begin{conjecture}[Hadwiger's Conjecture
+\mbox{\cite[Conjecture 1]{steiner}}]\label{hadw}
 Let $r\in \mathbb{N}$.
 For every finite simple graph $G$, we have:
 $$
@@ -53,6 +98,11 @@ $$
 \end{conjecture}
 
 While Conjecture \ref{hadw} is not difficult for every small values of $r$, already for $r=4$ it is equivalent to the 4-colour theorem. 
-Robertson, Seymour and Thomas proved the above for $r= 5$.
+Robertson, Seymour and Thomas proved the above for $r= 5$ \cite{RobertsonSeymourThomas1993Hadwiger}. 
 
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}

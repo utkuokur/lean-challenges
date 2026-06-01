@@ -1,6 +1,28 @@
+
 \documentclass[12pt]{article}
 \usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+
+\usepackage{minimalJ}
+
+\numberwithin{equation}{section}
+
+\usepackage[style=numeric,sorting=none,giveninits=true]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{etoolbox}
 \usepackage[margin=1in]{geometry}
+
+\DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
+
+%\usepackage[colorlinks, allcolors=blue, hypertexnames=false]{hyperref}
+%\usepackage[noabbrev, nameinlink]{cleveref}
+
+\usepackage{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Theorem Environments            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -12,18 +34,37 @@
 \newtheorem{example}{Example}
 \newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{openproblem}[theorem]{Open Problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               New Commands            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand{\ev}[1]{( #1 )} 
 \newcommand{\ew}[1]{\left( #1 \right)} 
+
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Document                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \let\underbrace\LaTeXunderbrace
 \let\overbrace\LaTeXoverbrace
+
+
 \begin{document}
+
 \section*{Challenge 10: The Unfriendly Partition Conjecture}
 \refstepcounter{section}
+
+(Cowan and Emerson, see for example \cite{aharoni1990unfriendly})
+
 
 \begin{definition}[Partial partition]
 A {\em partial partition} of the vertices of a graph $G$ is a partial function $V(G) \to \{0,1\}$. We call it {\em finite} if its domain is finite. We call it a {\em partition} if it is a total function.
@@ -45,10 +86,15 @@ In order to pose a scaled version of this conjecture, we introduce the following
 Let $r$ be an ordinal number and let $G$ be a graph. The {\em $r$-partitioning game on $G$} is played between two players, Challenger and Partitioner, as follows. A position in the game is a pair $(f, \alpha)$ consisting of a partial partition $f$ of $G$ and an ordinal number $\alpha$. The initial position is $(\emptyset, r)$. In each turn, beginning in position $(f, \alpha)$, Challenger must name a vertex $v$ of $G$ and an ordinal $\beta < \alpha$ and Partitioner must then name a finite partial partition $g$ extending $f$ which is defined at $v$ and unfriendly at $v$. After this, the new position is $(g, \beta)$. If at any point some player is unable to move, the other player wins.
 \end{definition}
 
-Note that since there are no infinite decreasing sequences of ordinals this game must end after finitely many turns.
+Note that since there are no infinite decreasing sequences of ordinals this game must end after finitely many turns. 
+
+The scaled conjecture is as follows:
 
 \begin{conjecture}[Scaled Unfriendly Partition Conjecture]
 Let $r$ be an ordinal. For any countable graph $G$, Partitioner has a winning strategy in the $r$-partitioning game on $G$.
 \end{conjecture}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}

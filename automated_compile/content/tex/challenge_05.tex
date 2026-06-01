@@ -1,6 +1,28 @@
+
 \documentclass[12pt]{article}
 \usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+
+\usepackage{minimalJ}
+
+\numberwithin{equation}{section}
+
+\usepackage[style=numeric,sorting=none,giveninits=true]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{etoolbox}
 \usepackage[margin=1in]{geometry}
+
+\DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
+
+%\usepackage[colorlinks, allcolors=blue, hypertexnames=false]{hyperref}
+%\usepackage[noabbrev, nameinlink]{cleveref}
+
+\usepackage{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Theorem Environments            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -12,18 +34,36 @@
 \newtheorem{example}{Example}
 \newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{openproblem}[theorem]{Open Problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               New Commands            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand{\ev}[1]{( #1 )} 
 \newcommand{\ew}[1]{\left( #1 \right)} 
+
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Document                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \let\underbrace\LaTeXunderbrace
 \let\overbrace\LaTeXoverbrace
+
+
 \begin{document}
+
 \section*{Challenge 5: Erdős--Hajnal Conjecture}
 \refstepcounter{section}
+
+
 
 \begin{definition}[Cliques and Independent sets]
 Given a simple graph $G$, a set of vertices of $G$ is a \textit{clique} if its vertices are pairwise adjacent. It is an \textit{independent set} if its vertices are pairwise non-adjacent. 
@@ -33,17 +73,25 @@ Given a simple graph $G$, a set of vertices of $G$ is a \textit{clique} if its v
 Given graphs $G$ and $H$, we say that $G$ is \textit{$H$-free} if it does not contain an induced subgraph isomorphic to $H$. 
 \end{definition}
 
-\begin{conjecture}[Erdős--Hajnal Conjecture]
+\begin{conjecture}[Erdős–Hajnal Conjecture \mbox{\cite{erdos_hajnal}}]
 For each graph $H$, there is a constant $c_H > 0$ such that every $H$-free graph $G$ with $n$ vertices has a clique or independent set of size at least $n^{c_H}$. 
 \end{conjecture}
 
+
+
 Given $r\in \mathbb{N}$, we denote the path with $r$ vertices by $P_r$.
 We are interested in the following parametrized version of the conjecture, where $H=P_r$ is a path. 
-
-\begin{conjecture}[Erdős--Hajnal Conjecture for paths]
+\begin{conjecture}[Erdős–Hajnal Conjecture for paths]
 Let $r\in \mathbb{N}$. There is some $c_r > 0$ such that every $P_r$-free graph $G$ with $n$ vertices has a clique or independent set of size $n^{c_r}$.
 \end{conjecture}
 
-The conjecture has been proved for $r=5$ by Nguyen, Tung, Scott and Seymour.
+The conjecture has been proved for $r=5$ by Nguyen, Tung, Scott and Seymour in \cite{nguyen2026induced}
 
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}

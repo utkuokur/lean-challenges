@@ -1,6 +1,28 @@
+
 \documentclass[12pt]{article}
 \usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+
+\usepackage{minimalJ}
+
+\numberwithin{equation}{section}
+
+\usepackage[style=numeric,sorting=none,giveninits=true]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{etoolbox}
 \usepackage[margin=1in]{geometry}
+
+\DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
+
+%\usepackage[colorlinks, allcolors=blue, hypertexnames=false]{hyperref}
+%\usepackage[noabbrev, nameinlink]{cleveref}
+
+\usepackage{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Theorem Environments            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -12,20 +34,39 @@
 \newtheorem{example}{Example}
 \newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{openproblem}[theorem]{Open Problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               New Commands            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand{\ev}[1]{( #1 )} 
 \newcommand{\ew}[1]{\left( #1 \right)} 
+
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Document                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \let\underbrace\LaTeXunderbrace
 \let\overbrace\LaTeXoverbrace
+
+
 \begin{document}
+
 \section*{Challenge 7: Rota's Basis Conjecture}
 \refstepcounter{section}
 
-The following conjecture in its original form is stated in terms of matroids, but even in the special case where the matroid is a vector matroid -- that is, the bases come from a finite-dimensional vector space -- the conjecture is widely open.
+
+The following conjecture in its original form \cite[Conjecture~4]{huang1994relations} is stated in terms of matroids, but even in the special case where the matroid is a vector matroid -- that is, the bases come from a finite-dimensional vector space -- the conjecture is widely open.
+
+
 
 \begin{conjecture}[Rota's basis conjecture]
 Let $M$ be a finite matroid with a family $(B_1,..,B_n)$ of disjoint bases.
@@ -40,6 +81,11 @@ Let $M$ be a finite matroid with a family $(B_1,..,B_n)$ of disjoint bases.
 There is $n_0\in \mathbb{N}$ so that for all $n\geq n_0$ and all $\epsilon\in \mathbb{R}_{>0}$, there is a family of disjoint bases $(C_1,..C_{\lceil (1-1/r-\epsilon) n\rceil})$ of $M$ so that $B_i\cap C_j$ is a singleton for all $i,j\in [n]$.
 \end{conjecture}
 
-Buci\'c, Kwan, Pokrovskiy and Sudakov proved the scaled weakening for $r=2$.
+Buci\'c, Kwan, Pokrovskiy and Sudakov proved the scaled weakening for $r=2$ \cite{bucic2020halfway}.
 
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}

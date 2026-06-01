@@ -8,3 +8,16 @@ Challenges/Check.lean
 # Windows NTFS mark-of-the-web artifacts
 *:Zone.Identifier
 *Zone.Identifier
+
+# LaTeX build artifacts (per-challenge tex files)
+automated_compile/content/tex/*.aux
+automated_compile/content/tex/*.bbl
+automated_compile/content/tex/*.bcf
+automated_compile/content/tex/*.blg
+automated_compile/content/tex/*.log
+automated_compile/content/tex/*.out
+automated_compile/content/tex/*.run.xml
+automated_compile/content/tex/*.toc
+automated_compile/content/tex/*.synctex.gz
+automated_compile/content/tex/*.fls
+automated_compile/content/tex/*.fdb_latexmk

@@ -1,6 +1,28 @@
+
 \documentclass[12pt]{article}
 \usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+
+\usepackage{minimalJ}
+
+\numberwithin{equation}{section}
+
+\usepackage[style=numeric,sorting=none,giveninits=true]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{etoolbox}
 \usepackage[margin=1in]{geometry}
+
+\DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
+
+%\usepackage[colorlinks, allcolors=blue, hypertexnames=false]{hyperref}
+%\usepackage[noabbrev, nameinlink]{cleveref}
+
+\usepackage{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Theorem Environments            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -12,21 +34,40 @@
 \newtheorem{example}{Example}
 \newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{openproblem}[theorem]{Open Problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               New Commands            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand{\ev}[1]{( #1 )} 
 \newcommand{\ew}[1]{\left( #1 \right)} 
+
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Document                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \let\underbrace\LaTeXunderbrace
 \let\overbrace\LaTeXoverbrace
+
+
 \begin{document}
+
 \section*{Challenge 4: Sidorenko Conjecture for Half-Graphs}
 \refstepcounter{section}
 
+% \cite{ }
+
 \begin{definition}[Graph homomorphism density]
 Let $G$ and $H$ be simple graphs. 
+%\phantom{a}
 \begin{enumerate}
 \item A function $f: V\ev{H} \rightarrow V\ev{G}$ is a \textit{graph homomorphism} from $H$ to $G$ if for each edge $uv \in E\ev{H}$, we have $f\ev{u}f\ev{v} \in E\ev{G}$. 
 
@@ -39,20 +80,22 @@ $$
 \end{enumerate}
 \end{definition}
 
-\begin{conjecture}[Sidorenko's Conjecture]
+\begin{conjecture}[Sidorenko's Conjecture \mbox{\cite{sidorenko}}]
 For every bipartite graph $H$ and for any graph $G$, we have:
 $$
 t_H\ev{G} \geq t_{K_2}\ev{G}^{|E\ev{H}|}
 $$
 \end{conjecture}
 
+
+We are interested in the special case of the conjecture, where $H = H_r$ is a half-graph with $2r$ vertices, as follows. As far as we are aware, the conjecture has not been asked anywhere for half-graphs, and the only reason we do it for half-graphs here is that we believe that they are somewhat generic, and it will help us formulate an easier scalable version. (TODO really ask some experts in extremal combinatorics here)
+
+
 \begin{definition}[Half-graph]
 Let $A_r = \{ a_1,\ldots, a_r \}$ and $B_r = \{ b_1,\ldots, b_r \} $ be disjoint sets of size $r$. 
 A \emph{half-graph} is the bipartite graph on the vertex set $A_r\cup B_r$ with the following edges present: $E = \{ a_i b_j : i \leq j \}$
-(Note that these are about `half' of the possible edges between $A_r$ and $B_r$, hence the name). 
+(Note that these are about \lq half\rq\ of the possible edges between $A_r$ and $B_r$, hence the name). 
 \end{definition}
-
-We are interested in the special case of the conjecture, where $H = H_r$ is a half-graph with $2r$ vertices.
 
 \begin{conjecture}[Scaled weakening of Sidorenko's Conjecture]
 Let $r \in \N$. For any graph $G$, we have:
@@ -61,4 +104,11 @@ t_{H_r}\ev{G} \geq t_{K_2}\ev{G}^{(r^2+r)/2}
 $$
 \end{conjecture}
 
+TODO find out for which half-graphs it is known.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}

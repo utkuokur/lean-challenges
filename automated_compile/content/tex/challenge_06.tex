@@ -1,6 +1,28 @@
+
 \documentclass[12pt]{article}
 \usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+
+\usepackage{minimalJ}
+
+\numberwithin{equation}{section}
+
+\usepackage[style=numeric,sorting=none,giveninits=true]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{etoolbox}
 \usepackage[margin=1in]{geometry}
+
+\DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
+
+%\usepackage[colorlinks, allcolors=blue, hypertexnames=false]{hyperref}
+%\usepackage[noabbrev, nameinlink]{cleveref}
+
+\usepackage{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Theorem Environments            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -12,16 +34,32 @@
 \newtheorem{example}{Example}
 \newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{openproblem}[theorem]{Open Problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               New Commands            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand{\ev}[1]{( #1 )} 
 \newcommand{\ew}[1]{\left( #1 \right)} 
+
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Document                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \let\underbrace\LaTeXunderbrace
 \let\overbrace\LaTeXoverbrace
+
+
 \begin{document}
+
 \section*{Challenge 6: Better-Quasi-Ordering of Finite Graphs under Minor Relation}
 \refstepcounter{section}
 
@@ -33,7 +71,7 @@ Given a set $Q$, we denote by $\mathcal P^*$ the set of nonempty subsets of $Q$.
 \item $V^*_{\lambda}(Q) := \dot \bigcup_{\alpha < \lambda} V^*_{\alpha}(Q)$ for any limit ordinal $\lambda$.
 \end{itemize}
 
-The class given by the union of all these sets is denoted $V^*(Q)$. 
+The classs given by the union of all these sets is denoted denoted $V^*(Q)$. 
 \end{definition}
 
 \begin{definition}[$\alpha$-well-quasiordering]
@@ -42,10 +80,15 @@ Given a quasi-order $(Q,\le)$, we define a relation $\le^*$ on $V^*(Q)$ in terms
 We say that $(Q, \le)$ is {\em $\alpha$-well-quasiordered} if the restriction of this game to $V^*_{\alpha}(Q)$ is well-quasiordered.
 \end{definition}
 
-Note that $(Q, \le)$ is better-quasi-ordered if and only if it is $\omega_1$-well-quasi-ordered.
+Note the $(Q, \le)$ is better-quasi-ordered if and only if it is $\omega_1$-well-quasi-ordered.
 
 \begin{conjecture}
 Let $r$ be an ordinal number. If $r$ is even, of the form $\alpha . 2$, then finite planar graphs are $\alpha$-well-quasi-ordered with respect to the minor relation. If $r$ is odd, of the form $\alpha . 2 + 1$, then finite graphs are $\alpha$-well-quasi-ordered.
 \end{conjecture}
 
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
