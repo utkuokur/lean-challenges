@@ -4,3 +4,7 @@
 # CI-generated files for signature-shim verification; should never be committed.
 Challenges/Submission.lean
 Challenges/Check.lean
+
+# Windows NTFS mark-of-the-web artifacts
+*:Zone.Identifier
+*Zone.Identifier
