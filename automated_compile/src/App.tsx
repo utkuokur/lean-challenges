@@ -15,6 +15,11 @@ interface LeaderboardEntry {
   claim: string;
   parameter: string;
   date?: string;
+  /** Public link to the proof. Empty/absent for private submissions. */
+  source_url?: string;
+  /** Whether the source was public at eval time. Absent on older entries
+   *  (predating private submissions); treated as public. */
+  submission_public?: boolean;
 }
 
 /** Compose the issue-template URL for a specific-r submission. */
@@ -89,6 +94,9 @@ function App() {
       problem: s.problem,
       result: `${s.claim === "prove" ? "holds" : "fails"} for r = ${s.parameter}`,
       date: s.date || "",
+      sourceUrl: s.source_url || "",
+      // Missing submission_public (older entries) is treated as public.
+      isPublic: s.submission_public !== false,
     }));
 
   const specificGitHubUrl = buildSpecificUrl({
@@ -223,12 +231,13 @@ function App() {
                 <th>Problem</th>
                 <th>Result</th>
                 <th>Date</th>
+                <th>Proof</th>
               </tr>
             </thead>
             <tbody>
               {lbEntries.length === 0 ? (
                 <tr>
-                  <td colSpan={6} style={{ textAlign: "center", color: "#888", padding: "20px" }}>
+                  <td colSpan={7} style={{ textAlign: "center", color: "#888", padding: "20px" }}>
                     No submissions yet.
                   </td>
                 </tr>
@@ -243,6 +252,29 @@ function App() {
                     <td>{row.problem}</td>
                     <td>{row.result}</td>
                     <td>{row.date}</td>
+                    <td>
+                      {row.isPublic ? (
+                        row.sourceUrl ? (
+                          <a href={row.sourceUrl} target="_blank" rel="noreferrer">
+                            view
+                          </a>
+                        ) : (
+                          <span style={{ color: "#888" }}>—</span>
+                        )
+                      ) : (
+                        <span
+                          style={{
+                            fontSize: 12,
+                            color: "#666",
+                            background: "#eee",
+                            borderRadius: 4,
+                            padding: "2px 6px",
+                          }}
+                        >
+                          private
+                        </span>
+                      )}
+                    </td>
                   </tr>
                 ))
               )}
