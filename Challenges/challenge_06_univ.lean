@@ -1,6 +1,6 @@
 import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Order.WellFoundedSet
 import Defs_and_Lems.Minor
+import Defs_and_Lems.BQO
 
 /-!
 # Better-Quasi-Ordering of Finite Graphs — Universal Statement
@@ -12,23 +12,11 @@ whether they form a *better*-quasi-order (BQO).
 This universal version asks for a proof or disproof for the class of ALL
 finite simple graphs.
 
-**Maintainer**: the BQO definition below is a placeholder (uses WQO instead
-of the proper barrier-based BQO); the `IsMinor` definition is `sorry`. Both
-need maintainer formalization.
+`IsBQO` is the Nash–Williams barrier-based definition from
+`Defs_and_Lems/BQO.lean`.
 -/
 
 open SimpleGraph
-
-/-- A sequence `f : ℕ → α` is bad in a quasi-order `≤` if no later element
-dominates an earlier one. -/
-def IsBadSequence {α : Type*} (le : α → α → Prop) (f : ℕ → α) : Prop :=
-  ∀ i j, i < j → ¬ le (f i) (f j)
-
-/-- A quasi-order is well-quasi-ordered (WQO) if it has no bad sequence.
-This is a **placeholder** for BQO; the actual BQO definition involves
-barrier sequences over infinite-block forests. -/
-def IsBQO {α : Type*} (le : α → α → Prop) : Prop :=
-  ∀ f : ℕ → α, ¬ IsBadSequence le f
 
 /-- `H` is a minor of `G`: there exists a branch-set model (the shared `Minor`
 structure from `Defs_and_Lems/Minor.lean`, also used by challenge_01). -/
