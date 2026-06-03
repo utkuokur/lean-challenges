@@ -121,7 +121,6 @@ function App() {
         <nav>
           <ul className="header-nav">
             <li><a href="#problems">Problems</a></li>
-            <li><a href="#rules">Rules</a></li>
             <li><a href="#leaderboard">Leaderboard</a></li>
             <li><a href="#submit">Submit</a></li>
           </ul>
@@ -175,22 +174,6 @@ function App() {
                 </div>
               </div>
             ))}
-          </div>
-        </section>
-
-        {/* Rules */}
-        <section id="rules">
-          <h2 className="section-heading">Rules</h2>
-          <p>Your Lean 4 code must compile without errors and without any instances of <code>sorry</code> tactics.</p>
-          <p style={{ marginTop: 12 }}>Contributions may be written by AI, human, or the collaboration of both.</p>
-          <div className="code-block">
-            <span className="comment">-- This is what we want to see:</span>
-            <br />
-            <span className="keyword">theorem</span> parametrized_bound (G : SimpleGraph V) : parameter G ≤ bound := <span className="keyword">by</span>
-            <br />
-            <span className="comment">&nbsp;&nbsp;-- Your complete proof here</span>
-            <br />
-            <span className="error-line">&nbsp;&nbsp;sorry</span> <span className="check">-- NOT ALLOWED</span>
           </div>
         </section>
 
@@ -279,6 +262,11 @@ function App() {
           <h2 className="section-heading">Submit Your Solution</h2>
           <div style={{ fontSize: 15, color: "#333", marginBottom: 24, maxWidth: 720, lineHeight: 1.7 }}>
             <p style={{ marginBottom: 12 }}>
+              Your Lean 4 proof must compile without errors and without any <code>sorry</code>.
+              AI-assisted, human, or collaborative proofs are all welcome — we don't ask how the
+              proof was produced.
+            </p>
+            <p style={{ marginBottom: 12 }}>
               Pick the option below that matches your proof and fill in the short form — it opens a
               pre-filled GitHub issue where you provide your proof source. On that issue, fill in{" "}
               <strong>exactly one</strong> of <em>Submission URL</em> or <em>Repository URL</em>:
@@ -308,10 +296,6 @@ function App() {
               — and put your solution in the <code>Submission/</code> folder. Push that to your own
               GitHub repository (public, or private with the <code>lean-challenge-bot</code> app
               installed) and submit its URL above.
-            </p>
-            <p>
-              AI-assisted, human, or hybrid proofs are all fine — we don't ask how the proof was
-              produced.
             </p>
           </div>
 
