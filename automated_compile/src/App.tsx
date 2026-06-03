@@ -296,6 +296,19 @@ function App() {
                 <code>Submission/&lt;Name&gt;.lean</code>.
               </li>
             </ul>
+            <p style={{ marginBottom: 12 }}>
+              To work locally, clone the problem set —{" "}
+              <a
+                href="https://github.com/utkuokur/lean-challenges"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                github.com/utkuokur/lean-challenges
+              </a>{" "}
+              — and put your solution in the <code>Submission/</code> folder. Push that to your own
+              GitHub repository (public, or private with the <code>lean-challenge-bot</code> app
+              installed) and submit its URL above.
+            </p>
             <p>
               AI-assisted, human, or hybrid proofs are all fine — we don't ask how the proof was
               produced.
