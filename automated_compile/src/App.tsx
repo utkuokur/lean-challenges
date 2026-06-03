@@ -158,9 +158,6 @@ function App() {
                       largest r so far: {p.largestParameterKnown}
                     </span>
                   </div>
-                  <p style={{ marginTop: 8, fontSize: 15, color: "#333", lineHeight: 1.6 }}>
-                    {p.shortDesc}
-                  </p>
                 </div>
                 <div className={`detail-panel ${openProblemId === p.id ? "active" : ""}`}>
                   <span
@@ -175,11 +172,6 @@ function App() {
                     style={{ width: "100%", height: "500px", border: "1px solid #ddd", borderRadius: "4px", marginBottom: "12px" }}
                     title={`${p.title} – full problem statement`}
                   />
-                  <div className="info-box">
-                    <div className="info-box-label">Status in Mathlib4</div>
-                    <p><strong>{p.status}</strong></p>
-                    <p style={{ fontSize: 14 }}>{p.info}</p>
-                  </div>
                 </div>
               </div>
             ))}
