@@ -374,7 +374,7 @@ function App() {
 
           {/* Option 2: Prove or disprove full universal conjecture (really?) */}
           <div className="submit-section" style={{ marginTop: 32 }}>
-            <h3 style={{ fontSize: 17, marginBottom: 8 }}>Prove or disprove full conjecture</h3>
+            <h3 style={{ fontSize: 17, marginBottom: 8 }}>Prove or disprove the full conjecture (really?)</h3>
             <p style={{ fontSize: 14, color: "#555", marginBottom: 20 }}>
               Settle the <strong>universal</strong> (&forall;r) version of a challenge —
               either prove the conjecture holds for all parameters, or disprove it by exhibiting a
