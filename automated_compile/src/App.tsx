@@ -267,22 +267,17 @@ function App() {
             </p>
             <p style={{ marginBottom: 12 }}>
               Pick the option below that matches your proof and fill in the short form — it opens a
-              pre-filled GitHub issue where you provide your proof source. On that issue, fill in{" "}
-              <strong>exactly one</strong> of <em>Submission URL</em> or <em>Repository URL</em>:
+              pre-filled GitHub issue with a single field to complete: the{" "}
+              <strong>Repository URL</strong> of your proof.
             </p>
-            <ul style={{ margin: "0 0 12px 20px", padding: 0 }}>
-              <li style={{ marginBottom: 8 }}>
-                <strong>Submission URL</strong> — a single <code>.lean</code> file at a public raw
-                URL (a gist, or a <code>raw.githubusercontent.com/…</code> link).
-              </li>
-              <li>
-                <strong>Repository URL</strong> — a multi-file submission in a public GitHub repo.
-                Your repo must contain <code>Submission/Main.lean</code> (with the relevant{" "}
-                <code>r</code> and <code>theorem challenge_N</code> inside{" "}
-                <code>namespace Submission</code>), plus any helpers as{" "}
-                <code>Submission/&lt;Name&gt;.lean</code>.
-              </li>
-            </ul>
+            <p style={{ marginBottom: 12 }}>
+              Your repo must contain <code>Submission/Main.lean</code> (with the relevant{" "}
+              <code>r</code> and <code>theorem challenge_N</code> inside{" "}
+              <code>namespace Submission</code>), plus any helpers as{" "}
+              <code>Submission/&lt;Name&gt;.lean</code>. A single-file proof is just a repo with
+              everything in <code>Main.lean</code>. The repo can be public, or{" "}
+              <strong>private</strong> with the <code>lean-challenge-bot</code> app installed.
+            </p>
             <p style={{ marginBottom: 12 }}>
               To work locally, clone the problem set —{" "}
               <a
