@@ -117,7 +117,6 @@ function App() {
     <>
       {/* Header */}
       <header className="header">
-        <span className="header-title">Parametrized Problems in Lean</span>
         <nav>
           <ul className="header-nav">
             <li><a href="#problems">Problems</a></li>
@@ -276,7 +275,15 @@ function App() {
               <code>namespace Submission</code>), plus any helpers as{" "}
               <code>Submission/&lt;Name&gt;.lean</code>. A single-file proof is just a repo with
               everything in <code>Main.lean</code>. The repo can be public, or{" "}
-              <strong>private</strong> with the <code>lean-challenge-bot</code> app installed.
+              <strong>private</strong> — just install the{" "}
+              <a
+                href="https://github.com/apps/lean-challenge-bot"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <code>lean-challenge-bot</code>
+              </a>{" "}
+              GitHub App on it so the CI can clone it.
             </p>
             <p style={{ marginBottom: 12 }}>
               To work locally, clone the problem set —{" "}
@@ -288,8 +295,15 @@ function App() {
                 github.com/utkuokur/lean-challenges
               </a>{" "}
               — and put your solution in the <code>Submission/</code> folder. Push that to your own
-              GitHub repository (public, or private with the <code>lean-challenge-bot</code> app
-              installed) and submit its URL below.
+              GitHub repository (public, or private with the{" "}
+              <a
+                href="https://github.com/apps/lean-challenge-bot"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <code>lean-challenge-bot</code>
+              </a>{" "}
+              GitHub App installed) and submit its URL below.
             </p>
           </div>
 
