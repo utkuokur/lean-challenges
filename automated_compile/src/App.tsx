@@ -292,7 +292,10 @@ function App() {
                 >
                   <code>lean-challenge-bot</code>
                 </a>{" "}
-                GitHub App installed so the CI can clone it.
+                GitHub App installed so the CI can clone it. After installing on a
+                private repo, double-check your repo's{" "}
+                <strong>Settings → GitHub Apps</strong> lists it — and if you picked
+                “only select repositories”, that the repo is granted.
               </li>
               <li style={{ marginBottom: 12 }}>
                 Pick the option below that matches your proof and fill in the submission form — it opens
