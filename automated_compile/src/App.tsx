@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { problems } from "@/data/problems";
+import { problems, type Problem } from "@/data/problems";
 
 const SUBMISSIONS_REPO = "utkuokur/lean-challenges-submissions";
 
@@ -99,6 +99,27 @@ function App() {
       isPublic: s.submission_public !== false,
     }));
 
+  // "Largest r so far" per problem: the hardcoded baseline, raised by any
+  // specific-r "prove" entry on the leaderboard. A universal "prove" entry
+  // (problem id `<id>_univ`) settles every r, so it shows as "all r".
+  const largestProvenR = (problem: Problem): string => {
+    if (
+      submissions.some(
+        (s) => s.problem === `${problem.id}_univ` && s.claim === "prove"
+      )
+    ) {
+      return "all r";
+    }
+    const baseline = Number(problem.largestParameterKnown.replace(/[^\d.-]/g, ""));
+    let best = Number.isNaN(baseline) ? -Infinity : baseline;
+    for (const s of submissions) {
+      if (s.problem !== problem.id || s.claim !== "prove") continue;
+      const r = Number(s.parameter);
+      if (!Number.isNaN(r) && r > best) best = r;
+    }
+    return best === -Infinity ? problem.largestParameterKnown : `r = ${best}`;
+  };
+
   const specificGitHubUrl = buildSpecificUrl({
     problemId: specProblem,
     parameter: specParameter,
@@ -153,7 +174,7 @@ function App() {
                   <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
                     <span style={{ fontSize: 16, fontWeight: "bold" }}>{p.title}</span>
                     <span style={{ fontSize: 13, color: "#555", fontFamily: '"Courier New", Courier, monospace' }}>
-                      largest r so far: {p.largestParameterKnown}
+                      largest r so far: {largestProvenR(p)}
                     </span>
                   </div>
                 </div>
