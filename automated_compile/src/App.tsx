@@ -100,9 +100,10 @@ function App() {
     }));
 
   // "Largest r so far" per problem: purely leaderboard-driven, no baseline.
-  // The largest r among specific-r "prove" entries, defaulting to 0 when
-  // none exist. A universal "prove" entry (problem id `<id>_univ`) settles
-  // every r, so it shows as "all r".
+  // The largest r among specific-r "prove" entries, or "N/A" when nobody has
+  // proven any r (note: a proof at r = 0 still shows "r = 0", not "N/A"). A
+  // universal "prove" entry (problem id `<id>_univ`) settles every r, so it
+  // shows as "all r".
   const largestProvenR = (problem: Problem): string => {
     if (
       submissions.some(
@@ -111,13 +112,13 @@ function App() {
     ) {
       return "all r";
     }
-    let best = 0;
+    let best: number | null = null;
     for (const s of submissions) {
       if (s.problem !== problem.id || s.claim !== "prove") continue;
       const r = Number(s.parameter);
-      if (!Number.isNaN(r) && r > best) best = r;
+      if (!Number.isNaN(r) && (best === null || r > best)) best = r;
     }
-    return `r = ${best}`;
+    return best === null ? "N/A" : `r = ${best}`;
   };
 
   const specificGitHubUrl = buildSpecificUrl({
