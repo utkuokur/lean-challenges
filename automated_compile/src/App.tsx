@@ -456,6 +456,14 @@ function App() {
             </div>
           </div>
         </section>
+
+        {/* Contact */}
+        <section id="contact">
+          <p style={{ fontSize: 16, color: "#333", maxWidth: 720, lineHeight: 1.7 }}>
+            <strong>Contact:</strong> for issues and recommendations, please email{" "}
+            <a href="mailto:utkuokur@gmail.com">utkuokur@gmail.com</a>.
+          </p>
+        </section>
       </main>
 
       <footer className="footer">
