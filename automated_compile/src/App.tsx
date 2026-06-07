@@ -99,9 +99,10 @@ function App() {
       isPublic: s.submission_public !== false,
     }));
 
-  // "Largest r so far" per problem: the hardcoded baseline, raised by any
-  // specific-r "prove" entry on the leaderboard. A universal "prove" entry
-  // (problem id `<id>_univ`) settles every r, so it shows as "all r".
+  // "Largest r so far" per problem: purely leaderboard-driven, no baseline.
+  // The largest r among specific-r "prove" entries, defaulting to 0 when
+  // none exist. A universal "prove" entry (problem id `<id>_univ`) settles
+  // every r, so it shows as "all r".
   const largestProvenR = (problem: Problem): string => {
     if (
       submissions.some(
@@ -110,14 +111,13 @@ function App() {
     ) {
       return "all r";
     }
-    const baseline = Number(problem.largestParameterKnown.replace(/[^\d.-]/g, ""));
-    let best = Number.isNaN(baseline) ? -Infinity : baseline;
+    let best = 0;
     for (const s of submissions) {
       if (s.problem !== problem.id || s.claim !== "prove") continue;
       const r = Number(s.parameter);
       if (!Number.isNaN(r) && r > best) best = r;
     }
-    return best === -Infinity ? problem.largestParameterKnown : `r = ${best}`;
+    return `r = ${best}`;
   };
 
   const specificGitHubUrl = buildSpecificUrl({
