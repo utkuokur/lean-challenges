@@ -144,6 +144,7 @@ function App() {
             <li><a href="#problems">Problems</a></li>
             <li><a href="#leaderboard">Leaderboard</a></li>
             <li><a href="#submit">Submit</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
       </header>
@@ -481,8 +482,9 @@ function App() {
 
         {/* Contact */}
         <section id="contact">
-          <p style={{ fontSize: 16, color: "#333", maxWidth: 720, lineHeight: 1.7 }}>
-            <strong>Contact:</strong> for issues and recommendations, please email{" "}
+          <h2 className="section-heading">Contact</h2>
+          <p style={{ fontSize: 15, color: "#333", maxWidth: 720, lineHeight: 1.7 }}>
+            For issues and recommendations, please email{" "}
             <a href="mailto:utkuokur@gmail.com">utkuokur@gmail.com</a>.
           </p>
         </section>
