@@ -55,9 +55,14 @@ def RyserConjectureFor (r : ℕ) : Prop :=
             H.IsMatchingNumber nu →
               tau ≤ (r - 1) * nu
 
-/-- Ryser's hypergraph conjecture for all natural numbers r. -/
+/-- Ryser's hypergraph conjecture for all `r ≥ 2`.
+
+The bound `τ ≤ (r - 1) · ν` is false for the degenerate small cases: at `r = 1`
+it reads `τ ≤ 0`, which fails for a one-vertex one-edge hypergraph (`τ = ν = 1`).
+The classical conjecture is therefore stated for `r ≥ 2` (König at `r = 2`,
+Aharoni at `r = 3`, open for `r ≥ 4`). -/
 def RyserHypergraphConjecture : Prop :=
-  ∀ r : ℕ, RyserConjectureFor.{u} (r := r)
+  ∀ r : ℕ, 2 ≤ r → RyserConjectureFor.{u} (r := r)
 
 /-- The r = 2 case, classically König's theorem. -/
 def KonigCase : Prop :=
@@ -103,26 +108,26 @@ theorem RyserConjectureFor_of_keyLemmata {r : ℕ}
 theorem RyserHypergraphConjecture_of_keyLemmata
     (hkey : ∀ r : ℕ, RyserKeyLemmataFor.{u} r) :
     RyserHypergraphConjecture.{u} := by
-  intro r
+  intro r _hr
   exact RyserConjectureFor_of_keyLemmata (hkey r)
 
 /-- A direct corollary: the full conjecture implies the König case. -/
 theorem KonigCase_of_RyserHypergraphConjecture
     (hRyser : RyserHypergraphConjecture.{u}) :
     KonigCase.{u} :=
-  hRyser 2
+  hRyser 2 (by omega)
 
 /-- A direct corollary: the full conjecture implies the Aharoni case. -/
 theorem AharoniCase_of_RyserHypergraphConjecture
     (hRyser : RyserHypergraphConjecture.{u}) :
     AharoniCase.{u} :=
-  hRyser 3
+  hRyser 3 (by omega)
 
-/-- The full conjecture specializes to any fixed value of r. -/
+/-- The full conjecture specializes to any fixed value of `r ≥ 2`. -/
 theorem RyserConjectureFor_of_RyserHypergraphConjecture
-    (hRyser : RyserHypergraphConjecture.{u}) (r : ℕ) :
+    (hRyser : RyserHypergraphConjecture.{u}) (r : ℕ) (hr : 2 ≤ r) :
     RyserConjectureFor.{u} r :=
-  hRyser r
+  hRyser r hr
 
 end Hypergraph
 

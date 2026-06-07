@@ -72,11 +72,16 @@ def RyserConjectureFor (r : ℕ) : Prop :=
             H.IsMatchingNumber nu →
               tau ≤ (r - 1) * nu
 
-/-- Ryser's hypergraph conjecture for all natural numbers r. -/
-def RyserHypergraphConjecture : Prop :=
-  ∀ r : ℕ, RyserConjectureFor.{u} (r := r)
+/-- Ryser's hypergraph conjecture for all `r ≥ 2`.
 
-/-- The universal challenge: prove or disprove Ryser's conjecture for ALL r. -/
+The bound `τ ≤ (r - 1) · ν` is false for the degenerate small cases: at `r = 1`
+it reads `τ ≤ 0`, which fails for a one-vertex one-edge hypergraph (`τ = ν = 1`).
+The classical conjecture is therefore stated for `r ≥ 2` (König at `r = 2`,
+Aharoni at `r = 3`, open for `r ≥ 4`). -/
+def RyserHypergraphConjecture : Prop :=
+  ∀ r : ℕ, 2 ≤ r → RyserConjectureFor.{u} (r := r)
+
+/-- The universal challenge: prove or disprove Ryser's conjecture for all `r ≥ 2`. -/
 theorem challenge_8 : RyserHypergraphConjecture.{u} := by
   sorry
 
