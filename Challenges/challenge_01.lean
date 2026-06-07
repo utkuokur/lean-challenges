@@ -17,9 +17,6 @@ variable {V W : Type*} [Fintype V]
 
 open SimpleGraph
 
--- The `Minor` structure lives in `Defs_and_Lems/Minor.lean` so it can be
--- shared with challenge_06 (the BQO-under-minor problem).
-
 -- The Hadwiger number of a graph is the largest r such that K_r is a minor of G.
 noncomputable def hadwigerNumber (G : SimpleGraph V) : ℕ := by
   classical
@@ -31,4 +28,3 @@ def r : ℕ := sorry -- The challenge parameter
 
 theorem challenge_1 (G : SimpleGraph V) :
   hadwigerNumber G ≤ r → G.Colorable (r + 1) := sorry
-  -- 0=0 := sorry -- The proof

@@ -65,7 +65,7 @@
 
 
 %Let $G= \ev{V,E}$ be a finite simple graph.
-
+\begin{comment}
 \begin{definition}[Graph Minor] 
 Given simple graphs $X$ and $G$, we say that $X$ is a \emph{minor} of $G$ if there is a function assigning to each vertex $x$ of $X$ a nonempty vertex set $V_x\subseteq V(G)$ such that 
 \begin{enumerate}
@@ -74,18 +74,21 @@ Given simple graphs $X$ and $G$, we say that $X$ is a \emph{minor} of $G$ if the
 \item for any two adjacent vertices $x,y\in V\ev{X}$, there are adjacent vertices $a\in V_x$ and $b\in V_y$ of $G$. 
 \end{enumerate}
 \end{definition}
+\end{comment}
 
-COMMENT FROM NATHAN: maybe we can skip the definitions of minor and chromatic number
+%COMMENT FROM NATHAN: maybe we can skip the definitions of minor and chromatic number
 
 \begin{definition}[Hadwiger Number]
 Given a graph $G$, the \textit{Hadwiger number} of $G$ is the largest integer $n$ such that $K_n$ is a minor of $G$; here $K_n$ denotes the complete graph on $n$ vertices. 
 We denote the Hadwiger number by $h\ev{G}$.
 \end{definition}
 
+\begin{comment}
 \begin{definition}[Chromatic number]
 Given a graph $G$  and $n\in \mathbb{N}$, 
 a \textit{proper coloring} of $G$ with $n$ colours is a function $f:[n] \rightarrow V\ev{G}$ so that adjacent vertices receive different $f$-values. The \textit{chromatic number} of $G$ is the minimum number $n$ such that there is a proper coloring of $G$ with $n$ colours. 
 \end{definition}
+\end{comment}
 
 
 \begin{conjecture}[Hadwiger's Conjecture
