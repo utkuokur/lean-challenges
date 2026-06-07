@@ -284,7 +284,7 @@ function App() {
               </li>
               <li style={{ marginBottom: 12 }}>
                 Push to your own GitHub repository. It can be public, or{" "}
-                <strong>private</strong> — private submissions require the{" "}
+                <strong>private</strong> — a private repo needs the{" "}
                 <a
                   href="https://github.com/apps/lean-challenge-bot"
                   target="_blank"
@@ -292,10 +292,11 @@ function App() {
                 >
                   <code>lean-challenge-bot</code>
                 </a>{" "}
-                GitHub App installed so the CI can clone it. After installing on a
-                private repo, double-check your repo's{" "}
-                <strong>Settings → GitHub Apps</strong> lists it — and if you picked
-                “only select repositories”, that the repo is granted.
+                GitHub App so the CI can clone it. To install: open that page, click{" "}
+                <strong>Install</strong>, choose your account, select{" "}
+                <strong>Only select repositories → your submission repo</strong>, and
+                confirm. (It needs only <strong>Contents: Read</strong>; you can later
+                check it under your repo’s <strong>Settings → GitHub Apps</strong>.)
               </li>
               <li style={{ marginBottom: 12 }}>
                 Pick the option below that matches your proof and fill in the submission form — it opens
