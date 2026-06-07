@@ -27,7 +27,7 @@ noncomputable def density (F : Finset (Finset U)) (x : U) : Rat :=
 def Nondegenerate (F : Finset (Finset U)) : Prop :=
   F ≠ ∅ /\ F ≠ {∅}
 
------- Do not change the code above this line.
+------ Import this module from your submission to reuse the definitions above — don't copy them.
 
 end Challenge10
 
