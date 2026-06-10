@@ -12,8 +12,7 @@ open Function Matroid
 namespace Disprove
 
 theorem challenge_2 :
-    ¬ ∀ {α : Type*} (r p m : ℕ) [Fact p.Prime], r = p ^ m →
-      ∃ L : Set (Matroid α),
-        CompleteExcludedMinorList (IsGFRepresentable p m) L := sorry
+    ¬ ∀ (r p m : ℕ) [Fact p.Prime], 0 < m → r = p ^ m →
+      ∃ L : Set (Matroid ℕ), CompleteExcludedMinorList p m L := sorry
 
 end Disprove

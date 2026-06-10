@@ -324,7 +324,7 @@ theorem target_gives_neighbor_bound {V : Type u}
 /-! ## Conjectural extension, clearly conditional -/
 
 /-- Conditional bridge: the scaled game conjecture entails the ordinary
-unfriendly partition conjecture.  -/
+unfriendly partition conjecture. -/
 def ScaledImpliesOrdinary : Prop :=
   ScaledUnfriendlyPartitionConjecture.{u, v} ->
     UnfriendlyPartitionConjecture.{u}

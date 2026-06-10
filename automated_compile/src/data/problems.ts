@@ -12,7 +12,7 @@ export const problems: Problem[] = [
   },
   {
     id: "challenge_2",
-    title: "Excluded Minors of GF(pʳ)-representable matroids",
+    title: "Excluded Minors of GF(pᵐ)-representable matroids",
     pdfPath: "content/pdf/challenge_02.pdf",
   },
   {

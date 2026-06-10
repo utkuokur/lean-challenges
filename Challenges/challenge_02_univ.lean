@@ -1,4 +1,5 @@
 import Matroid.Representation.Basic
+import Matroid.Minor.Iso
 import Mathlib.Data.Complex.Basic
 import Mathlib.FieldTheory.Finite.GaloisField
 
@@ -10,16 +11,18 @@ representability over the finite field `GF(pᵐ)`.
 
 For `r = 2` (binary matroids), the only excluded minor is `U₂,₄` (Tutte 1958).
 For `r = 3` (ternary matroids), the excluded minors are `U₂,₅`, `U₃,₅`, `F₇`,
-and `F₇*` (Rota's theorem). Beyond that, the problem remains broadly open.
+and `F₇*` (Reid; Bixby; Seymour).
 
-This universal version asks for a complete list of excluded minors that
-works for ALL prime-power field sizes — i.e., for every `r` accompanied
-by a witness `(p, m)` such that `p` is prime and `r = pᵐ`.
+This universal version asserts that a complete finite excluded-minor list
+exists for EVERY prime-power field size — that is, Rota's conjecture, proved
+by Geelen, Gerards, and Whittle.
 -/
 
 open Function Matroid
 
-variable {α : Type*}
+universe u
+
+variable {α : Type u}
 
 /-- A matroid is GF(pᵐ)-representable if it can be represented over the
 Galois field of order `p^m`. -/
@@ -33,13 +36,30 @@ but every proper minor of N does. -/
 def IsExcludedMinorFor (P : Matroid α → Prop) (M : Matroid α) : Prop :=
   ¬ P M ∧ ∀ N : Matroid α, N <m M → P N
 
-/-- L is a complete list of excluded minors for P if every matroid lacking
-P has some element of L as a minor. -/
-def CompleteExcludedMinorList (P : Matroid α → Prop) (L : Set (Matroid α)) : Prop :=
-  ∀ M : Matroid α, ¬ P M → ∃ N ∈ L, N ≤m M
+/--
+`L` is a complete list of excluded minors for GF(pᵐ)-representability:
+
+* `L` is finite;
+* every member of `L` is a finite matroid which is an excluded minor for
+  GF(pᵐ)-representability;
+* no two distinct members of `L` are isomorphic; and
+* every finite matroid that is not GF(pᵐ)-representable has a minor
+  isomorphic to a member of `L` (`≤i` is the iso-minor relation).
+
+Members of `L` are matroids with ground sets in `ℕ`; matroids over an
+arbitrary type are compared against `L` up to isomorphism.
+-/
+def CompleteExcludedMinorList (p m : ℕ) [Fact p.Prime]
+    (L : Set (Matroid ℕ)) : Prop :=
+  L.Finite ∧
+    (∀ N ∈ L, N.Finite ∧ IsExcludedMinorFor (IsGFRepresentable p m) N) ∧
+      (∀ N₁ ∈ L, ∀ N₂ ∈ L, N₁ ≠ N₂ → IsEmpty (N₁ ≂ N₂)) ∧
+        (∀ {β : Type u} (M : Matroid β), M.Finite →
+          ¬ IsGFRepresentable p m M → ∃ N ∈ L, Nonempty (N ≤i M))
 
 /-- The universal challenge: for every field size `r` that is a prime
-power (witnessed by some prime `p` and exponent `m` with `r = pᵐ`),
-provide a complete list of excluded minors for GF(pᵐ)-representability. -/
-theorem challenge_2 (r p m : ℕ) [Fact p.Prime] (hr : r = p ^ m) :
-    ∃ L : Set (Matroid α), CompleteExcludedMinorList (IsGFRepresentable p m) L := sorry
+power (witnessed by some prime `p` and positive exponent `m` with
+`r = pᵐ`), a complete finite list of excluded minors for
+GF(pᵐ)-representability exists. This is Rota's conjecture. -/
+theorem challenge_2 (r p m : ℕ) [Fact p.Prime] (hm : 0 < m) (hr : r = p ^ m) :
+    ∃ L : Set (Matroid ℕ), CompleteExcludedMinorList p m L := sorry
