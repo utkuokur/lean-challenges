@@ -42,4 +42,4 @@ noncomputable def hadwigerNumber (G : SimpleGraph V) : ℕ := by
 /- Import this module from your submission to reuse the definitions above — don't copy them. -/
 
 theorem challenge_1 (G : SimpleGraph V) :
-  ∀ r, hadwigerNumber G ≤ r → G.Colorable (r + 1) := sorry
+  ∀ r, hadwigerNumber G ≤ r → G.Colorable r := sorry

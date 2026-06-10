@@ -29,4 +29,4 @@ noncomputable def hadwigerNumber (G : SimpleGraph V) : ℕ := by
 def r : ℕ := sorry -- The challenge parameter
 
 theorem challenge_1 (G : SimpleGraph V) :
-  hadwigerNumber G ≤ r → G.Colorable (r + 1) := sorry
+  hadwigerNumber G ≤ r → G.Colorable r := sorry

@@ -1,0 +1,62 @@
+name: Shim drift check
+
+# Every canonical theorem statement in Challenges/ has a matching
+# signature-shim template in lean-challenges-submissions
+# (scripts/generate_check.py), and the two must move in lockstep. This
+# workflow runs the drift checker from the submissions repo against the
+# pushed canon: each shim is rebuilt against a mock submission that
+# re-exports the canonical (sorry-backed) theorem, so a stale template
+# fails with a type error while an in-sync one fails only at the sorryAx
+# axiom gate.
+#
+# If this goes red after you edit a challenge statement, update the
+# matching CHECKS template(s) in lean-challenges-submissions
+# scripts/generate_check.py — see that script's header for the routine.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Challenges/**"
+      - "Defs_and_Lems/**"
+      - "lakefile.toml"
+      - "lean-toolchain"
+      - ".github/workflows/shim-drift.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: shim-drift
+  cancel-in-progress: true
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/checkout@v4
+        with:
+          repository: utkuokur/lean-challenges-submissions
+          ref: main
+          path: submissions
+          persist-credentials: false
+
+      - name: Install elan
+        run: |
+          set -e
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get || true
+
+      - name: Check every shim against the canon
+        run: python3 submissions/scripts/shim_drift_check.py --project .
