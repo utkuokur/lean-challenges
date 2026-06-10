@@ -145,8 +145,10 @@ For $p^r=2$, the excluded minor list is known: a matroid is representable over $
 
 We have the following parametrized version of the open problem.
 \begin{openproblem}
-Let $r$ be a positive integer. If there is a prime number $p$ and an integer $m$ such that $r=p^m$, then list the minimal excluded minors for the class of $\mathrm{GF}(p^r)$-representable matroids and prove that the list is complete up to isomorphism.
+Let $r$ be a positive integer. If there is a prime number $p$ and a positive integer $m$ such that $r=p^m$, then list the minimal excluded minors for the class of $\mathrm{GF}(p^m)$-representable matroids and prove that the list is complete up to isomorphism.
 \end{openproblem}
+
+In the formal statement, the list is given as a finite set $L$ of matroids together with its cardinality $k$: the members of $L$ are pairwise non-isomorphic excluded minors, and every finite matroid that is not $\mathrm{GF}(p^m)$-representable has a minor isomorphic to a member of $L$. This rules out indirect solutions that prove the existence of a complete list without exhibiting one.
 
 TODO: Check references. 
 
@@ -352,11 +354,11 @@ For every finite union-closed set $\mathcal{F}\notin\{\emptyset, \{\emptyset\}\}
 
 We are interested in the following parametrized version of the conjecture.
 \begin{conjecture}[Scaled union-closed sets conjecture]
-Let $r\in \mathbb{N}_{>2}$.
-For every finite union-closed set $\mathcal{F}\notin\{\emptyset, \{\emptyset\}\}$, there exists an element $x$ of density at least $\frac{1}{2}-\frac{1}{r}$.
+Let $r\in \mathbb{N}$.
+For every finite union-closed set $\mathcal{F}\notin\{\emptyset, \{\emptyset\}\}$, there exists an element $x$ of density at least $\frac{1}{2}-\frac{1}{r+2}$.
 \end{conjecture}
 
-The above conjecture is open for all values of $r>2$.
+For $r=0$ the bound equals $0$ and the statement is elementary, while as $r\to\infty$ the bound approaches $\frac{1}{2}$ and the statement recovers the full conjecture in the limit. The best published lower bound on the density ($\approx 0.382$, obtained via the entropy method) settles the cases $r\leq 6$; the conjecture is open for all $r\geq 7$.
 
 
 
