@@ -2,138 +2,81 @@ import Mathlib.Data.Finset.Card
 
 universe u
 
+namespace Challenge08
+
 structure Hypergraph (V : Type u) [DecidableEq V] where
   vertices : Finset V
-  edges : Set (Finset V)
-  edge_subset_vertices : ∀ ⦃e : Finset V⦄, e ∈ edges → e ⊆ vertices
+  edges : Finset (Finset V)
+  edge_subset_vertices : forall {e : Finset V}, e ∈ edges -> e ⊆ vertices
 
 namespace Hypergraph
 
 variable {V : Type u} [DecidableEq V]
 
-/- An r-uniform hypergraph has every edge of cardinality r. -/
-def IsUniform (H : Hypergraph V) (r : ℕ) : Prop :=
-  ∀ ⦃e : Finset V⦄, e ∈ H.edges → e.card = r
+/-- An `r`-uniform hypergraph has every edge of cardinality `r`. -/
+def IsUniform (H : Hypergraph V) (r : Nat) : Prop :=
+  forall {e : Finset V}, e ∈ H.edges -> e.card = r
 
-/- An r-partite hypergraph has its vertices partitioned into r parts,
-with every edge meeting every part in exactly one vertex. -/
-def IsPartite (H : Hypergraph V) (r : ℕ) : Prop :=
-  ∃ parts : Fin r → Finset V,
-    (∀ v : V, v ∈ H.vertices ↔ ∃ i : Fin r, v ∈ parts i) ∧
-      (∀ i j : Fin r, i ≠ j → Disjoint (parts i) (parts j)) ∧
-        (∀ ⦃e : Finset V⦄, e ∈ H.edges →
-          ∀ i : Fin r, ((parts i) ∩ e).card = 1)
+/--
+An `r`-partite hypergraph has its vertices partitioned into `r` parts, and
+every edge meets every part in exactly one vertex.
+-/
+def IsPartite (H : Hypergraph V) (r : Nat) : Prop :=
+  exists parts : Fin r -> Finset V,
+    (forall v : V, v ∈ H.vertices <-> exists i : Fin r, v ∈ parts i) /\
+      (forall i j : Fin r, i ≠ j -> Disjoint (parts i) (parts j)) /\
+        (forall {e : Finset V}, e ∈ H.edges ->
+          forall i : Fin r, ((parts i) ∩ e).card = 1)
 
 /-- A vertex cover is a set of vertices meeting every edge. -/
 def IsVertexCover (H : Hypergraph V) (C : Finset V) : Prop :=
-  C ⊆ H.vertices ∧
-    ∀ ⦃e : Finset V⦄, e ∈ H.edges → ∃ v : V, v ∈ C ∧ v ∈ e
+  C ⊆ H.vertices /\
+    forall {e : Finset V}, e ∈ H.edges -> exists v : V, v ∈ C /\ v ∈ e
 
 /-- A matching is a finite set of pairwise disjoint edges. -/
 def IsMatching (H : Hypergraph V) (M : Finset (Finset V)) : Prop :=
-  (∀ ⦃e : Finset V⦄, e ∈ M → e ∈ H.edges) ∧
-    ∀ ⦃e₁ : Finset V⦄, e₁ ∈ M →
-      ∀ ⦃e₂ : Finset V⦄, e₂ ∈ M → e₁ ≠ e₂ → Disjoint e₁ e₂
+  (forall {e : Finset V}, e ∈ M -> e ∈ H.edges) /\
+    forall {e1 : Finset V}, e1 ∈ M ->
+      forall {e2 : Finset V}, e2 ∈ M -> e1 ≠ e2 -> Disjoint e1 e2
 
-/-- tau is the cover number of H, stated relationally. -/
-def IsCoverNumber (H : Hypergraph V) (tau : ℕ) : Prop :=
-  (∃ C : Finset V, H.IsVertexCover C ∧ C.card = tau) ∧
-    ∀ C : Finset V, H.IsVertexCover C → tau ≤ C.card
+/-- `tau` is the vertex-cover number of `H`, stated relationally. -/
+def IsCoverNumber (H : Hypergraph V) (tau : Nat) : Prop :=
+  (exists C : Finset V, H.IsVertexCover C /\ C.card = tau) /\
+    forall C : Finset V, H.IsVertexCover C -> tau <= C.card
 
-/-- nu is the matching number of H, stated relationally. -/
-def IsMatchingNumber (H : Hypergraph V) (nu : ℕ) : Prop :=
-  (∃ M : Finset (Finset V), H.IsMatching M ∧ M.card = nu) ∧
-    ∀ M : Finset (Finset V), H.IsMatching M → M.card ≤ nu
+/-- `nu` is the matching number of `H`, stated relationally. -/
+def IsMatchingNumber (H : Hypergraph V) (nu : Nat) : Prop :=
+  (exists M : Finset (Finset V), H.IsMatching M /\ M.card = nu) /\
+    forall M : Finset (Finset V), H.IsMatching M -> M.card <= nu
 
-/-- Ryser's hypergraph conjecture for a fixed value of r, without choosing τ or ν. -/
-def RyserConjectureFor (r : ℕ) : Prop :=
-  ∀ (V : Type u) [DecidableEq V], ∀ H : Hypergraph V,
-    H.IsUniform r →
-      H.IsPartite r →
-        ∀ tau nu : ℕ,
-          H.IsCoverNumber tau →
-            H.IsMatchingNumber nu →
-              tau ≤ (r - 1) * nu
-
-/-- Ryser's hypergraph conjecture for all `r ≥ 2`.
-
-The bound `τ ≤ (r - 1) · ν` is false for the degenerate small cases: at `r = 1`
-it reads `τ ≤ 0`, which fails for a one-vertex one-edge hypergraph (`τ = ν = 1`).
-The classical conjecture is therefore stated for `r ≥ 2` (König at `r = 2`,
-Aharoni at `r = 3`, open for `r ≥ 4`). -/
-def RyserHypergraphConjecture : Prop :=
-  ∀ r : ℕ, 2 ≤ r → RyserConjectureFor.{u} (r := r)
-
-/-- The r = 2 case, classically König's theorem. -/
-def KonigCase : Prop :=
-  RyserConjectureFor.{u} (r := 2)
-
-/-- The r = 3 case, proved by Aharoni. -/
-def AharoniCase : Prop :=
-  RyserConjectureFor.{u} (r := 3)
-
-/-!
-## Theorem sandwich
--/
-
-/-- Any concrete vertex cover bounds a relational cover number from above. -/
-theorem isCoverNumber_le_card_of_isVertexCover
-    (H : Hypergraph V) {tau : ℕ} (htau : H.IsCoverNumber tau)
-    {C : Finset V} (hC : H.IsVertexCover C) :
-    tau ≤ C.card :=
-  htau.2 C hC
-
-/--
-First layer of key lemmata for Ryser: every admissible hypergraph with relational
-matching number nu has a vertex cover of size at most (r - 1) * nu.
--/
-def RyserKeyLemmataFor (r : ℕ) : Prop :=
-  ∀ (V : Type u) [DecidableEq V], ∀ H : Hypergraph V,
-    H.IsUniform r →
-      H.IsPartite r →
-        ∀ nu : ℕ,
-          H.IsMatchingNumber nu →
-            ∃ C : Finset V,
-              H.IsVertexCover C ∧ C.card ≤ (r - 1) * nu
-
-/-- The key lemmata imply Ryser's conjectural inequality for fixed r. -/
-theorem RyserConjectureFor_of_keyLemmata {r : ℕ}
-    (hkey : RyserKeyLemmataFor.{u} r) :
-    RyserConjectureFor.{u} r := by
-  intro V _ H hUniform hPartite tau nu htau hnu
-  rcases hkey V H hUniform hPartite nu hnu with ⟨C, hCover, hCard⟩
-  exact (H.isCoverNumber_le_card_of_isVertexCover htau hCover).trans hCard
-
-/-- If the key lemmata hold for every r, then the full Ryser conjecture follows. -/
-theorem RyserHypergraphConjecture_of_keyLemmata
-    (hkey : ∀ r : ℕ, RyserKeyLemmataFor.{u} r) :
-    RyserHypergraphConjecture.{u} := by
-  intro r _hr
-  exact RyserConjectureFor_of_keyLemmata (hkey r)
-
-/-- A direct corollary: the full conjecture implies the König case. -/
-theorem KonigCase_of_RyserHypergraphConjecture
-    (hRyser : RyserHypergraphConjecture.{u}) :
-    KonigCase.{u} :=
-  hRyser 2 (by omega)
-
-/-- A direct corollary: the full conjecture implies the Aharoni case. -/
-theorem AharoniCase_of_RyserHypergraphConjecture
-    (hRyser : RyserHypergraphConjecture.{u}) :
-    AharoniCase.{u} :=
-  hRyser 3 (by omega)
-
-/-- The full conjecture specializes to any fixed value of `r ≥ 2`. -/
-theorem RyserConjectureFor_of_RyserHypergraphConjecture
-    (hRyser : RyserHypergraphConjecture.{u}) (r : ℕ) (hr : 2 ≤ r) :
-    RyserConjectureFor.{u} r :=
-  hRyser r hr
+/-- Ryser's hypergraph conjecture for a fixed value of `r`. -/
+def RyserConjectureFor (r : Nat) : Prop :=
+  forall (V : Type u) [DecidableEq V], forall H : Hypergraph V,
+    H.IsUniform r ->
+      H.IsPartite r ->
+        forall tau nu : Nat,
+          H.IsCoverNumber tau ->
+            H.IsMatchingNumber nu ->
+              tau <= (r - 1) * nu
 
 end Hypergraph
+
+end Challenge08
+
+/- Import this module from your submission to reuse the definitions above — don't copy them. -/
 
 /-- The challenge parameter. -/
 def r : ℕ := sorry
 
-/-- Ryser's hypergraph conjecture for the chosen value of r. -/
-theorem challenge_8 : Hypergraph.RyserConjectureFor.{u} r := by
+/--
+Ryser's hypergraph conjecture for the chosen `r` (with `2 <= r`):
+every `r`-partite `r`-uniform hypergraph satisfies `tau <= (r - 1) * nu`.
+
+For `r = 2` this is a classical theorem of König, and for `r = 3` it was
+proved by Aharoni. The hypothesis `2 <= r` is necessary: for `r = 1` the
+bound reads `tau <= 0`, which already fails for the single-vertex
+single-edge hypergraph (where `tau = nu = 1`).
+-/
+theorem challenge_8 (hr : 2 <= r) :
+    Challenge08.Hypergraph.RyserConjectureFor.{u} r := by
   sorry
