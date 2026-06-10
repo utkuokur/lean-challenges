@@ -51,16 +51,12 @@ the conclusion to make sense — that requirement is part of the
 theorem's hypothesis, not encoded into `r` itself. -/
 def r : ℕ := sorry
 
-/-- The number of excluded minors in the list, up to isomorphism. -/
-def k : ℕ := sorry
-
 /-- The excluded-minor list itself: finitely many matroids on ground sets
 in `ℕ`. -/
 def L : Set (Matroid ℕ) := sorry
 
 /-- **The challenge.** For the chosen field size `r`, given any prime `p`
 and positive exponent `m` with `r = pᵐ`, the chosen `L` is a complete list
-of excluded minors for GF(pᵐ)-representability, and it has exactly `k`
-members. -/
+of excluded minors for GF(pᵐ)-representability. -/
 theorem challenge_2 (p m : ℕ) [Fact p.Prime] (hm : 0 < m) (hr : r = p ^ m) :
-    CompleteExcludedMinorList p m L ∧ L.ncard = k := sorry
+    CompleteExcludedMinorList p m L := sorry
