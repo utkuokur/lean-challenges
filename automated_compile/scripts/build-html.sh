@@ -46,6 +46,12 @@ done
 # Tidy intermediate logs (also gitignored, but keep the tree clean).
 rm -f "$TEX"/*.latexml.log
 
+# Restyle bibliographies to the biblatex/PDF look (clickable DOI/arXiv ids,
+# no "Cited by:" back-references).
+if [ "$status" -eq 0 ]; then
+  python3 "$HERE/postprocess-bib.py" || status=1
+fi
+
 if [ "$status" -eq 0 ]; then
   echo "Done. HTML + LaTeXML CSS written to public/content/html/"
 else
