@@ -47,9 +47,9 @@ done
 rm -f "$TEX"/*.latexml.log
 
 # Restyle bibliographies to the biblatex/PDF look (clickable DOI/arXiv ids,
-# no "Cited by:" back-references).
+# no "Cited by:" back-references) and strip LaTeXML's timestamped page footer.
 if [ "$status" -eq 0 ]; then
-  python3 "$HERE/postprocess-bib.py" || status=1
+  python3 "$HERE/postprocess-html.py" || status=1
 fi
 
 if [ "$status" -eq 0 ]; then
