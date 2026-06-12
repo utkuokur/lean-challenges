@@ -6,10 +6,11 @@ import { defineConfig } from "vite"
 import { inspectAttr } from 'kimi-plugin-inspect-react'
 
 // https://vite.dev/config/
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ command, isPreview }) => ({
   // GitHub Pages serves this project site under /lean-challenges/.
-  // Keep the dev server at the root so local development is unaffected.
-  base: command === "build" ? "/lean-challenges/" : "/",
+  // `vite preview` must use the same base or the built asset URLs 404 and the
+  // page renders blank. Only the dev server stays at the root.
+  base: command === "build" || isPreview ? "/lean-challenges/" : "/",
   plugins: [
     devServer({ entry: "api/boot.ts", exclude: [/^\/(?!api\/).*$/] }),
     inspectAttr(), react()],
