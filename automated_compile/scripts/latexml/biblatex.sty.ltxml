@@ -1,0 +1,35 @@
+# -*- mode: Perl -*-
+# Build-time LaTeXML shim for the biblatex package.
+#
+# LaTeXML (0.8.8) ships no biblatex binding, so `\addbibresource` and
+# `\printbibliography` are undefined and the bibliography is dropped from the
+# HTML. The challenge sources stay biblatex (they still build a PDF that way);
+# this shim only affects the HTML build, mapping biblatex's resource/print
+# commands onto LaTeXML's native, well-supported BibTeX handling so that
+# \cite resolves and the reference list (with DOI/arXiv/URL links) renders.
+use strict;
+use warnings;
+use LaTeXML::Package;
+
+# Swallow all biblatex package options (style=numeric, sorting=none, ...).
+DeclareOption(undef, sub { });
+ProcessOptions();
+
+# \addbibresource[opts]{file.bib}: remember the resource name, emit nothing.
+DefPrimitive('\addbibresource[]{}', sub {
+  my ($stomach, $opts, $resource) = @_;
+  my $name = ToString($resource);
+  $name =~ s/\.bib$//;
+  AssignValue('BIBLATEX_RESOURCE' => $name, 'global');
+  return; });
+
+# \printbibliography[opts] -> \bibliography{<resource>} (LaTeXML native).
+DefMacro('\printbibliography[]', sub {
+  my $name = LookupValue('BIBLATEX_RESOURCE') || 'bibliography';
+  return (T_CS('\bibliography'), T_BEGIN, Explode($name), T_END); });
+
+# Harmless no-ops for biblatex preamble commands (unused today, future-proofing).
+DefPrimitive('\ExecuteBibliographyOptions[]{}', undef);
+DefPrimitive('\DeclareLanguageMapping{}{}', undef);
+
+1;

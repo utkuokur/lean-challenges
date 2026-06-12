@@ -1,58 +1,58 @@
 export interface Problem {
   id: string;
   title: string;
-  pdfPath: string;
+  htmlPath: string;
 }
 
 export const problems: Problem[] = [
   {
     id: "challenge_1",
     title: "The Hadwiger Conjecture",
-    pdfPath: "content/pdf/challenge_01.pdf",
+    htmlPath: "content/html/challenge_01.html",
   },
   {
     id: "challenge_2",
     title: "Excluded Minors of GF(pᵐ)-representable matroids",
-    pdfPath: "content/pdf/challenge_02.pdf",
+    htmlPath: "content/html/challenge_02.html",
   },
   {
     id: "challenge_3",
     title: "Ramsey Numbers",
-    pdfPath: "content/pdf/challenge_03.pdf",
+    htmlPath: "content/html/challenge_03.html",
   },
   {
     id: "challenge_4",
     title: "Sidorenko Conjecture for Half-Graphs",
-    pdfPath: "content/pdf/challenge_04.pdf",
+    htmlPath: "content/html/challenge_04.html",
   },
   {
     id: "challenge_5",
     title: "Erdős–Hajnal Conjecture",
-    pdfPath: "content/pdf/challenge_05.pdf",
+    htmlPath: "content/html/challenge_05.html",
   },
   {
     id: "challenge_6",
     title: "Better-Quasi-Ordering of Finite Graphs under Minor Relation",
-    pdfPath: "content/pdf/challenge_06.pdf",
+    htmlPath: "content/html/challenge_06.html",
   },
   {
     id: "challenge_7",
     title: "Rota's Basis Conjecture",
-    pdfPath: "content/pdf/challenge_07.pdf",
+    htmlPath: "content/html/challenge_07.html",
   },
   {
     id: "challenge_8",
     title: "Ryser's Hypergraph Conjecture",
-    pdfPath: "content/pdf/challenge_08.pdf",
+    htmlPath: "content/html/challenge_08.html",
   },
   {
     id: "challenge_9",
     title: "Union-Closed Sets Conjecture",
-    pdfPath: "content/pdf/challenge_09.pdf",
+    htmlPath: "content/html/challenge_09.html",
   },
   {
     id: "challenge_10",
     title: "The Unfriendly Partition Conjecture",
-    pdfPath: "content/pdf/challenge_10.pdf",
+    htmlPath: "content/html/challenge_10.html",
   },
 ];

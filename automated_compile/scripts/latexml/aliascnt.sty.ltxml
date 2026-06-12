@@ -1,0 +1,21 @@
+# -*- mode: Perl -*-
+# Build-time LaTeXML shim for the aliascnt package.
+#
+# minimalJ.sty pulls in aliascnt (\newaliascnt / \aliascntresetthe) to make its
+# theorem environments share a counter. LaTeXML has no aliascnt binding, which
+# otherwise aborts the conversion. The challenge bodies define and use their own
+# theorem environments (theorem/definition/conjecture/...), not minimalJ's, so
+# faithful counter-aliasing is unnecessary here -- we only need the package to
+# load without error.
+use strict;
+use warnings;
+use LaTeXML::Package;
+
+# \newaliascnt{new}{alias}: real aliascnt makes `new` share `alias`'s register;
+# for HTML we just need `new` to be a usable counter, so create an ordinary one.
+DefMacro('\newaliascnt{}{}', '\newcounter{#1}');
+
+# \aliascntresetthe{ctr}: registers a \the-reset upstream; a no-op here.
+DefMacro('\aliascntresetthe{}', '');
+
+1;

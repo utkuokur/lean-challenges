@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Challenge 10: The Unfriendly Partition Conjecture</title>
+<!--Generated on Fri Jun 12 12:19:14 2026 by LaTeXML (version 0.8.8) http://dlmf.nist.gov/LaTeXML/.-->
+
+<link rel="stylesheet" href="LaTeXML.css" type="text/css">
+<link rel="stylesheet" href="ltx-article.css" type="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div class="ltx_page_main">
+<div class="ltx_page_content">
+<article class="ltx_document">
+<section id="Sx1" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">Challenge 10: The Unfriendly Partition Conjecture</h2>
+
+<div id="Sx1.p1" class="ltx_para">
+<p class="ltx_p">(Cowan and Emerson, see for example <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib10" title="Unfriendly partitions of a graph" class="ltx_ref">1</a>]</cite>)</p>
+</div>
+<div id="Thmdefinition1" class="ltx_theorem ltx_theorem_definition">
+<h6 class="ltx_title ltx_runin ltx_title_theorem">
+<span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Definition 1</span></span><span class="ltx_text ltx_font_bold"> </span>(Partial partition)<span class="ltx_text ltx_font_bold">.</span>
+</h6>
+<div id="Thmdefinition1.p1" class="ltx_para">
+<p class="ltx_p">A <span class="ltx_text ltx_font_italic">partial partition</span> of the vertices of a graph <math id="Thmdefinition1.p1.m1" class="ltx_Math" alttext="G" display="inline"><mi>G</mi></math> is a partial function <math id="Thmdefinition1.p1.m2" class="ltx_Math" alttext="V(G)\to\{0,1\}" display="inline"><mrow><mrow><mi>V</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><mi>G</mi><mo stretchy="false">)</mo></mrow></mrow><mo stretchy="false">→</mo><mrow><mo stretchy="false">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false">}</mo></mrow></mrow></math>. We call it <span class="ltx_text ltx_font_italic">finite</span> if its domain is finite. We call it a <span class="ltx_text ltx_font_italic">partition</span> if it is a total function.</p>
+</div>
+</div>
+<div id="Thmdefinition2" class="ltx_theorem ltx_theorem_definition">
+<h6 class="ltx_title ltx_runin ltx_title_theorem">
+<span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Definition 2</span></span><span class="ltx_text ltx_font_bold"> </span>(Unfriendly)<span class="ltx_text ltx_font_bold">.</span>
+</h6>
+<div id="Thmdefinition2.p1" class="ltx_para">
+<p class="ltx_p">Let <math id="Thmdefinition2.p1.m1" class="ltx_Math" alttext="v" display="inline"><mi>v</mi></math> be a vertex of a graph <math id="Thmdefinition2.p1.m2" class="ltx_Math" alttext="G" display="inline"><mi>G</mi></math>. A partial partition <math id="Thmdefinition2.p1.m3" class="ltx_Math" alttext="f\colon V(G)\to\{0,1\}" display="inline"><mrow><mi>f</mi><mo lspace="0.278em" rspace="0.278em">:</mo><mrow><mrow><mi>V</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><mi>G</mi><mo stretchy="false">)</mo></mrow></mrow><mo stretchy="false">→</mo><mrow><mo stretchy="false">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false">}</mo></mrow></mrow></mrow></math> is <span class="ltx_text ltx_font_italic">unfriendly at <math id="Thmdefinition2.p1.m4" class="ltx_Math" alttext="v" display="inline"><mi>v</mi></math></span> if <math id="Thmdefinition2.p1.m5" class="ltx_Math" alttext="v" display="inline"><mi>v</mi></math> has at least as many neighbours mapped by <math id="Thmdefinition2.p1.m6" class="ltx_Math" alttext="f" display="inline"><mi>f</mi></math> to the opposite partition class as it has neighbours mapped to the same partition class. Formally this means</p>
+<table id="S1.Ex1" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="S1.Ex1.m1" class="ltx_Math" alttext="|N(v)\cap f^{-1}[1-f(v)]|\geq|N(v)\cap f^{-1}[f(v)]|." display="block"><mrow><mrow><mrow><mo stretchy="false">|</mo><mrow><mrow><mi>N</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><mi>v</mi><mo stretchy="false">)</mo></mrow></mrow><mo>∩</mo><mrow><msup><mi>f</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>⁢</mo><mrow><mo stretchy="false">[</mo><mrow><mn>1</mn><mo>−</mo><mrow><mi>f</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><mi>v</mi><mo stretchy="false">)</mo></mrow></mrow></mrow><mo stretchy="false">]</mo></mrow></mrow></mrow><mo stretchy="false">|</mo></mrow><mo>≥</mo><mrow><mo stretchy="false">|</mo><mrow><mrow><mi>N</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><mi>v</mi><mo stretchy="false">)</mo></mrow></mrow><mo>∩</mo><mrow><msup><mi>f</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>⁢</mo><mrow><mo stretchy="false">[</mo><mrow><mi>f</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><mi>v</mi><mo stretchy="false">)</mo></mrow></mrow><mo stretchy="false">]</mo></mrow></mrow></mrow><mo stretchy="false">|</mo></mrow></mrow><mo lspace="0em">.</mo></mrow></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p">A partition is <span class="ltx_text ltx_font_italic">unfriendly</span> if it is unfriendly at every vertex.</p>
+</div>
+</div>
+<div id="S1.Thmtheorem1" class="ltx_theorem ltx_theorem_conjecture">
+<h6 class="ltx_title ltx_runin ltx_title_theorem">
+<span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Conjecture 1.1</span></span><span class="ltx_text ltx_font_bold"> </span>(Unfriendly partition Conjecture)<span class="ltx_text ltx_font_bold">.</span>
+</h6>
+<div id="S1.Thmtheorem1.p1" class="ltx_para">
+<p class="ltx_p">Every countable graph has an unfriendly partition.</p>
+</div>
+</div>
+<div id="Sx1.p2" class="ltx_para">
+<p class="ltx_p">In order to pose a scaled version of this conjecture, we introduce the following game:</p>
+</div>
+<div id="Thmdefinition3" class="ltx_theorem ltx_theorem_definition">
+<h6 class="ltx_title ltx_runin ltx_title_theorem">
+<span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Definition 3</span></span><span class="ltx_text ltx_font_bold"> </span>(The <math id="Thmdefinition3.m1" class="ltx_Math" alttext="r" display="inline"><mi>r</mi></math>-partitioning game.)<span class="ltx_text ltx_font_bold">.</span>
+</h6>
+<div id="Thmdefinition3.p1" class="ltx_para">
+<p class="ltx_p">Let <math id="Thmdefinition3.p1.m1" class="ltx_Math" alttext="r" display="inline"><mi>r</mi></math> be an ordinal number and let <math id="Thmdefinition3.p1.m2" class="ltx_Math" alttext="G" display="inline"><mi>G</mi></math> be a graph. The <math id="Thmdefinition3.p1.m3" class="ltx_Math" alttext="r" display="inline"><mi>r</mi></math><span class="ltx_text ltx_font_italic">-partitioning game on <math id="Thmdefinition3.p1.m4" class="ltx_Math" alttext="G" display="inline"><mi>G</mi></math></span> is played between two players, Challenger and Partitioner, as follows. A position in the game is a pair <math id="Thmdefinition3.p1.m5" class="ltx_Math" alttext="(f,\alpha)" display="inline"><mrow><mo stretchy="false">(</mo><mi>f</mi><mo>,</mo><mi>α</mi><mo stretchy="false">)</mo></mrow></math> consisting of a partial partition <math id="Thmdefinition3.p1.m6" class="ltx_Math" alttext="f" display="inline"><mi>f</mi></math> of <math id="Thmdefinition3.p1.m7" class="ltx_Math" alttext="G" display="inline"><mi>G</mi></math> and an ordinal number <math id="Thmdefinition3.p1.m8" class="ltx_Math" alttext="\alpha" display="inline"><mi>α</mi></math>. The initial position is <math id="Thmdefinition3.p1.m9" class="ltx_Math" alttext="(\emptyset,r)" display="inline"><mrow><mo stretchy="false">(</mo><mi mathvariant="normal">∅</mi><mo>,</mo><mi>r</mi><mo stretchy="false">)</mo></mrow></math>. In each turn, beginning in position <math id="Thmdefinition3.p1.m10" class="ltx_Math" alttext="(f,\alpha)" display="inline"><mrow><mo stretchy="false">(</mo><mi>f</mi><mo>,</mo><mi>α</mi><mo stretchy="false">)</mo></mrow></math>, Challenger must name a vertex <math id="Thmdefinition3.p1.m11" class="ltx_Math" alttext="v" display="inline"><mi>v</mi></math> of <math id="Thmdefinition3.p1.m12" class="ltx_Math" alttext="G" display="inline"><mi>G</mi></math> and an ordinal <math id="Thmdefinition3.p1.m13" class="ltx_Math" alttext="\beta&lt;\alpha" display="inline"><mrow><mi>β</mi><mo>&lt;</mo><mi>α</mi></mrow></math> and Partitioner must then name a finite partial partition <math id="Thmdefinition3.p1.m14" class="ltx_Math" alttext="g" display="inline"><mi>g</mi></math> extending <math id="Thmdefinition3.p1.m15" class="ltx_Math" alttext="f" display="inline"><mi>f</mi></math> which is defined at <math id="Thmdefinition3.p1.m16" class="ltx_Math" alttext="v" display="inline"><mi>v</mi></math> and unfriendly at <math id="Thmdefinition3.p1.m17" class="ltx_Math" alttext="v" display="inline"><mi>v</mi></math>. After this, the new position is <math id="Thmdefinition3.p1.m18" class="ltx_Math" alttext="(g,\beta)" display="inline"><mrow><mo stretchy="false">(</mo><mi>g</mi><mo>,</mo><mi>β</mi><mo stretchy="false">)</mo></mrow></math>. If at any point some player is unable to move, the other player wins.</p>
+</div>
+</div>
+<div id="Sx1.p3" class="ltx_para">
+<p class="ltx_p">Note that since there are no infinite decreasing sequences of ordinals this game must end after finitely many turns.</p>
+</div>
+<div id="Sx1.p4" class="ltx_para">
+<p class="ltx_p">The scaled conjecture is as follows:</p>
+</div>
+<div id="S1.Thmtheorem2" class="ltx_theorem ltx_theorem_conjecture">
+<h6 class="ltx_title ltx_runin ltx_title_theorem">
+<span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Conjecture 1.2</span></span><span class="ltx_text ltx_font_bold"> </span>(Scaled Unfriendly Partition Conjecture)<span class="ltx_text ltx_font_bold">.</span>
+</h6>
+<div id="S1.Thmtheorem2.p1" class="ltx_para">
+<p class="ltx_p">Let <math id="S1.Thmtheorem2.p1.m1" class="ltx_Math" alttext="r" display="inline"><mi>r</mi></math> be an ordinal. For any countable graph <math id="S1.Thmtheorem2.p1.m2" class="ltx_Math" alttext="G" display="inline"><mi>G</mi></math>, Partitioner has a winning strategy in the <math id="S1.Thmtheorem2.p1.m3" class="ltx_Math" alttext="r" display="inline"><mi>r</mi></math>-partitioning game on <math id="S1.Thmtheorem2.p1.m4" class="ltx_Math" alttext="G" display="inline"><mi>G</mi></math>.</p>
+</div>
+</div>
+</section>
+<section id="bib" class="ltx_bibliography">
+<h2 class="ltx_title ltx_title_bibliography">References</h2>
+
+<ul id="bib.L1" class="ltx_biblist">
+<li id="bib.bib10" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[1]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">R. Aharoni, E. C. Milner, and K. Prikry</span><span class="ltx_text ltx_bib_year"> (1990)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Unfriendly partitions of a graph</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">Journal of Combinatorial Theory, Series B</span> <span class="ltx_text ltx_bib_volume">50</span> (<span class="ltx_text ltx_bib_number">1</span>), <span class="ltx_text ltx_bib_pages"> pp. 1–10</span>.
+</span>
+<span class="ltx_bibblock">External Links: <span class="ltx_text ltx_bib_links"><a href="https://dx.doi.org/10.1016/0095-8956%2890%2990092-E" title="" class="ltx_ref doi ltx_bib_external">Document</a></span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#Sx1.p1" title="Challenge 10: The Unfriendly Partition Conjecture" class="ltx_ref"><span class="ltx_text ltx_ref_title">Challenge 10: The Unfriendly Partition Conjecture</span></a>.
+</span>
+</li>
+</ul>
+</section>
+</article>
+</div>
+<footer class="ltx_page_footer">
+<div class="ltx_page_logo">Generated  on Fri Jun 12 12:19:14 2026 by <a href="http://dlmf.nist.gov/LaTeXML/" class="ltx_LaTeXML_logo"><span style="letter-spacing:-0.2em; margin-right:0.1em;">L<span class="ltx_font_smallcaps" style="position:relative; bottom:2.2pt;">a</span>T<span class="ltx_font_smallcaps" style="font-size:120%;position:relative; bottom:-0.2ex;">e</span></span><span style="font-size:90%; position:relative; bottom:-0.2ex;">XML</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg==" alt="Mascot Sammy"></a>
+</div></footer>
+</div>
+</body>
+</html>

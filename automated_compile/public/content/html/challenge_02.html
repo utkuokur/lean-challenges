@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Challenge 2: Excluded Minors of GF⁢(𝑝^𝑚)-representable matroids</title>
+<!--Generated on Fri Jun 12 12:18:51 2026 by LaTeXML (version 0.8.8) http://dlmf.nist.gov/LaTeXML/.-->
+
+<link rel="stylesheet" href="LaTeXML.css" type="text/css">
+<link rel="stylesheet" href="ltx-article.css" type="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div class="ltx_page_main">
+<div class="ltx_page_content">
+<article class="ltx_document">
+<section id="Sx1" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">Challenge 2: Excluded Minors of <math id="Sx1.m1" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable matroids</h2>
+
+<div id="Thmdefinition1" class="ltx_theorem ltx_theorem_definition">
+<h6 class="ltx_title ltx_runin ltx_title_theorem">
+<span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Definition 1</span></span><span class="ltx_text ltx_font_bold"> </span>(Matroid)<span class="ltx_text ltx_font_bold">.</span>
+</h6>
+<div id="Thmdefinition1.p1" class="ltx_para">
+<p class="ltx_p">A <em class="ltx_emph ltx_font_italic">matroid</em> is a pair <math id="Thmdefinition1.p1.m1" class="ltx_Math" alttext="M=(E,\mathcal{I})" display="inline"><mrow><mi>M</mi><mo>=</mo><mrow><mo stretchy="false">(</mo><mi>E</mi><mo>,</mo><mi class="ltx_font_mathcaligraphic">ℐ</mi><mo stretchy="false">)</mo></mrow></mrow></math> consisting of a finite set <math id="Thmdefinition1.p1.m2" class="ltx_Math" alttext="E" display="inline"><mi>E</mi></math> and a collection <math id="Thmdefinition1.p1.m3" class="ltx_Math" alttext="\mathcal{I}" display="inline"><mi class="ltx_font_mathcaligraphic">ℐ</mi></math> of subsets of <math id="Thmdefinition1.p1.m4" class="ltx_Math" alttext="E" display="inline"><mi>E</mi></math>, called the <em class="ltx_emph ltx_font_italic">independent sets</em>, such that:</p>
+<ol id="S1.I1" class="ltx_enumerate">
+<li id="S1.I1.i1" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">1.</span> 
+<div id="S1.I1.i1.p1" class="ltx_para">
+<p class="ltx_p"><math id="S1.I1.i1.p1.m1" class="ltx_Math" alttext="\emptyset\in\mathcal{I}" display="inline"><mrow><mi mathvariant="normal">∅</mi><mo>∈</mo><mi class="ltx_font_mathcaligraphic">ℐ</mi></mrow></math>;</p>
+</div>
+</li>
+<li id="S1.I1.i2" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">2.</span> 
+<div id="S1.I1.i2.p1" class="ltx_para">
+<p class="ltx_p">if <math id="S1.I1.i2.p1.m1" class="ltx_Math" alttext="I\in\mathcal{I}" display="inline"><mrow><mi>I</mi><mo>∈</mo><mi class="ltx_font_mathcaligraphic">ℐ</mi></mrow></math> and <math id="S1.I1.i2.p1.m2" class="ltx_Math" alttext="J\subseteq I" display="inline"><mrow><mi>J</mi><mo>⊆</mo><mi>I</mi></mrow></math>, then <math id="S1.I1.i2.p1.m3" class="ltx_Math" alttext="J\in\mathcal{I}" display="inline"><mrow><mi>J</mi><mo>∈</mo><mi class="ltx_font_mathcaligraphic">ℐ</mi></mrow></math>;</p>
+</div>
+</li>
+<li id="S1.I1.i3" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">3.</span> 
+<div id="S1.I1.i3.p1" class="ltx_para">
+<p class="ltx_p">if <math id="S1.I1.i3.p1.m1" class="ltx_Math" alttext="I,J\in\mathcal{I}" display="inline"><mrow><mrow><mi>I</mi><mo>,</mo><mi>J</mi></mrow><mo>∈</mo><mi class="ltx_font_mathcaligraphic">ℐ</mi></mrow></math> and <math id="S1.I1.i3.p1.m2" class="ltx_Math" alttext="|I|&lt;|J|" display="inline"><mrow><mrow><mo stretchy="false">|</mo><mi>I</mi><mo stretchy="false">|</mo></mrow><mo>&lt;</mo><mrow><mo stretchy="false">|</mo><mi>J</mi><mo stretchy="false">|</mo></mrow></mrow></math>, then there is some <math id="S1.I1.i3.p1.m3" class="ltx_Math" alttext="x\in J\setminus I" display="inline"><mrow><mi>x</mi><mo>∈</mo><mrow><mi>J</mi><mo>∖</mo><mi>I</mi></mrow></mrow></math> such that <math id="S1.I1.i3.p1.m4" class="ltx_Math" alttext="I\cup\{x\}\in\mathcal{I}" display="inline"><mrow><mrow><mi>I</mi><mo>∪</mo><mrow><mo stretchy="false">{</mo><mi>x</mi><mo stretchy="false">}</mo></mrow></mrow><mo>∈</mo><mi class="ltx_font_mathcaligraphic">ℐ</mi></mrow></math>.</p>
+</div>
+</li>
+</ol>
+<p class="ltx_p">The maximal independent sets of <math id="Thmdefinition1.p1.m5" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math> are called the <em class="ltx_emph ltx_font_italic">bases</em> of <math id="Thmdefinition1.p1.m6" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math>.</p>
+</div>
+</div>
+<div id="Thmdefinition2" class="ltx_theorem ltx_theorem_definition">
+<h6 class="ltx_title ltx_runin ltx_title_theorem">
+<span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Definition 2</span></span><span class="ltx_text ltx_font_bold"> </span>(<math id="Thmdefinition2.m1" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable matroid)<span class="ltx_text ltx_font_bold">.</span>
+</h6>
+<div id="Thmdefinition2.p1" class="ltx_para">
+<p class="ltx_p">Let <math id="Thmdefinition2.p1.m1" class="ltx_Math" alttext="p" display="inline"><mi>p</mi></math> be a prime number. Let <math id="Thmdefinition2.p1.m2" class="ltx_Math" alttext="m" display="inline"><mi>m</mi></math> be a positive integer. Let <math id="Thmdefinition2.p1.m3" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math> denote the finite field with <math id="Thmdefinition2.p1.m4" class="ltx_Math" alttext="p^{m}" display="inline"><msup><mi>p</mi><mi>m</mi></msup></math> elements. A matroid <math id="Thmdefinition2.p1.m5" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math> is <em class="ltx_emph ltx_font_italic"><math id="Thmdefinition2.p1.m6" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable</em> if there is a matrix <math id="Thmdefinition2.p1.m7" class="ltx_Math" alttext="A" display="inline"><mi>A</mi></math> over <math id="Thmdefinition2.p1.m8" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math> such that the independent sets of <math id="Thmdefinition2.p1.m9" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math> are exactly the sets of columns of <math id="Thmdefinition2.p1.m10" class="ltx_Math" alttext="A" display="inline"><mi>A</mi></math> which are linearly independent over <math id="Thmdefinition2.p1.m11" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>.</p>
+</div>
+</div>
+<div id="Thmdefinition3" class="ltx_theorem ltx_theorem_definition">
+<h6 class="ltx_title ltx_runin ltx_title_theorem">
+<span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Definition 3</span></span><span class="ltx_text ltx_font_bold"> </span>(Matroid minor)<span class="ltx_text ltx_font_bold">.</span>
+</h6>
+<div id="Thmdefinition3.p1" class="ltx_para">
+<p class="ltx_p">Let <math id="Thmdefinition3.p1.m1" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math> be a matroid with ground set <math id="Thmdefinition3.p1.m2" class="ltx_Math" alttext="E" display="inline"><mi>E</mi></math>. The <span class="ltx_text ltx_font_italic">dual</span> of <math id="Thmdefinition3.p1.m3" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math>, denoted <math id="Thmdefinition3.p1.m4" class="ltx_Math" alttext="M^{*}" display="inline"><msup><mi>M</mi><mo>∗</mo></msup></math>, is the matroid with the same ground set, where the bases are the complements of the bases of <math id="Thmdefinition3.p1.m5" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math>. Given a subset <math id="Thmdefinition3.p1.m6" class="ltx_Math" alttext="D\subseteq E" display="inline"><mrow><mi>D</mi><mo>⊆</mo><mi>E</mi></mrow></math>, the <em class="ltx_emph ltx_font_italic">deletion</em> of <math id="Thmdefinition3.p1.m7" class="ltx_Math" alttext="D" display="inline"><mi>D</mi></math> from <math id="Thmdefinition3.p1.m8" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math>, denoted <math id="Thmdefinition3.p1.m9" class="ltx_Math" alttext="M\setminus D" display="inline"><mrow><mi>M</mi><mo>∖</mo><mi>D</mi></mrow></math>, is the restriction of <math id="Thmdefinition3.p1.m10" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math> to <math id="Thmdefinition3.p1.m11" class="ltx_Math" alttext="E\setminus D" display="inline"><mrow><mi>E</mi><mo>∖</mo><mi>D</mi></mrow></math>. Given a subset <math id="Thmdefinition3.p1.m12" class="ltx_Math" alttext="C\subseteq E" display="inline"><mrow><mi>C</mi><mo>⊆</mo><mi>E</mi></mrow></math>, the <em class="ltx_emph ltx_font_italic">contraction</em> of <math id="Thmdefinition3.p1.m13" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math> onto <math id="Thmdefinition3.p1.m14" class="ltx_Math" alttext="E-C" display="inline"><mrow><mi>E</mi><mo>−</mo><mi>C</mi></mrow></math> is the matroid <math id="Thmdefinition3.p1.m15" class="ltx_Math" alttext="M/C:=(M^{*}\setminus C)^{*}" display="inline"><mrow><mrow><mi>M</mi><mo>/</mo><mi>C</mi></mrow><mo lspace="0.278em" rspace="0.278em">:=</mo><msup><mrow><mo stretchy="false">(</mo><mrow><msup><mi>M</mi><mo>∗</mo></msup><mo>∖</mo><mi>C</mi></mrow><mo stretchy="false">)</mo></mrow><mo>∗</mo></msup></mrow></math>, with ground set <math id="Thmdefinition3.p1.m16" class="ltx_Math" alttext="E\setminus C" display="inline"><mrow><mi>E</mi><mo>∖</mo><mi>C</mi></mrow></math>.</p>
+</div>
+<div id="Thmdefinition3.p2" class="ltx_para">
+<p class="ltx_p">Given matroids <math id="Thmdefinition3.p2.m1" class="ltx_Math" alttext="M,N" display="inline"><mrow><mi>M</mi><mo>,</mo><mi>N</mi></mrow></math>, then <math id="Thmdefinition3.p2.m2" class="ltx_Math" alttext="N" display="inline"><mi>N</mi></math> is a <em class="ltx_emph ltx_font_italic">minor</em> of <math id="Thmdefinition3.p2.m3" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math> if there exist sets <math id="Thmdefinition3.p2.m4" class="ltx_Math" alttext="C" display="inline"><mi>C</mi></math> and <math id="Thmdefinition3.p2.m5" class="ltx_Math" alttext="D" display="inline"><mi>D</mi></math> such that <math id="Thmdefinition3.p2.m6" class="ltx_Math" alttext="N=M/C\setminus D" display="inline"><mrow><mi>N</mi><mo>=</mo><mrow><mrow><mi>M</mi><mo>/</mo><mi>C</mi></mrow><mo>∖</mo><mi>D</mi></mrow></mrow></math>.</p>
+</div>
+</div>
+<div id="Thmdefinition4" class="ltx_theorem ltx_theorem_definition">
+<h6 class="ltx_title ltx_runin ltx_title_theorem">
+<span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Definition 4</span></span><span class="ltx_text ltx_font_bold"> </span>(Excluded minor)<span class="ltx_text ltx_font_bold">.</span>
+</h6>
+<div id="Thmdefinition4.p1" class="ltx_para">
+<p class="ltx_p">Let <math id="Thmdefinition4.p1.m1" class="ltx_Math" alttext="\mathcal{C}" display="inline"><mi class="ltx_font_mathcaligraphic">𝒞</mi></math> be a class of matroids closed under minors. A matroid <math id="Thmdefinition4.p1.m2" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math> is an <em class="ltx_emph ltx_font_italic">excluded minor</em> for <math id="Thmdefinition4.p1.m3" class="ltx_Math" alttext="\mathcal{C}" display="inline"><mi class="ltx_font_mathcaligraphic">𝒞</mi></math> if <math id="Thmdefinition4.p1.m4" class="ltx_Math" alttext="M\notin\mathcal{C}" display="inline"><mrow><mi>M</mi><mo>∉</mo><mi class="ltx_font_mathcaligraphic">𝒞</mi></mrow></math>, but every proper minor of <math id="Thmdefinition4.p1.m5" class="ltx_Math" alttext="M" display="inline"><mi>M</mi></math> belongs to <math id="Thmdefinition4.p1.m6" class="ltx_Math" alttext="\mathcal{C}" display="inline"><mi class="ltx_font_mathcaligraphic">𝒞</mi></math>.</p>
+</div>
+</div>
+<div id="Sx1.p1" class="ltx_para">
+<p class="ltx_p">The class of <math id="Sx1.p1.m1" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable matroids is closed under taking minors. Thus, it is natural to ask for minimal matroids which fail to be representable over <math id="Sx1.p1.m2" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>.</p>
+</div>
+<div id="S1.Thmtheorem1" class="ltx_theorem ltx_theorem_openproblem">
+<h6 class="ltx_title ltx_runin ltx_title_theorem">
+<span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Open Problem 1.1</span></span><span class="ltx_text ltx_font_bold">.</span>
+</h6>
+<div id="S1.Thmtheorem1.p1" class="ltx_para">
+<p class="ltx_p">Let <math id="S1.Thmtheorem1.p1.m1" class="ltx_Math" alttext="p" display="inline"><mi>p</mi></math> be a prime number. Let <math id="S1.Thmtheorem1.p1.m2" class="ltx_Math" alttext="m" display="inline"><mi>m</mi></math> be a positive integer. List the minimal excluded minors for the class of <math id="S1.Thmtheorem1.p1.m3" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable matroids and prove that the given list is complete up to isomorphism.</p>
+</div>
+</div>
+<div id="Sx1.p2" class="ltx_para">
+<p class="ltx_p">For <math id="Sx1.p2.m1" class="ltx_Math" alttext="p^{m}=2" display="inline"><mrow><msup><mi>p</mi><mi>m</mi></msup><mo>=</mo><mn>2</mn></mrow></math>, the excluded minor list is known: a matroid is representable over <math id="Sx1.p2.m2" class="ltx_Math" alttext="\mathrm{GF}(2)" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo></mrow></mrow></math> if and only if it has no minor isomorphic to <math id="Sx1.p2.m3" class="ltx_Math" alttext="U_{2,4}" display="inline"><msub><mi>U</mi><mrow><mn>2</mn><mo>,</mo><mn>4</mn></mrow></msub></math> <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib22" title="A homotopy theorem for matroids. I, II" class="ltx_ref">5</a>]</cite>. For <math id="Sx1.p2.m4" class="ltx_Math" alttext="p^{m}=3" display="inline"><mrow><msup><mi>p</mi><mi>m</mi></msup><mo>=</mo><mn>3</mn></mrow></math>, there is also a finite explicit list: a matroid is representable over <math id="Sx1.p2.m5" class="ltx_Math" alttext="\mathrm{GF}(3)" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo></mrow></mrow></math> if and only if it has no minor isomorphic to <math id="Sx1.p2.m6" class="ltx_Math" alttext="U_{2,5}" display="inline"><msub><mi>U</mi><mrow><mn>2</mn><mo>,</mo><mn>5</mn></mrow></msub></math>, <math id="Sx1.p2.m7" class="ltx_Math" alttext="U_{3,5}" display="inline"><msub><mi>U</mi><mrow><mn>3</mn><mo>,</mo><mn>5</mn></mrow></msub></math>, <math id="Sx1.p2.m8" class="ltx_Math" alttext="F_{7}" display="inline"><msub><mi>F</mi><mn>7</mn></msub></math>, or <math id="Sx1.p2.m9" class="ltx_Math" alttext="F_{7}^{*}" display="inline"><msubsup><mi>F</mi><mn>7</mn><mo>∗</mo></msubsup></math> <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib23" title="On Reid’s characterization of the ternary matroids" class="ltx_ref">1</a>, <a href="#bib.bib24" title="Matroid representation over GF(3)" class="ltx_ref">4</a>]</cite>. In general, Rota’s excluded-minor conjecture, proven by Geelen, Gerards and Whittle, says that for every finite field <math id="Sx1.p2.m10" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math> there are only finitely many excluded minors for the class of <math id="Sx1.p2.m11" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable matroids <cite class="ltx_cite ltx_citemacro_cite">[<a href="#bib.bib25" title="Combinatorial theory, old and new" class="ltx_ref">3</a>, <a href="#bib.bib26" title="Solving Rota’s conjecture" class="ltx_ref">2</a>]</cite>.</p>
+</div>
+<div id="Sx1.p3" class="ltx_para">
+<p class="ltx_p">We have the following parametrized version of the open problem.</p>
+</div>
+<div id="S1.Thmtheorem2" class="ltx_theorem ltx_theorem_openproblem">
+<h6 class="ltx_title ltx_runin ltx_title_theorem">
+<span class="ltx_tag ltx_tag_theorem"><span class="ltx_text ltx_font_bold">Open Problem 1.2</span></span><span class="ltx_text ltx_font_bold">.</span>
+</h6>
+<div id="S1.Thmtheorem2.p1" class="ltx_para">
+<p class="ltx_p">Let <math id="S1.Thmtheorem2.p1.m1" class="ltx_Math" alttext="r" display="inline"><mi>r</mi></math> be a positive integer. If there is a prime number <math id="S1.Thmtheorem2.p1.m2" class="ltx_Math" alttext="p" display="inline"><mi>p</mi></math> and a positive integer <math id="S1.Thmtheorem2.p1.m3" class="ltx_Math" alttext="m" display="inline"><mi>m</mi></math> such that <math id="S1.Thmtheorem2.p1.m4" class="ltx_Math" alttext="r=p^{m}" display="inline"><mrow><mi>r</mi><mo>=</mo><msup><mi>p</mi><mi>m</mi></msup></mrow></math>, then list the minimal excluded minors for the class of <math id="S1.Thmtheorem2.p1.m5" class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable matroids and prove that the list is complete up to isomorphism.</p>
+</div>
+</div>
+</section>
+<section id="bib" class="ltx_bibliography">
+<h2 class="ltx_title ltx_title_bibliography">References</h2>
+
+<ul id="bib.L1" class="ltx_biblist">
+<li id="bib.bib23" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[1]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">R. E. Bixby</span><span class="ltx_text ltx_bib_year"> (1979)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">On Reid’s characterization of the ternary matroids</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">Journal of Combinatorial Theory, Series B</span> <span class="ltx_text ltx_bib_volume">26</span> (<span class="ltx_text ltx_bib_number">2</span>), <span class="ltx_text ltx_bib_pages"> pp. 174–204</span>.
+</span>
+<span class="ltx_bibblock">External Links: <span class="ltx_text ltx_bib_links"><a href="https://dx.doi.org/10.1016/0095-8956%2879%2990056-X" title="" class="ltx_ref doi ltx_bib_external">Document</a></span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#Sx1.p2" title="Challenge 2: Excluded Minors of GF⁢(𝑝^𝑚)-representable matroids" class="ltx_ref"><span class="ltx_text ltx_ref_title">Challenge 2: Excluded Minors of <math class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable matroids</span></a>.
+</span>
+</li>
+<li id="bib.bib26" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[2]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">J. Geelen, B. Gerards, and G. Whittle</span><span class="ltx_text ltx_bib_year"> (2014)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Solving Rota’s conjecture</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">Notices of the American Mathematical Society</span> <span class="ltx_text ltx_bib_volume">61</span> (<span class="ltx_text ltx_bib_number">7</span>), <span class="ltx_text ltx_bib_pages"> pp. 736–743</span>.
+</span>
+<span class="ltx_bibblock">External Links: <span class="ltx_text ltx_bib_links"><a href="https://dx.doi.org/10.1090/noti1139" title="" class="ltx_ref doi ltx_bib_external">Document</a></span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#Sx1.p2" title="Challenge 2: Excluded Minors of GF⁢(𝑝^𝑚)-representable matroids" class="ltx_ref"><span class="ltx_text ltx_ref_title">Challenge 2: Excluded Minors of <math class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable matroids</span></a>.
+</span>
+</li>
+<li id="bib.bib25" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[3]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">G. Rota</span><span class="ltx_text ltx_bib_year"> (1971)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Combinatorial theory, old and new</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">Actes du Congrès International des Mathématiciens, Nice, 1970</span>,
+</span>
+<span class="ltx_bibblock">Vol. <span class="ltx_text ltx_bib_volume">3</span>, <span class="ltx_text ltx_bib_place">Paris</span>, <span class="ltx_text ltx_bib_pages"> pp. 229–233</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#Sx1.p2" title="Challenge 2: Excluded Minors of GF⁢(𝑝^𝑚)-representable matroids" class="ltx_ref"><span class="ltx_text ltx_ref_title">Challenge 2: Excluded Minors of <math class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable matroids</span></a>.
+</span>
+</li>
+<li id="bib.bib24" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[4]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">P. D. Seymour</span><span class="ltx_text ltx_bib_year"> (1979)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Matroid representation over GF(3)</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">Journal of Combinatorial Theory, Series B</span> <span class="ltx_text ltx_bib_volume">26</span> (<span class="ltx_text ltx_bib_number">2</span>), <span class="ltx_text ltx_bib_pages"> pp. 159–173</span>.
+</span>
+<span class="ltx_bibblock">External Links: <span class="ltx_text ltx_bib_links"><a href="https://dx.doi.org/10.1016/0095-8956%2879%2990055-8" title="" class="ltx_ref doi ltx_bib_external">Document</a></span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#Sx1.p2" title="Challenge 2: Excluded Minors of GF⁢(𝑝^𝑚)-representable matroids" class="ltx_ref"><span class="ltx_text ltx_ref_title">Challenge 2: Excluded Minors of <math class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable matroids</span></a>.
+</span>
+</li>
+<li id="bib.bib22" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[5]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">W. T. Tutte</span><span class="ltx_text ltx_bib_year"> (1958)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">A homotopy theorem for matroids. I, II</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">Transactions of the American Mathematical Society</span> <span class="ltx_text ltx_bib_volume">88</span>, <span class="ltx_text ltx_bib_pages"> pp. 144–174</span>.
+</span>
+<span class="ltx_bibblock">External Links: <span class="ltx_text ltx_bib_links"><a href="https://dx.doi.org/10.2307/1993243" title="" class="ltx_ref doi ltx_bib_external">Document</a></span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#Sx1.p2" title="Challenge 2: Excluded Minors of GF⁢(𝑝^𝑚)-representable matroids" class="ltx_ref"><span class="ltx_text ltx_ref_title">Challenge 2: Excluded Minors of <math class="ltx_Math" alttext="\mathrm{GF}(p^{m})" display="inline"><mrow><mi>GF</mi><mo>⁢</mo><mrow><mo stretchy="false">(</mo><msup><mi>p</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow></mrow></math>-representable matroids</span></a>.
+</span>
+</li>
+</ul>
+</section>
+</article>
+</div>
+<footer class="ltx_page_footer">
+<div class="ltx_page_logo">Generated  on Fri Jun 12 12:18:51 2026 by <a href="http://dlmf.nist.gov/LaTeXML/" class="ltx_LaTeXML_logo"><span style="letter-spacing:-0.2em; margin-right:0.1em;">L<span class="ltx_font_smallcaps" style="position:relative; bottom:2.2pt;">a</span>T<span class="ltx_font_smallcaps" style="font-size:120%;position:relative; bottom:-0.2ex;">e</span></span><span style="font-size:90%; position:relative; bottom:-0.2ex;">XML</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg==" alt="Mascot Sammy"></a>
+</div></footer>
+</div>
+</body>
+</html>
