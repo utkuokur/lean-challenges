@@ -1,0 +1,411 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
+
+\usepackage{minimalJ}
+
+\numberwithin{equation}{section}
+
+% Requires Biber
+\usepackage[style=numeric,sorting=none,giveninits=true]{biblatex}
+\addbibresource{bibliography.bib}
+
+\usepackage{etoolbox}
+\usepackage[margin=1in]{geometry}
+
+\DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
+
+%\usepackage[colorlinks, allcolors=blue, hypertexnames=false]{hyperref}
+%\usepackage[noabbrev, nameinlink]{cleveref}
+
+\usepackage{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Theorem Environments            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{example}{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{openproblem}[theorem]{Open Problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               New Commands            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\ev}[1]{( #1 )} 
+\newcommand{\ew}[1]{\left( #1 \right)} 
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Document                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\underbrace\LaTeXunderbrace
+\let\overbrace\LaTeXoverbrace
+
+\begin{document}
+
+\title{Leanified Theorems}
+
+%\date{\today}
+%\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Challenges}
+\refstepcounter{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{enumerate}
+\item \textbf{The Hadwiger Conjecture. }  
+
+%Let $G= \ev{V,E}$ be a finite simple graph.
+\begin{comment}
+\begin{definition}[Graph Minor] 
+Given simple graphs $X$ and $G$, we say that $X$ is a \emph{minor} of $G$ if there is a function assigning to each vertex $x$ of $X$ a nonempty vertex set $V_x\subseteq V(G)$ such that 
+\begin{enumerate}
+\item the subgraph $G[V_x]$ induced by $G$ on $V_x$ is connected for each $x$;
+\item for different vertices  $x,y\in V\ev{X}$, the sets $V_x$ and $V_y$ are disjoint;
+\item for any two adjacent vertices $x,y\in V\ev{X}$, there are adjacent vertices $a\in V_x$ and $b\in V_y$ of $G$. 
+\end{enumerate}
+\end{definition}
+\end{comment}
+
+%COMMENT FROM NATHAN: maybe we can skip the definitions of minor and chromatic number
+
+\begin{definition}[Hadwiger Number]
+Given a graph $G$, the \textit{Hadwiger number} of $G$ is the largest integer $t$ such that the complete graph $K_t$ on $t$ vertices is a minor of $G$.
+We denote the Hadwiger number by $h\ev{G}$.
+\end{definition}
+
+\begin{comment}
+\begin{definition}[Chromatic number]
+Given a graph $G$  and $n\in \mathbb{N}$, 
+a \textit{proper coloring} of $G$ with $n$ colours is a function $f:[n] \rightarrow V\ev{G}$ so that adjacent vertices receive different $f$-values. The \textit{chromatic number} of $G$ is the minimum number $n$ such that there is a proper coloring of $G$ with $n$ colours. 
+\end{definition}
+\end{comment}
+
+
+\begin{conjecture}[Hadwiger's Conjecture
+\mbox{\cite[Conjecture 1]{steiner}}]\label{hadw}
+Let $r\in \mathbb{N}$.
+For every finite simple graph $G$, we have:
+$$
+r \leq \chi\ev{G} \ \Longrightarrow \  r \leq h\ev{G} 
+$$
+where $\chi\ev{G}$ denotes the chromatic number of $G$. 
+\end{conjecture}
+
+While Conjecture \ref{hadw} is not difficult for values of $r\leq 3$, already for $r=4$ it is equivalent to the 4-colour theorem. 
+Robertson, Seymour and Thomas proved the above for $r= 5$ \cite{RobertsonSeymourThomas1993Hadwiger}. 
+
+\newpage
+\item \textbf{Excluded Minors of $\mathrm{GF}(p^m)$-representable matroids.}
+
+\begin{definition}[Matroid]
+A \emph{matroid} is a pair $M=(E,\mathcal I)$ consisting of a finite set $E$ and a collection $\mathcal I$ of subsets of $E$, called the \emph{independent sets}, such that:
+\begin{enumerate}
+\item $\emptyset \in \mathcal I$;
+\item if $I\in \mathcal I$ and $J\subseteq I$, then $J\in \mathcal I$;
+\item if $I,J\in \mathcal I$ and $|I|<|J|$, then there is some $x\in J\setminus I$ such that $I\cup \{x\}\in \mathcal I$.
+\end{enumerate}
+The maximal independent sets of $M$ are called the \emph{bases} of $M$.
+\end{definition}
+
+\begin{definition}[$\mathrm{GF}(p^m)$-representable matroid]
+Let $p$ be a prime number. Let $m$ be a positive integer. Let $\mathrm{GF}(p^m)$ denote the finite field with $p^m$ elements. A matroid $M$ is \emph{$\mathrm{GF}(p^m)$-representable} if there is a matrix $A$  whose entries are in $\mathrm{GF}(p^m)$ and whose columns are labelled with the elements of $M$ such that the independent sets of $M$ are exactly the sets of columns of $A$ which are linearly independent over $\mathrm{GF}(p^m)$.
+\end{definition}
+
+\begin{definition}[Matroid minor]
+Let $M$ be a matroid with ground set $E$. 
+Given a subset $D \subseteq E$, the \emph{deletion} of $D$ from $M$, denoted $M\setminus D$, is the restriction of $M$ to $E\setminus D$.
+The \textit{dual} of $M$, denoted $M^*$, is the matroid with the same ground set as $M$, where a set is independent whenever its complement includes a base of $M$.  Given a subset $C\subseteq E$, the \emph{contraction} of $M$ onto $E\setminus C$ is the matroid $M/C := (M^* \setminus C)^*$.
+
+Given matroids $M,N$, then $N$ is a \emph{minor} of $M$ if there exist disjoint sets $C$ and $D$ such that $N = M/C \setminus D$. A minor of $M$ is \textit{proper} if it is not equal to $M$.
+\end{definition}
+
+\begin{definition}[Excluded minor]
+Let $\mathcal C$ be a class of matroids closed under minors. A matroid $M$ is an \emph{excluded minor} for $\mathcal C$ if $M\notin \mathcal C$, but every proper minor of $M$ belongs to $\mathcal C$.
+\end{definition}
+
+The class of $\mathrm{GF}(p^m)$-representable matroids is closed under taking minors. Thus, it is natural to ask what its excluded minors are.
+
+\begin{openproblem}
+Let $p$ be a prime number. Let $m$ be a positive integer. List the minimal excluded minors for the class of $\mathrm{GF}(p^m)$-representable matroids and prove that the given list is complete up to isomorphism.
+\end{openproblem}
+
+For $p^m=2$, the excluded minor list is known: In 1958, Tutte proved that a matroid is representable over $\mathrm{GF}(2)$ if and only if it has no minor isomorphic to $U_{2,4}$ \cite{Tutte1958Homotopy}. For $p^m=3$, there is also a finite explicit list: In 1979, Bixby and Seymour proved that a matroid is representable over $\mathrm{GF}(3)$ if and only if it has no minor isomorphic to $U_{2,5}$, $U_{3,5}$, $F_7$, or $F_7^*$ \cite{Bixby1979Reid,Seymour1979GF3}.
+The excluded minors for $GF(4)$-representable matroids have been determined by Geelen, Gerards and Kapoor \cite{GeelenGerardsKapoor2000GF4}.
+In general, Rota's excluded-minor conjecture, proven by Geelen, Gerards and Whittle, says that for every finite field $\mathrm{GF}(p^m)$ there are only finitely many excluded minors for the class of $\mathrm{GF}(p^m)$-representable matroids \cite{Rota1971Combinatorial, GeelenGerardsWhittle2014Solving}. 
+
+We consider the following parametrized version of the well-known open problem to determine  for every finite field $\mathrm{GF}(p^m)$, the finitely many excluded minors explicitly.
+\begin{openproblem}
+Let $r$ be a positive integer. If there is a prime number $p$ and a positive integer $m$ such that $r=p^m$, then list the excluded minors for the class of $\mathrm{GF}(p^m)$-representable matroids and prove that the list is complete up to isomorphism.
+\end{openproblem}
+
+
+\begin{comment}
+\newpage
+\item \textbf{Excluded Minors of $GF(r)$-representable matroids.}
+%\cite{}
+
+In the formal statement, the list is given as a finite set $L$ of matroids: the members of $L$ are pairwise non-isomorphic excluded minors, and every finite matroid that is not $\mathrm{GF}(p^m)$-representable has a minor isomorphic to a member of $L$. This rules out indirect solutions that prove the existence of a complete list without exhibiting one.
+
+\begin{openproblem}
+Let $r$ be a natural number which is a prime power. List the minimal excluded minors for the class of GF$(p^m)$-representable matroids and prove that the given list is complete up to isomorphism.
+\end{openproblem}
+\end{comment}
+
+\newpage
+\item {\bf Ramsey Numbers.}
+\begin{definition}[Ramsey Number]
+Given $t\in \mathbb{N}$, the \emph{(diagonal) Ramsey number} \( R(t) \) is the smallest $n\in \mathbb{N}\cup \{\infty\}$ such that every simple graph \( G \) on \( n \) vertices contains either a clique of size \( t \) or an independent set of size \( t \).
+\end{definition}
+By Ramsey's theorem, $R(t)$ is always an integer, which is upper bounded by $4^t$ \cite{ramsey1930formal, ramseygraham1990ramsey}.
+Erd\H{o}s proved that random graphs $G(n,p)$ give a lower bound of the form $\sqrt{2}^t$ for $t$ sufficently large \cite{erdos1947some}. An important problem  that can be traced back to Ramsey's original paper \cite{ramsey1930formal} is to get good upper and lower bounds for the Ramsey number.
+
+\begin{openproblem}[Scaled Ramsey problem]
+Let $r\in \mathbb{N}$.
+Provide decimal numbers $d_1$ and $d_2$ with $|d_2-d_1|\leq (4-\sqrt{2}) \cdot 0.9^r$ so that for all sufficiently large $t\in \mathbb{N}$
+\[
+d_1^t \leq R(t) \leq d_2^t.
+\]
+\end{openproblem}
+
+The scaled Ramsey problem for $r=1$ follows by combining the above mentioned works of Ramsey and Erd\H{o}s.
+The problem was solved for $r=2$ by Campos, Griffiths, Morris  and Sahasrabudhe
+\cite{campos2026exponential} combined with the better bound from the follow-up paper by 
+Gupta, Ndiaye, Norin and Wei \cite{gupta2024optimizing}.
+
+\newpage
+\item \textbf{Sidorenko Conjecture for Bipartite Graphs with Bounded Sides.} 
+% \cite{ }
+
+\begin{definition}[Graph homomorphism density]
+Let $G$ and $H$ be simple graphs. 
+%\phantom{a}
+\begin{enumerate}
+\item A function $f: V\ev{H} \rightarrow V\ev{G}$ is a \textit{graph homomorphism} from $H$ to $G$ if for each edge $uv \in E\ev{H}$, we have $f\ev{u}f\ev{v} \in E\ev{G}$. 
+
+\item Let $\mathrm{hom}\ev{H,G}$ be the number of graph homomorphisms $H \rightarrow G$. 
+
+\item The \textit{homomorphism density} of $H$ in $G$ is the fraction
+$$
+t_{H}\ev{G} := \dfrac{\mathrm{hom}\ev{H,G}}{|V\ev{G}|^{|V\ev{H}|}}
+$$
+\end{enumerate}
+\end{definition}
+
+\begin{conjecture}[Sidorenko's Conjecture \mbox{\cite{sidorenko}}]
+For every bipartite graph $H$ and for any graph $G$, we have:
+$$
+t_H\ev{G} \geq t_{K_2}\ev{G}^{|E\ev{H}|}
+$$
+\end{conjecture}
+
+We are interested in the special case of the conjecture where $H$ is a bipartite graph in which each side has at most $r$ vertices.
+\begin{openproblem}[Sidorenko's Conjecture for bipartite graphs with bounded sides]
+Let $r \in \N$. For every bipartite graph $H$ that admits a bipartition $V\ev{H} = X \cup Y$ with $|X| \leq r$ and $|Y| \leq r$ and for any graph $G$, we have:
+$$
+t_H\ev{G} \geq t_{K_2}\ev{G}^{|E\ev{H}|}
+$$
+\end{openproblem}
+
+\begin{comment}
+\begin{definition}[Half-graph]
+Let $A_r = \{ a_1,\ldots, a_r \}$ and $B_r = \{ b_1,\ldots, b_r \} $ be disjoint sets of size $r$. 
+A \emph{half-graph} is the bipartite graph on the vertex set $A_r\cup B_r$ with the following edges present: $E = \{ a_i b_j : i \leq j \}$
+(Note that these are about \lq half\rq\ of the possible edges between $A_r$ and $B_r$, hence the name). 
+\end{definition}
+
+Note that Sidorenko conjecture is already resolved for half-graphs by \cite{}.
+\end{comment}
+
+\newpage
+\item \textbf{Erdős–Hajnal Conjecture.}
+
+
+\begin{definition}[Cliques and Independent sets]
+Given a simple graph $G$, a set of vertices of $G$ is a \textit{clique} if its vertices are pairwise adjacent. It is an \textit{independent set} if its vertices are pairwise non-adjacent. 
+\end{definition}
+
+\begin{definition}[$H$-free graphs]
+Given graphs $G$ and $H$, we say that $G$ is \textit{$H$-free} if it does not contain an induced subgraph isomorphic to $H$. 
+\end{definition}
+
+\begin{conjecture}[Erdős–Hajnal Conjecture \mbox{\cite{erdos_hajnal}}]
+For each graph $H$, there is a constant $c_H > 0$ such that every $H$-free graph $G$ with $n$ vertices has a clique or independent set of size at least $n^{c_H}$. 
+\end{conjecture}
+
+
+
+Given $r\in \mathbb{N}$, we denote the path with $r$ vertices by $P_r$.
+We are interested in the following parametrized version of the conjecture, where $H=P_r$ is a path. 
+\begin{conjecture}[Erdős–Hajnal Conjecture for paths]
+Let $r\in \mathbb{N}$. There is some $c_r > 0$ such that every $P_r$-free graph $G$ with $n$ vertices has a clique or independent set of size $n^{c_r}$.
+\end{conjecture}
+
+The conjecture has been proved for $r=5$ by Nguyen, Tung, Scott and Seymour in \cite{nguyen2026induced}
+
+
+
+\newpage
+\item \textbf{Better-Quasi-Ordering of Finite Graphs under Minor Relation.}
+\begin{definition}[Cumulative Hierarchy over $Q$]
+Given a set $Q$, we denote by $\mathcal P^*$ the set of nonempty subsets of $Q$. We define for each ordinal $\alpha$ a set $V^*_{\alpha}(Q)$ recursively as follows:
+\begin{itemize}
+\item $V^*_0(Q) := Q$.
+\item $V^*_{\beta + 1} := \cal{P}^* V^*_{\beta}$
+\item $V^*_{\lambda}(Q) := \dot \bigcup_{\alpha < \lambda} V^*_{\alpha}(Q)$ for any limit ordinal $\lambda$.
+\end{itemize}
+
+The class given by the union of all these sets is denoted $V^*(Q)$.
+\end{definition}
+
+\begin{definition}[$\alpha$-well-quasiordering]
+Given a quasi-order $(Q,\le)$, we define a relation $\le^*$ on $V^*(Q)$ in terms of a 2-player game between Player I and Player II. A position in this game is a pair $(X,Y)$ with $X$ and $Y$ in $V_*(Q)$. If $X$ and $Y$ are both in $Q$ then this position is a win for Player II if $X \le Y$ and a win for Player I otherwise. If not, then Player I names a set $X'$, which must be $X$ itself if $X \in Q$ and otherwise must be an element of $X$. Then Player II also names a set $Y'$, which must be $Y$ itself if $Y \in Q$ and otherwise must be an element of $Y$. After this, the new position is $(X', Y')$. We define $X \le^* Y$ to mean that Player II has a winning strategy in this game with starting position $(X,Y)$.
+
+We say that $(Q, \le)$ is {\em $\alpha$-well-quasiordered} if the restriction of this game to $V^*_{\alpha}(Q)$ is well-quasiordered.
+\end{definition}
+
+Note the $(Q, \le)$ is better-quasi-ordered if and only if it is $\omega_1$-well-quasi-ordered.
+
+\begin{conjecture}
+Let $r$ be an ordinal number. If $r$ is even, of the form $\alpha . 2$, then finite planar graphs are $\alpha$-well-quasi-ordered with respect to the minor relation. If $r$ is odd, of the form $\alpha . 2 + 1$, then finite graphs are $\alpha$-well-quasi-ordered.
+\end{conjecture}
+
+\newpage
+\item {\bf Rota's Basis Conjecture.}
+
+The following conjecture in its original form \cite[Conjecture~4]{huang1994relations} is stated in terms of matroids, but even in the special case where the matroid is a vector matroid -- that is, the bases come from a finite-dimensional vector space -- the conjecture is widely open.
+
+
+
+\begin{conjecture}[Rota's basis conjecture]
+Let $M$ be a finite matroid with a family $(B_1,..,B_n)$ of disjoint bases.
+There is a family of disjoint bases $(C_1,..C_n)$ of $M$ so that $B_i\cap C_j$ is a singleton for all $i,j\in [n]$.
+\end{conjecture}
+
+Here we are interested in the following scaled weakening of the original conjecture.
+
+\begin{conjecture}[Scaled weakening of Rota's basis conjecture]
+Let $r\in \mathbb{N}$.
+Let $M$ be a finite matroid with a family $(B_1,..,B_n)$ of disjoint bases. 
+There is $n_0\in \mathbb{N}$ so that for all $n\geq n_0$ and all $\epsilon\in \mathbb{R}_{>0}$, there is a family of disjoint bases $(C_1,..C_{\lceil (1-1/r-\epsilon) n\rceil})$ of $M$ so that $B_i\cap C_j$ is a singleton for all $i,j\in [n]$.
+\end{conjecture}
+
+Buci\'c, Kwan, Pokrovskiy and Sudakov proved the scaled weakening for $r=2$ \cite{bucic2020halfway}.
+
+\newpage
+\item \textbf{Ryser's Hypergraph Conjecture}.
+
+
+\begin{definition}[$r$-partite]
+Given $r\in \mathbb{N}$, an $r$-uniform hypergraph $\mathcal{H}$ is \emph{$r$-partite} if there is a partition
+$$
+V\ev{\mathcal{H}} = \bigcup_{i=1}^{r} P_i
+$$
+of the vertex set of $\mathcal{H}$ such that $|P_i \cap e| = 1$, for each $e\in E\ev{\mathcal{H}}$ and $i\in [r]$. 
+\end{definition}
+
+
+\begin{definition}[Cover number]
+Given a hypergraph $\mathcal{H}$, a
+set $C$ of vertices of $\mathcal{H}$ is a \textit{vertex cover} if it contains a vertex of every edge. The smallest cardinality of a vertex cover of $\mathcal{H}$ is called the \textit{cover number} of $\mathcal{H}$. It is denoted by $\tau(\mathcal{H})$.
+\end{definition}
+
+\begin{definition}[Matching number]
+The \textit{matching number} of a hypergraph $\mathcal{H}$ is the largest cardinality of a set of pairwise disjoint edges of $\mathcal{H}$. It is denoted by $\nu\ev{\mathcal{H}}$.
+\end{definition}
+
+\begin{conjecture}[Ryser's Conjecture \mbox{\cite{bishnoi}}]
+Let $r\in \mathbb{N}$.
+Every $r$-partite $r$-uniform hypergraph $\mathcal{H}$ satisfies:
+$$
+\tau\ev{\mathcal{H}} \leq \ev{r-1} \cdot \nu\ev{\mathcal{H}}
+$$
+
+\end{conjecture}
+
+For $r=2$, it is a classical theorem of K\H{o}nig, and for $r=3$ it was proved by Aharoni \cite{AharoniRyserTripartite} using the topological method. 
+
+\newpage
+\item \textbf{Union-Closed Sets Conjecture.} 
+
+\begin{definition}[Union-closed set]
+A set $\mathcal{F}$ of sets is \textit{union-closed} if for any two sets in $\mathcal{F}$, their union is also in $\mathcal{F}$. 
+For a nonempty finite set $\Fcal$, the \emph{density} of an element $x$ with respect to $\Fcal$ is defined
+to be 
+\[
+\frac{|\{ F \in \mathcal{F} : x \in F \}|}{|\Fcal|}
+\]
+\end{definition}
+
+\begin{conjecture}[Union-closed sets conjecture \mbox{\cite{nagel2023}}]
+For every finite union-closed set $\mathcal{F}\notin\{\emptyset, \{\emptyset\}\}$, there exists an element $x$ of density at least one half.
+\end{conjecture}
+
+We are interested in the following parametrized version of the conjecture.
+\begin{conjecture}[Scaled union-closed sets conjecture]
+Let $r\in \mathbb{N}$.
+For every finite union-closed set $\mathcal{F}\notin\{\emptyset, \{\emptyset\}\}$, there exists an element $x$ of density at least $\frac{1}{2}-\frac{1}{r+2}$.
+\end{conjecture}
+
+For $r=0$ the bound equals $0$ and the statement is elementary, while as $r\to\infty$ the bound approaches $\frac{1}{2}$ and the statement recovers the full conjecture in the limit. The best published lower bound on the density ($\approx 0.382$, obtained via the entropy method) settles the cases $r\leq 6$; the conjecture is open for all $r\geq 7$.
+
+
+
+
+
+
+\newpage
+\item \textbf{The Unfriendly Partition Conjecture} (Cowan and Emerson, see for example \cite{aharoni1990unfriendly})
+
+\begin{definition}[Partial partition]
+A {\em partial partition} of the vertices of a graph $G$ is a partial function $V(G) \to \{0,1\}$. We call it {\em finite} if its domain is finite. We call it a {\em partition} if it is a total function.
+\end{definition}
+
+\begin{definition}[Unfriendly]
+Let $v$ be a vertex of a graph $G$. A partial partition $f \colon V(G) \to \{0,1\}$ is {\em unfriendly at $v$} if $v$ has at least as many neighbours mapped by $f$ to the opposite partition class as it has neighbours mapped to the same partition class. Formally this means
+$$|N(v) \cap f^{-1}[1 - f(v)]| \ge |N(v) \cap f^{-1}[f(v)]|.$$
+A partition is {\em unfriendly} if it is unfriendly at every vertex.
+\end{definition}
+
+\begin{conjecture}[Unfriendly partition Conjecture]
+Every countable graph has an unfriendly partition.
+\end{conjecture}
+
+In order to pose a scaled version of this conjecture, we introduce the following game:
+
+\begin{definition}[The $r$-partitioning game.]
+Let $r$ be an ordinal number and let $G$ be a graph. The {\em $r$-partitioning game on $G$} is played between two players, Challenger and Partitioner, as follows. A position in the game is a pair $(f, \alpha)$ consisting of a partial partition $f$ of $G$ and an ordinal number $\alpha$. The initial position is $(\emptyset, r)$. In each turn, beginning in position $(f, \alpha)$, Challenger must name a vertex $v$ of $G$ and an ordinal $\beta < \alpha$ and Partitioner must then name a finite partial partition $g$ extending $f$ which is defined at $v$ and unfriendly at $v$. After this, the new position is $(g, \beta)$. If at any point some player is unable to move, the other player wins.
+\end{definition}
+
+Note that since there are no infinite decreasing sequences of ordinals this game must end after finitely many turns. 
+
+The scaled conjecture is as follows:
+
+\begin{conjecture}[Scaled Unfriendly Partition Conjecture]
+Let $r$ be an ordinal. For any countable graph $G$, Partitioner has a winning strategy in the $r$-partitioning game on $G$.
+\end{conjecture}
+\end{enumerate}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printbibliography 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
