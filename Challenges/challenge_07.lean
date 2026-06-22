@@ -5,8 +5,8 @@ import Mathlib.Order.Filter.AtTopBot.Basic
 /-!
 # Sphere Packing — Parametrized Statement
 
-The challenge parameter is the dimension `dim`. For that dimension, the
-sphere-packing constant `Δ_dim` is achieved by a lattice packing. The universal
+The challenge parameter is the dimension `r`. For that dimension, the
+sphere-packing constant `Δ_r` is achieved by a lattice packing. The universal
 version (`challenge_07_univ.lean`) quantifies over all dimensions; the solved
 cases are `d ∈ {1, 2, 3, 8, 24}` (largest known: `24`).
 -/
@@ -47,5 +47,5 @@ noncomputable def latticePackingConstant (d : ℕ) : ℝ≥0∞ :=
 /-- The challenge parameter: the dimension. -/
 def r : ℕ := sorry
 
-/-- **Sphere packing for the chosen dimension `dim` (lattice optimality).** -/
+/-- **Sphere packing for the chosen dimension `r` (lattice optimality).** -/
 theorem challenge_7 : spherePackingConstant r = latticePackingConstant r := sorry
