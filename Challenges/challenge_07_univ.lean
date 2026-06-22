@@ -56,4 +56,4 @@ noncomputable def latticePackingConstant (d : ℕ) : ℝ≥0∞ :=
 /-- **Sphere packing (universal, lattice optimality).** In every dimension the
 sphere-packing constant is achieved by a lattice packing. Open in general; known
 in `d ∈ {1, 2, 3, 8, 24}`. -/
-theorem challenge_7 : ∀ (d : ℕ), spherePackingConstant d = latticePackingConstant d := sorry
+theorem challenge_7 : ∀ (r : ℕ), spherePackingConstant r = latticePackingConstant r := sorry

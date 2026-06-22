@@ -45,7 +45,7 @@ noncomputable def latticePackingConstant (d : ℕ) : ℝ≥0∞ :=
   ⨆ (C : Set (EuclideanSpace ℝ (Fin d))) (_ : IsLatticePacking C), upperDensity C
 
 /-- The challenge parameter: the dimension. -/
-def dim : ℕ := sorry
+def r : ℕ := sorry
 
 /-- **Sphere packing for the chosen dimension `dim` (lattice optimality).** -/
-theorem challenge_7 : spherePackingConstant dim = latticePackingConstant dim := sorry
+theorem challenge_7 : spherePackingConstant r = latticePackingConstant r := sorry
