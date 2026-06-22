@@ -37,7 +37,7 @@ export const problems: Problem[] = [
   },
   {
     id: "challenge_7",
-    title: "Rota's Basis Conjecture",
+    title: "Sphere Packing Problem",
     htmlPath: "content/html/challenge_07.html",
   },
   {
@@ -52,7 +52,7 @@ export const problems: Problem[] = [
   },
   {
     id: "challenge_10",
-    title: "The Unfriendly Partition Conjecture",
+    title: "Unfriendly Partition Conjecture",
     htmlPath: "content/html/challenge_10.html",
   },
 ];
