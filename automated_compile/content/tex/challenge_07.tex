@@ -39,8 +39,8 @@
 %               New Commands            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\ev}[1]{( #1 )} 
-\newcommand{\ew}[1]{\left( #1 \right)} 
+\newcommand{\ev}[1]{( #1 )}
+\newcommand{\ew}[1]{\left( #1 \right)}
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
@@ -60,28 +60,22 @@
 
 \begin{document}
 
-\section*{Challenge 7: Rota's Basis Conjecture}
+\section*{Challenge 7: The Sphere Packing Problem}
 \refstepcounter{section}
 
 
-The following conjecture in its original form \cite[Conjecture~4]{huang1994relations} is stated in terms of matroids, but even in the special case where the matroid is a vector matroid -- that is, the bases come from a finite-dimensional vector space -- the conjecture is widely open.
+For a dimension $d\in\N$, a \emph{unit packing} of $\R^d$ is a set $C\subseteq\R^d$ of centres with $\lVert x-y\rVert\geq 2$ for all distinct $x,y\in C$, so that the open unit balls around the centres are pairwise disjoint. Its \emph{upper density} is
+$$
+\bar\delta\ev{C}=\limsup_{R\to\infty}\frac{\mathrm{vol}\!\ew{\textstyle\bigcup_{x\in C}B\ev{x,1}\cap B\ev{0,R}}}{\mathrm{vol}\!\ev{B\ev{0,R}}},
+$$
+and the \emph{sphere-packing constant} $\Delta_d=\sup_C\bar\delta\ev{C}$ is the supremum over all unit packings; $\Delta_d^{L}$ denotes the supremum over packings whose centres form a lattice.
 
 
+\begin{openproblem}[The sphere-packing problem]
+Determine the sphere-packing constant $\Delta_d$ for every dimension $d$. The value is known only for $d\in\{1,2,3,8,24\}$: the case $d=3$ is the Kepler conjecture \cite{hales2005kepler}, and $d=8$, $d=24$ were settled by Viazovska \cite{viazovska2017eight} and by Cohn, Kumar, Miller, Radchenko and Viazovska \cite{cohn2017twentyfour}. The largest solved case is $d=24$, and in each the optimum is attained by a lattice ($\Z$, $A_2$, the FCC lattice, $E_8$, and the Leech lattice).
+\end{openproblem}
 
-\begin{conjecture}[Rota's basis conjecture]
-Let $M$ be a finite matroid with a family $(B_1,..,B_n)$ of disjoint bases.
-There is a family of disjoint bases $(C_1,..C_n)$ of $M$ so that $B_i\cap C_j$ is a singleton for all $i,j\in [n]$.
-\end{conjecture}
-
-Here we are interested in the following scaled weakening of the original conjecture.
-
-\begin{conjecture}[Scaled weakening of Rota's basis conjecture]
-Let $r\in \mathbb{N}$.
-Let $M$ be a finite matroid with a family $(B_1,..,B_n)$ of disjoint bases.
-There is $n_0\in \mathbb{N}$ so that for all $n\geq n_0$ and all $\epsilon\in \mathbb{R}_{>0}$, there is a family of disjoint bases $(C_1,..C_{\lceil (1-1/r-\epsilon) n\rceil})$ of $M$ so that $B_i\cap C_j$ is a singleton for all $i,j\in [n]$.
-\end{conjecture}
-
-Buci\'c, Kwan, Pokrovskiy and Sudakov proved the scaled weakening for $r=2$ \cite{bucic2020halfway}.
+The universal version, posed as a prove-or-disprove challenge, asks whether lattices are always optimal: is $\Delta_d=\Delta_d^{L}$ for every $d$? This holds in every solved dimension but is open in general and is widely expected to fail in high dimensions.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printbibliography

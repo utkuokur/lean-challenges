@@ -158,22 +158,27 @@ theorem challenge_6 :
 - BQO has a precise barrier-based definition. I sketched WQO; the actual BQO is stronger. Want me to write the full barrier definition?
 - Should the parameter `r` constrain vertex count, or is the universal version (`challenge_6_univ`) the only meaningful version?
 
-## §7 — challenge_07 (Rota's Basis Conjecture)
+## §7 — challenge_07 (The Sphere Packing Problem)
 
-Existing theorems:
-- `rotas_basis_conjecture {M : Matroid α} {B : Fin n → Set α} ...`
-- `scaled_weakening_rotas_conjecture (r : ℕ) (hr : r > 0) : ...`
-- `scaled_weakening_r_eq_two : ...`
+Rota's Basis Conjecture (the previous occupant of this slot) was retired here
+because its parametrized "scaled weakening" form is already resolved in the
+literature (Bucić–Kwan–Pokrovskiy–Sudakov); it lives on in ProofBench as `P024`.
+This slot now hosts the **sphere-packing problem**, which is genuinely open.
 
-**Proposed canonical theorem:** standardize to use `def r` and rename to `challenge_7`:
+Canonical theorem (`challenge_7`), universal over the dimension `d`:
 
 ```lean
-def r : ℕ := sorry  -- The parameter (interpretation: the scaling factor)
+def IsUnitPacking (C : Set (EuclideanSpace ℝ (Fin d))) : Prop :=
+  ∀ ⦃x⦄, x ∈ C → ∀ ⦃y⦄, y ∈ C → x ≠ y → 2 ≤ dist x y
+-- upperDensity C, spherePackingConstant d, latticePackingConstant d as in the file
 
-theorem challenge_7 (hr : r > 0) : <statement of scaled_weakening_rotas_conjecture at r> := sorry
+theorem challenge_7 : ∀ (d : ℕ), spherePackingConstant d = latticePackingConstant d := sorry
 ```
 
-**Open question:** Is the canonical theorem here `rotas_basis_conjecture` (the full conjecture) or `scaled_weakening_rotas_conjecture` (the scaled weakening)? They have different signatures, and the answer depends on what "the challenge" actually is for the parametrized version.
+The statement asks whether lattice packings are always optimal (Δ_d = Δ_dᴸ). It
+holds in every solved dimension (`d ∈ {1, 2, 3, 8, 24}`, largest known `24`) and
+is open in general. `challenge_07.lean` fixes the dimension via `def d`; the
+universal version quantifies over all `d`.
 
 ## §8 — challenge_08 (Ryser's Hypergraph Conjecture)
 
