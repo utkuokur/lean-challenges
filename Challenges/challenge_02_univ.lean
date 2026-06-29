@@ -4,18 +4,24 @@ import Mathlib.Data.Complex.Basic
 import Mathlib.FieldTheory.Finite.GaloisField
 
 /-!
-# Excluded Minors of GF(pᵐ)-representable Matroids — Universal Statement
+# Excluded Minors of GF(pᵐ)-representable Matroids — Universal Statement (Rota's conjecture)
 
-For every prime power `r = pᵐ`, characterize the excluded minors for
-representability over the finite field `GF(pᵐ)`.
+For every prime power `r = pᵐ`, a complete finite list of excluded minors for
+representability over the finite field `GF(pᵐ)` exists.
+
+NOTE: This is **not an open problem**. The statement is Rota's excluded-minor
+conjecture — that the excluded-minor set is finite for every finite field —
+**proved** by Geelen, Gerards, and Whittle. Unlike the parametrized, genuinely
+open `challenge_02.lean` (which asks for the *explicit* list at a fixed `r`,
+unknown for `r ≥ 5`), the universal *existence* claim is a settled theorem. This
+slot is therefore a **formalization target** — discharge it by formalizing /
+citing GGW — rather than a prove-or-disprove open challenge. There is
+deliberately no `_disprove` counterpart: the negation is false, so that slot
+would be unwinnable.
 
 For `r = 2` (binary matroids), the only excluded minor is `U₂,₄` (Tutte 1958).
 For `r = 3` (ternary matroids), the excluded minors are `U₂,₅`, `U₃,₅`, `F₇`,
 and `F₇*` (Reid; Bixby; Seymour).
-
-This universal version asserts that a complete finite excluded-minor list
-exists for EVERY prime-power field size — that is, Rota's conjecture, proved
-by Geelen, Gerards, and Whittle.
 -/
 
 open Function Matroid
@@ -57,9 +63,10 @@ def CompleteExcludedMinorList (p m : ℕ) [Fact p.Prime]
         (∀ {β : Type u} (M : Matroid β), M.Finite →
           ¬ IsGFRepresentable p m M → ∃ N ∈ L, Nonempty (N ≤i M))
 
-/-- The universal challenge: for every field size `r` that is a prime
-power (witnessed by some prime `p` and positive exponent `m` with
-`r = pᵐ`), a complete finite list of excluded minors for
-GF(pᵐ)-representability exists. This is Rota's conjecture. -/
+/-- **Rota's conjecture (Geelen–Gerards–Whittle), as a formalization target.**
+For every prime-power field size `r = pᵐ` (witnessed by a prime `p` and positive
+exponent `m`), a complete finite list of excluded minors for
+GF(pᵐ)-representability exists. This is a proved theorem, not an open problem;
+the task in this slot is to formalize it. -/
 theorem challenge_2 (r p m : ℕ) [Fact p.Prime] (hm : 0 < m) (hr : r = p ^ m) :
     ∃ L : Set (Matroid ℕ), CompleteExcludedMinorList p m L := sorry
