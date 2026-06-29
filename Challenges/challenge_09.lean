@@ -13,7 +13,7 @@ def IsUnionClosed (F : Finset (Finset U)) : Prop :=
 
 /-- An element belongs to the ground set covered by the family. -/
 def InGround (F : Finset (Finset U)) (x : U) : Prop :=
-  exists A, A ∈ F /\ x ∈ A
+  exists A, A ∈ F ∧ x ∈ A
 
 /-- The number of members of the family containing `x`. -/
 def occurrences (F : Finset (Finset U)) (x : U) : Nat :=
