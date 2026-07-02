@@ -36,5 +36,11 @@ def BipartiteBoundedBy {W : Type*} (H : SimpleGraph W) (k : ℕ) : Prop :=
 def r : ℕ := sorry
 
 /-- The universal Sidorenko conjecture for bipartite graphs with bounded sides:
-for every bound `r`, the conjecture holds for every such graph. -/
-theorem challenge_4 : BipartiteBoundedBy H r → SidorenkoFor H G := sorry
+for every bound `r`, the conjecture holds for every such graph.
+
+The host graph is required to be nonempty: on an empty host `homDensity`
+degenerates to `0 / 0 = 0` while for an edgeless (still bipartite, e.g. a
+single vertex with sides `{0}, ∅`) graph `H` the right-hand side is
+`0 ^ 0 = 1`, so the unguarded statement would be false for degenerate
+reasons whenever `r ≥ 1`. -/
+theorem challenge_4 [Nonempty V] : BipartiteBoundedBy H r → SidorenkoFor H G := sorry
