@@ -21,3 +21,10 @@ automated_compile/content/tex/*.toc
 automated_compile/content/tex/*.synctex.gz
 automated_compile/content/tex/*.fls
 automated_compile/content/tex/*.fdb_latexmk
+
+# Local Claude Code config
+/.claude
+
+# Generated LaTeX outputs
+automated_compile/content/tex/*.pdf
+automated_compile/content/tex/*.xdv
