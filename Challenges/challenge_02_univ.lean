@@ -63,10 +63,10 @@ def CompleteExcludedMinorList (p m : ℕ) [Fact p.Prime]
         (∀ {β : Type u} (M : Matroid β), M.Finite →
           ¬ IsGFRepresentable p m M → ∃ N ∈ L, Nonempty (N ≤i M))
 
-/-- **Rota's conjecture (Geelen–Gerards–Whittle), as a formalization target.**
+/- **Rota's conjecture (Geelen–Gerards–Whittle), as a formalization target.**
 For every prime-power field size `r = pᵐ` (witnessed by a prime `p` and positive
 exponent `m`), a complete finite list of excluded minors for
 GF(pᵐ)-representability exists. This is a proved theorem, not an open problem;
 the task in this slot is to formalize it. -/
-theorem challenge_2 (r p m : ℕ) [Fact p.Prime] (hm : 0 < m) (hr : r = p ^ m) :
+theorem challenge_2_univ (r p m : ℕ) [Fact p.Prime] (hm : 0 < m) (hr : r = p ^ m) :
     ∃ L : Set (Matroid ℕ), CompleteExcludedMinorList p m L := sorry

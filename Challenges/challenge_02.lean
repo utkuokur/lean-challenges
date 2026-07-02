@@ -38,9 +38,14 @@ The structure that prevents the GGW dodge:
   *a* finite list, not that *your* specific `L` is complete.  Proving a concrete
   `L` complete is the open determination problem — which is the point.
 
-`r` is left free (faithful to the parametrized TeX open problem).  Note that the
-small cases `r = 2, 3, 4` are solved in the literature (Tutte; Bixby–Seymour;
-Geelen–Gerards–Kapoor); the challenge is genuinely open only for `r ≥ 5`.
+`r` is left free (faithful to the parametrized TeX open problem), but the solver
+must also exhibit the prime-power witnesses `p` and `m` and prove `r = p ^ m` as
+part of the *conclusion*.  (An earlier draft took `hr : r = p ^ m` as a
+hypothesis; that made every non-prime-power `r` — e.g. `r = 6` or any huge
+composite — vacuously provable by refuting `hr`, a leaderboard exploit.)  Note
+that the small cases `r = 2, 3, 4` are solved in the literature (Tutte;
+Bixby–Seymour; Geelen–Gerards–Kapoor); the challenge is genuinely open only for
+`r ≥ 5`.
 
 NOTE: This file compiles cleanly (`lake build Challenges.challenge_02`); the only
 `sorry`s are the three the solver must fill (`r`, `L`, `challenge_2`).  The data
@@ -129,10 +134,23 @@ end FinMatroid
 /- Import this module from your submission to reuse the definitions above — don't
 copy them. -/
 
-/-- The challenge parameter: the field size.  Must be a prime power for the
-conclusion to make sense — that requirement is part of the theorem's hypothesis,
-not encoded into `r`. -/
+/-- The challenge parameter: the field size.  Must be a prime power — the
+solver also supplies the witnesses `p` and `m` below, and `challenge_2` demands
+`r = p ^ m` as a conclusion, so a non-prime-power `r` is unprovable rather than
+vacuous. -/
 def r : ℕ := sorry
+
+/-- The prime `p` witnessing that `r` is a prime power. -/
+def p : ℕ := sorry
+
+/-- The positive exponent `m` with `r = p ^ m`. -/
+def m : ℕ := sorry
+
+/-- Primality of `p`, registered as an instance so that `GaloisField p m` (and
+hence `IsGFRepresentable p m`) elaborates.  The solver replaces the `sorry`
+with a genuine proof, e.g. `⟨by norm_num⟩`; a sorried instance is caught by the
+axiom gate because it appears in the elaborated statement of `challenge_2`. -/
+instance fact_p_prime : Fact p.Prime := sorry
 
 /-- **The excluded-minor list, as concrete data.**  The solver must fill this with
 an actual literal, e.g. `{U₂₄}` for `r = 2`.  It cannot be a `Set`, a
@@ -142,8 +160,8 @@ data.  Using `Finset` rather than `List` makes duplicate-freeness automatic. -/
 def L : Finset FinMatroid := sorry
 
 open FinMatroid in
-/-- **The challenge.**  For the chosen field size `r`, given any prime `p` and
-positive exponent `m` with `r = pᵐ`, the chosen concrete list `L`:
+/-- **The challenge.**  For the chosen field size `r` and the exhibited prime
+power decomposition `r = p ^ m` (with `0 < m`), the chosen concrete list `L`:
 
 1. consists of genuine matroid data **(decidable lock — `by decide`)**;
 2. lists only excluded minors for GF(pᵐ)-representability;
@@ -151,10 +169,13 @@ positive exponent `m` with `r = pᵐ`, the chosen concrete list `L`:
 4. is **complete**: every finite non-GF(pᵐ)-representable matroid has a minor
    isomorphic to a member of `L`.
 
-Duplicate-freeness is automatic — `L` is a `Finset`.  Clause (1) forces `L` to be
-an explicit literal; clauses (2)–(4) are the genuine mathematics, and (4) is the
-open determination that GGW does not settle for a fixed `L`. -/
-theorem challenge_2 (p m : ℕ) [Fact p.Prime] (hm : 0 < m) (hr : r = p ^ m) :
+The prime-power facts are *conclusions*, not hypotheses: there is nothing to
+refute, so a non-prime-power `r` cannot be won vacuously.  Duplicate-freeness is
+automatic — `L` is a `Finset`.  Clause (1) forces `L` to be an explicit literal;
+clauses (2)–(4) are the genuine mathematics, and (4) is the open determination
+that GGW does not settle for a fixed `L`. -/
+theorem challenge_2 :
+    0 < m ∧ r = p ^ m ∧
     (∀ A ∈ L, IsMatroidData A) ∧
     (∀ A ∈ L, IsExcludedMinorFor (IsGFRepresentable p m) A.decode) ∧
     (∀ A ∈ L, ∀ B ∈ L, A ≠ B → IsEmpty (A.decode ≂ B.decode)) ∧

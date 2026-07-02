@@ -24,8 +24,6 @@ noncomputable def hadwigerNumber (G : SimpleGraph V) : ℕ := by
   classical
   exact Nat.findGreatest (fun r => Nonempty (Minor (completeGraph (Fin r)) G)) (Fintype.card V)
 
-/- Import this module from your submission to reuse the definitions above — don't copy them. -/
-
 def r : ℕ := sorry -- The challenge parameter
 
 theorem challenge_1 (G : SimpleGraph V) :
