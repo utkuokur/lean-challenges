@@ -16,5 +16,5 @@ noncomputable def ramseyNumber (t : ℕ) : ℕ :=
 
 def r : ℕ := sorry
 
-theorem challenge_3 : ∃ d₁ d₂ : ℝ, |d₁ - d₂| ≤ (4 - √2) * (0.9 : ℝ)^r ∧
+theorem challenge_3 : ∃ d₁ d₂ : ℝ, |d₁ - d₂| ≤ (4 - √2) * (0.98 : ℝ)^r ∧
  ∀ᶠ t in atTop, d₁ ^ t ≤ ramseyNumber t ∧ ramseyNumber t ≤ d₂ ^ t := sorry
