@@ -1,6 +1,7 @@
 import Mathlib.Combinatorics.SimpleGraph.Basic
 import Mathlib.Data.Countable.Defs
 import Mathlib.SetTheory.Ordinal.Basic
+import Defs_and_Lems.UnfriendlyPartition
 /-===========================================================================-/
 /-!# The Unfriendly Partition Conjecture -/
 /-===========================================================================-/
@@ -9,16 +10,12 @@ namespace UnfriendlyPartition
 
 universe u v
 
-/-- A type is countable when it injects into `Nat`. -/
-abbrev CountableType (V : Type u) : Prop :=
-  Countable V
-
 /-- Finite vertex types use mathlib's `Finite` predicate. -/
 abbrev FiniteType (V : Type u) : Prop :=
   Finite V
 
 theorem finiteType_countable {V : Type u} (h : FiniteType V) :
-    CountableType V := by
+    Countable V := by
   letI : Finite V := h
   infer_instance
 
@@ -32,7 +29,7 @@ def emptyPartialPartition (V : Type u) : PartialPartition V :=
 
 /-- A partial partition is finite when its domain injects into some finite type. -/
 def HasFiniteDomain {V : Type u} (f : PartialPartition V) : Prop :=
-  exists n : Nat, exists encode : {v : V // f v ≠ none} -> Fin n,
+  ∃ n : Nat, ∃ encode : {v : V // f v ≠ none} -> Fin n,
     Function.Injective encode
 
 theorem emptyPartialPartition_finite (V : Type u) :
@@ -43,34 +40,17 @@ theorem emptyPartialPartition_finite (V : Type u) :
 
 /-- A partial partition is total when every vertex is assigned a side. -/
 def IsPartition {V : Type u} (f : PartialPartition V) : Prop :=
-  forall v : V, exists b : Bool, f v = some b
+  ∀ v : V, ∃ b : Bool, f v = some b
 
 /-- `g` extends `f` when all assignments already made by `f` are preserved. -/
 def Extends {V : Type u} (f g : PartialPartition V) : Prop :=
-  forall v b, f v = some b -> g v = some b
+  ∀ v b, f v = some b -> g v = some b
 
-theorem extends_refl {V : Type u} (f : PartialPartition V) :
-    Extends f f := by
-  intro _ _ h
-  exact h
-
-theorem extends_trans {V : Type u} {f g h : PartialPartition V}
-    (hfg : Extends f g) (hgh : Extends g h) :
-    Extends f h := by
-  intro v b hv
-  exact hgh v b (hfg v b hv)
-
-/-- An injection-based comparison of cardinalities. -/
-def InjectsInto (A : Type u) (B : Type v) : Prop :=
-  exists e : A -> B, Function.Injective e
-
-/-- `A` has at least as many elements as `B`. -/
-def AtLeastAsMany (A : Type u) (B : Type v) : Prop :=
-  InjectsInto B A
-
-theorem atLeastAsMany_refl (A : Type u) :
-    AtLeastAsMany A A := by
-  exact ⟨id, fun _ _ h => h⟩
+/- `InjectsInto`, `AtLeastAsMany`, and `atLeastAsMany_refl` are shared with the
+plain conjecture (`challenge_10_univ`/`challenge_10_disprove`) via
+`Defs_and_Lems.UnfriendlyPartition`.  The game needs its own *partial*-partition
+`neighboursInSide`/`UnfriendlyAt`/`IsUnfriendlyPartition` below (`f y = some b`
+rather than `f y = b`), so those stay here. -/
 
 /-- Neighbours of `x` currently mapped to side `b`. -/
 def neighboursInSide {V : Type u} (G : SimpleGraph V) (f : PartialPartition V)
@@ -83,7 +63,7 @@ own class, with cardinalities compared by injections (so vertices of infinite
 degree are handled correctly). -/
 def UnfriendlyAt {V : Type u} (G : SimpleGraph V) (f : PartialPartition V)
     (x : V) : Prop :=
-  exists b : Bool,
+  ∃ b : Bool,
     f x = some b /\
       AtLeastAsMany
         (neighboursInSide G f x (!b))
@@ -92,17 +72,17 @@ def UnfriendlyAt {V : Type u} (G : SimpleGraph V) (f : PartialPartition V)
 /-- A total partition unfriendly at every vertex. -/
 def IsUnfriendlyPartition {V : Type u} (G : SimpleGraph V)
     (f : PartialPartition V) : Prop :=
-  IsPartition f /\ forall x : V, UnfriendlyAt G f x
+  IsPartition f /\ ∀ x : V, UnfriendlyAt G f x
 
 theorem unfriendlyAt_defined {V : Type u} {G : SimpleGraph V}
     {f : PartialPartition V} {x : V} (h : UnfriendlyAt G f x) :
-    exists b : Bool, f x = some b := by
+    ∃ b : Bool, f x = some b := by
   rcases h with ⟨b, hb, _⟩
   exact ⟨b, hb⟩
 
 theorem unfriendlyAt_same_to_opposite_bound {V : Type u} {G : SimpleGraph V}
     {f : PartialPartition V} {x : V} (h : UnfriendlyAt G f x) :
-    exists b : Bool,
+    ∃ b : Bool,
       f x = some b /\
         InjectsInto
           (neighboursInSide G f x b)
@@ -115,8 +95,8 @@ theorem unfriendlyAt_same_to_opposite_bound {V : Type u} {G : SimpleGraph V}
 /-- The Unfriendly Partition Conjecture (Cowan and Emerson):
 every countable graph has an unfriendly partition. -/
 def UnfriendlyPartitionConjecture : Prop :=
-  forall {V : Type u}, CountableType V -> forall G : SimpleGraph V,
-    exists f : PartialPartition V, IsUnfriendlyPartition G f
+  ∀ {V : Type u}, Countable V -> ∀ G : SimpleGraph V,
+    ∃ f : PartialPartition V, IsUnfriendlyPartition G f
 
 /-! ## The `r`-partitioning game
 
@@ -146,18 +126,18 @@ response from which Partitioner again has a winning strategy. The recursion
 is well-founded because the ordinal strictly decreases. -/
 def PartitionerWins {V : Type u} (G : SimpleGraph V)
     (f : PartialPartition V) (alpha : Ordinal.{v}) : Prop :=
-  forall v : V, forall beta : Ordinal.{v}, beta < alpha ->
-    exists g : PartialPartition V,
-      IsLegalResponse G f g v /\ PartitionerWins G g beta
+  ∀ v : V, ∀ beta : Ordinal.{v}, beta < alpha ->
+    ∃ g : PartialPartition V,
+      IsLegalResponse G f g v ∧ PartitionerWins G g beta
 termination_by alpha
 
 /-- The defining recurrence of `PartitionerWins`, as an `iff`. -/
 theorem partitionerWins_iff {V : Type u} (G : SimpleGraph V)
     (f : PartialPartition V) (alpha : Ordinal.{v}) :
     PartitionerWins G f alpha <->
-      forall v : V, forall beta : Ordinal.{v}, beta < alpha ->
-        exists g : PartialPartition V,
-          IsLegalResponse G f g v /\ PartitionerWins G g beta := by
+      ∀ v : V, ∀ beta : Ordinal.{v}, beta < alpha ->
+        ∃ g : PartialPartition V,
+          IsLegalResponse G f g v ∧ PartitionerWins G g beta := by
   rw [PartitionerWins]
 
 /-- When the clock is `0`, Challenger cannot move, so Partitioner wins. -/
@@ -199,7 +179,7 @@ theorem partitionerWins_one {V : Type u} (G : SimpleGraph V) :
     exact Subtype.ext (hx.trans hy.symm)
   · simp
   · refine ⟨true, by simp, ?_⟩
-    have hempty : forall y : neighboursInSide G
+    have hempty : ∀ y : neighboursInSide G
         (fun w => if w = v then some true else none) v true, False := by
       rintro ⟨y, hadj, hyval⟩
       by_cases hyv : y = v
@@ -214,14 +194,14 @@ theorem partitionerWins_one {V : Type u} (G : SimpleGraph V) :
 Partitioner has a winning strategy in the `rho`-partitioning game, starting
 from the empty partial partition. -/
 def ScaledUnfriendlyPartitionConjectureFor (rho : Ordinal.{v}) : Prop :=
-  forall {V : Type u}, CountableType V -> forall G : SimpleGraph V,
+  ∀ {V : Type u}, Countable V -> ∀ G : SimpleGraph V,
     PartitionerWins G (emptyPartialPartition V) rho
 
 /-- The Scaled Unfriendly Partition Conjecture: for every ordinal `rho`,
 Partitioner has a winning strategy in the `rho`-partitioning game on every
 countable graph. -/
 def ScaledUnfriendlyPartitionConjecture : Prop :=
-  forall rho : Ordinal.{v}, ScaledUnfriendlyPartitionConjectureFor.{u, v} rho
+  ∀ rho : Ordinal.{v}, ScaledUnfriendlyPartitionConjectureFor.{u, v} rho
 
 /-- The scaled conjecture gets weaker as the ordinal decreases. -/
 theorem scaledFor_mono {rho sigma : Ordinal.{v}} (hle : sigma <= rho)
@@ -244,15 +224,15 @@ theorem scaledFor_one : ScaledUnfriendlyPartitionConjectureFor.{u, v} 1 := by
 
 /-- First upstream lemma: countable graph instances admit total partitions. -/
 def CountableGraphsAdmitPartitions : Prop :=
-  forall {V : Type u}, CountableType V -> forall _ : SimpleGraph V,
-    exists f : PartialPartition V, IsPartition f
+  ∀ {V : Type u}, Countable V -> ∀ _ : SimpleGraph V,
+    ∃ f : PartialPartition V, IsPartition f
 
 /-- Second upstream lemma: any total partition on a countable graph can be
 replaced by an unfriendly total partition. -/
 def CountablePartitionImprovement : Prop :=
-  forall {V : Type u}, CountableType V -> forall G : SimpleGraph V,
-    (exists f : PartialPartition V, IsPartition f) ->
-      exists g : PartialPartition V, IsUnfriendlyPartition G g
+  ∀ {V : Type u}, Countable V -> ∀ G : SimpleGraph V,
+    (∃ f : PartialPartition V, IsPartition f) ->
+      ∃ g : PartialPartition V, IsUnfriendlyPartition G g
 
 theorem upstream_implies_unfriendlyPartitionConjecture
     (hpart : CountableGraphsAdmitPartitions.{u})
@@ -263,8 +243,8 @@ theorem upstream_implies_unfriendlyPartitionConjecture
 
 /-- A single upstream statement equivalent to the target conjecture. -/
 def CountableGraphsAdmitUnfriendlyPartitions : Prop :=
-  forall {V : Type u}, CountableType V -> forall G : SimpleGraph V,
-    exists f : PartialPartition V, IsUnfriendlyPartition G f
+  ∀ {V : Type u}, Countable V -> ∀ G : SimpleGraph V,
+    ∃ f : PartialPartition V, IsUnfriendlyPartition G f
 
 theorem firstLayer_implies_target
     (h : CountableGraphsAdmitUnfriendlyPartitions.{u}) :
@@ -288,30 +268,30 @@ theorem firstLayer_iff_target :
 /-! ## Downstream layer -/
 
 theorem target_gives_partition {V : Type u} (h : UnfriendlyPartitionConjecture.{u})
-    (hV : CountableType V) (G : SimpleGraph V) :
-    exists f : PartialPartition V, IsPartition f := by
+    (hV : Countable V) (G : SimpleGraph V) :
+    ∃ f : PartialPartition V, IsPartition f := by
   rcases h hV G with ⟨f, hf⟩
   exact ⟨f, hf.1⟩
 
 theorem target_gives_unfriendly_at_each_vertex {V : Type u}
-    (h : UnfriendlyPartitionConjecture.{u}) (hV : CountableType V)
+    (h : UnfriendlyPartitionConjecture.{u}) (hV : Countable V)
     (G : SimpleGraph V) :
-    exists f : PartialPartition V, forall x : V, UnfriendlyAt G f x := by
+    ∃ f : PartialPartition V, ∀ x : V, UnfriendlyAt G f x := by
   rcases h hV G with ⟨f, hf⟩
   exact ⟨f, hf.2⟩
 
 theorem target_gives_finite_graph_case {V : Type u}
     (h : UnfriendlyPartitionConjecture.{u}) (hV : FiniteType V)
     (G : SimpleGraph V) :
-    exists f : PartialPartition V, IsUnfriendlyPartition G f := by
+    ∃ f : PartialPartition V, IsUnfriendlyPartition G f := by
   exact h (finiteType_countable hV) G
 
 theorem target_gives_neighbor_bound {V : Type u}
-    (h : UnfriendlyPartitionConjecture.{u}) (hV : CountableType V)
+    (h : UnfriendlyPartitionConjecture.{u}) (hV : Countable V)
     (G : SimpleGraph V) :
-    exists f : PartialPartition V,
-      forall x : V,
-        exists b : Bool,
+    ∃ f : PartialPartition V,
+      ∀ x : V,
+        ∃ b : Bool,
           f x = some b /\
             InjectsInto
               (neighboursInSide G f x b)
@@ -339,7 +319,7 @@ theorem scaled_conditional_gives_finite_case
     (hscaled : ScaledUnfriendlyPartitionConjecture.{u, v})
     (hbridge : ScaledImpliesOrdinary.{u, v})
     {V : Type u} (hV : FiniteType V) (G : SimpleGraph V) :
-    exists f : PartialPartition V, IsUnfriendlyPartition G f := by
+    ∃ f : PartialPartition V, IsUnfriendlyPartition G f := by
   exact target_gives_finite_graph_case
     (scaled_conditional_implies_target hscaled hbridge) hV G
 
@@ -347,14 +327,17 @@ end UnfriendlyPartition
 
 universe u v
 
-/-- The challenge parameter. -/
-def r : ℕ := sorry
+/-- The challenge parameter: an ordinal clock for the `r`-partitioning game.
+Taking `r : Ordinal` (rather than `ℕ`) lets submissions reach the interesting
+regime `r ≥ ω`, where Partitioner's strategy genuinely encodes the difficulty
+of the conjecture; the finite rungs `r < ω` are elementary. -/
+def r : Ordinal.{v} := sorry
 
-/--
-Scaled Unfriendly Partition Conjecture for the chosen `r`: on every countable
-graph, Partitioner has a winning strategy in the `r`-partitioning game.
+/-
+Scaled Unfriendly Partition Conjecture for the chosen ordinal `r`: on every
+countable graph, Partitioner has a winning strategy in the `r`-partitioning
+game.
 -/
 theorem challenge_10 :
-    UnfriendlyPartition.ScaledUnfriendlyPartitionConjectureFor.{u, v}
-      (r : Ordinal.{v}) := by
+    UnfriendlyPartition.ScaledUnfriendlyPartitionConjectureFor.{u, v} r := by
   sorry
