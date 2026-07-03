@@ -345,8 +345,6 @@ theorem scaled_conditional_gives_finite_case
 
 end UnfriendlyPartition
 
-/- Import this module from your submission to reuse the definitions above — don't copy them. -/
-
 universe u v
 
 /-- The challenge parameter. -/

@@ -25,8 +25,6 @@ def density (F : Finset (Finset U)) (x : U) : Rat :=
 def Nondegenerate (F : Finset (Finset U)) : Prop :=
   F ≠ ∅ /\ F ≠ {∅}
 
-/- Import this module from your submission to reuse the definitions above — don't copy them. -/
-
 /- The challenge parameter. -/
 def r : Nat := sorry
 

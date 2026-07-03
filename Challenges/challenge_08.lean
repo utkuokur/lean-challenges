@@ -2,8 +2,6 @@ import Mathlib.Data.Finset.Card
 
 universe u
 
-namespace Challenge08
-
 structure Hypergraph (α : Type*) where
   vertices : Finset α
   edges : Set (Finset α)
@@ -61,10 +59,6 @@ def RyserConjectureFor (r : Nat) : Prop :=
 
 end Hypergraph
 
-end Challenge08
-
-/- Import this module from your submission to reuse the definitions above — don't copy them. -/
-
 /-- The challenge parameter. -/
 def r : ℕ := sorry
 
@@ -78,5 +72,5 @@ bound reads `tau <= 0`, which already fails for the single-vertex
 single-edge hypergraph (where `tau = nu = 1`).
 -/
 theorem challenge_8 (hr : 2 <= r) :
-    Challenge08.Hypergraph.RyserConjectureFor.{u} r := by
+    Hypergraph.RyserConjectureFor.{u} r := by
   sorry

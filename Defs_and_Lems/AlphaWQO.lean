@@ -5,7 +5,7 @@ import Defs_and_Lems.Minor
 # α-well-quasi-ordering (Nash–Williams hierarchy) and the minor order
 
 Shared by `challenge_06`, `challenge_06_univ`, and
-`challenge_06_univ_disprove`.
+`challenge_06_disprove`.
 
 `V*_α(Q)` is the cumulative hierarchy over a quasi-order `Q`: level `0` is
 `Q` itself, and level `α + 1` consists of the nonempty subsets of level `α`

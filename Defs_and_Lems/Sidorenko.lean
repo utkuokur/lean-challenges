@@ -1,13 +1,18 @@
 import Mathlib.Combinatorics.SimpleGraph.Basic
+import Mathlib.Combinatorics.SimpleGraph.Bipartite
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Set.Card
 import Mathlib.SetTheory.Cardinal.Finite
 
 /-!
-# Shared definitions for Sidorenko's conjecture (half-graphs)
+# Shared definitions for Sidorenko's conjecture
 
-Used by both `challenge_04` (specific `r`) and `challenge_04_univ` (∀r), so
-the half-graph, homomorphism density, and the Sidorenko inequality live here.
+Used by both `challenge_04` (specific `r`) and `challenge_04_univ` (∀r):
+homomorphism density, the Sidorenko inequality, and the bounded-side
+bipartiteness predicate live here.  (`halfGraph` is kept as auxiliary
+material; the challenge itself is stated for all bounded-side bipartite
+graphs.)
 -/
 
 open SimpleGraph
@@ -33,3 +38,10 @@ the number of edges of `H`. -/
 def SidorenkoFor {W V : Type*} [Fintype W] [Fintype V]
     (H : SimpleGraph W) (G : SimpleGraph V) : Prop :=
   homDensity H G ≥ homDensity (completeGraph (Fin 2)) G ^ Nat.card H.edgeSet
+
+/-- `H` is *bipartite with sides bounded by `k`*: it admits a bipartition
+`V(H) = X ∪ Y` (Mathlib's `IsBipartiteWith`, i.e. `X`, `Y` disjoint and every
+edge runs between them) covering all vertices, with `|X| ≤ k` and `|Y| ≤ k`. -/
+def BipartiteBoundedBy {W : Type*} (H : SimpleGraph W) (k : ℕ) : Prop :=
+  ∃ X Y : Set W,
+    H.IsBipartiteWith X Y ∧ X ∪ Y = Set.univ ∧ X.ncard ≤ k ∧ Y.ncard ≤ k

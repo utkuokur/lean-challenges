@@ -5,11 +5,10 @@ import Challenges.challenge_08_univ
 
 To win this slot, exhibit an `r ≥ 4` and an `r`-partite `r`-uniform
 hypergraph with vertex-cover number `τ` and matching number `ν`
-violating `τ ≤ (r-1)·ν`.
+violating `τ ≤ (r-1)·ν`.  (The cases `r = 2, 3` are theorems, so any
+counterexample must have `r ≥ 4`.)
 -/
 
-namespace Disprove
+universe u
 
-theorem challenge_8 : ¬ Challenge08.RyserHypergraphConjecture.{u} := sorry
-
-end Disprove
+theorem challenge_8_disprove : ¬ RyserHypergraphConjecture.{u} := sorry

@@ -9,9 +9,5 @@ conjecture fails for the path graph `P_r`.
 
 open SimpleGraph
 
-namespace Disprove
-
-theorem challenge_5 :
+theorem challenge_5_disprove :
     ¬ ∀ r : ℕ, ErdosHajnalConjectureFor (pathGraph r) := sorry
-
-end Disprove

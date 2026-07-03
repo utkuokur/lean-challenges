@@ -1,25 +1,35 @@
 import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Maps
+import Mathlib.Combinatorics.SimpleGraph.Bipartite
+import Mathlib.Data.Set.Card
 import Defs_and_Lems.Sidorenko
 
 /-!
-# Sidorenko's Conjecture for Half-Graphs — Universal Statement
+# Sidorenko's Conjecture for Bipartite Graphs with Bounded Sides — Universal Statement
 
-For every `r`, the half-graph `H_r` is the bipartite graph on
-`Fin r ⊕ Fin r` with `(Sum.inl i, Sum.inr j)` adjacent iff `i ≤ j`.
+Sidorenko's conjecture states that for every bipartite graph `H` and every
+graph `G`, the homomorphism-density inequality `t(H, G) ≥ t(K₂, G) ^ e(H)`
+holds.
 
-Sidorenko's conjecture states that for every bipartite `H` and every `G`,
-`t(H, G) ≥ t(K₂, G)^{|E(H)|}` (homomorphism-density inequality).
+This is the ∀r form of `challenge_04`: for EVERY bound `r`, the conjecture
+holds for every bipartite `H` whose bipartition sides both have at most `r`
+vertices.  Since every finite bipartite graph has both sides bounded by some
+`r`, this is equivalent to the full (open) Sidorenko conjecture.
 
-This universal version asks for a proof or disproof for ALL r.
+The host graph is required to be nonempty for the same degenerate-case reason
+as in `challenge_04`: on an empty host `homDensity` is `0 / 0 = 0` while for an
+edgeless bipartite `H` the right-hand side is `0 ^ 0 = 1`.
 
-`halfGraph`, `homDensity`, and `SidorenkoFor` live in
+`homDensity`, `SidorenkoFor`, and `BipartiteBoundedBy` live in
 `Defs_and_Lems/Sidorenko.lean`, shared with `challenge_04`.
 -/
 
 open SimpleGraph
 
-variable {V : Type*} [Fintype V]
+variable {W V : Type} [Fintype W] [Fintype V]
 
-/-- Sidorenko's conjecture for all half-graphs. -/
-theorem challenge_4 : ∀ r, ∀ (G : SimpleGraph V), SidorenkoFor (halfGraph r) G := sorry
+/-- The universal Sidorenko conjecture for bipartite graphs with bounded
+sides: for every bound `r`, every bipartite graph with sides bounded by `r`
+satisfies Sidorenko's inequality over every nonempty host. -/
+theorem challenge_4_univ [Nonempty V] :
+    ∀ r : ℕ, ∀ (H : SimpleGraph W) (G : SimpleGraph V),
+      BipartiteBoundedBy H r → SidorenkoFor H G := sorry

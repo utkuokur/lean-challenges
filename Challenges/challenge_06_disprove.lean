@@ -7,8 +7,4 @@ To win this slot, show that the class of all finite simple graphs is NOT
 better-quasi-ordered under the minor relation.
 -/
 
-namespace Disprove
-
-theorem challenge_6 : ¬ IsBQO FiniteGraph.MinorLE := sorry
-
-end Disprove
+theorem challenge_6_disprove : ¬ IsBQO FiniteGraph.MinorLE := sorry

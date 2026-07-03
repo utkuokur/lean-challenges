@@ -10,10 +10,6 @@ exponential Ramsey-number sandwich.
 
 open Filter
 
-namespace Disprove
-
-theorem challenge_3 :
+theorem challenge_3_disprove :
     ¬ ∀ r : ℕ, ∃ d₁ d₂ : ℝ, |d₁ - d₂| ≤ (4 - √2) * (0.9 : ℝ)^r ∧
       ∀ᶠ t in atTop, d₁ ^ t ≤ ramseyNumber t ∧ ramseyNumber t ≤ d₂ ^ t := sorry
-
-end Disprove

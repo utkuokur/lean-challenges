@@ -1,4 +1,4 @@
-import Challenges.challenge_01
+import Challenges.challenge_01_univ
 
 /-!
 # The Hadwiger Conjecture (Universal) — Disprove direction

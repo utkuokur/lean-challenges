@@ -131,9 +131,6 @@ end FinMatroid
 
 /-! ## The challenge -/
 
-/- Import this module from your submission to reuse the definitions above — don't
-copy them. -/
-
 /-- The challenge parameter: the field size.  Must be a prime power — the
 solver also supplies the witnesses `p` and `m` below, and `challenge_2` demands
 `r = p ^ m` as a conclusion, so a non-prime-power `r` is unprovable rather than

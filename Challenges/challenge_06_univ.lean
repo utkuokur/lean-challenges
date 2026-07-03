@@ -10,15 +10,16 @@ whether they form a *better*-quasi-order (BQO).
 
 This universal version asks for a proof or disproof of full BQO for the
 class of ALL finite simple graphs (of every vertex count) under the minor
-relation — the `r → ∞` limit of the parametrized ladder in
-`challenge_06`.
+relation.
 
 `IsBQO` is the Nash–Williams barrier-based definition from
 `Defs_and_Lems/BQO.lean`; `FiniteGraph` and its minor order come from
-`Defs_and_Lems/AlphaWQO.lean`.
+`Defs_and_Lems/AlphaWQO.lean`.  Note that the parametrized ladder in
+`challenge_06` uses the finite-level `IsAlphaWQO` hierarchy; on paper BQO
+implies every finite level, but that bridge (Nash–Williams theory) is not
+formalized in this repository, so the two slots are formally independent
+statements about the same conjecture.
 -/
 
-/- Import this module from your submission to reuse the definitions above — don't copy them. -/
-
 /-- BQO of finite graphs of all sizes under the minor relation. -/
-theorem challenge_6 : IsBQO FiniteGraph.MinorLE := sorry
+theorem challenge_6_univ : IsBQO FiniteGraph.MinorLE := sorry

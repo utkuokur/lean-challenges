@@ -24,14 +24,8 @@ open SimpleGraph
 
 variable {W V : Type} [Fintype W] [Fintype V] (H : SimpleGraph W) (G : SimpleGraph V)
 
-/-
-`H` is *bipartite with sides bounded by `k`*: it admits a bipartition
-`V(H) = X ∪ Y` (Mathlib's `IsBipartiteWith`, i.e. `X`, `Y` disjoint and every
-edge runs between them) covering all vertices, with `|X| ≤ k` and `|Y| ≤ k`.
--/
-def BipartiteBoundedBy {W : Type*} (H : SimpleGraph W) (k : ℕ) : Prop :=
-  ∃ X Y : Set W,
-    H.IsBipartiteWith X Y ∧ X ∪ Y = Set.univ ∧ X.ncard ≤ k ∧ Y.ncard ≤ k
+/- `BipartiteBoundedBy` (sides of the bipartition bounded by `k`) lives in
+`Defs_and_Lems/Sidorenko.lean`, shared with `challenge_04_univ`. -/
 
 def r : ℕ := sorry
 

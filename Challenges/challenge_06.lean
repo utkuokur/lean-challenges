@@ -24,7 +24,6 @@ copying them, then state your `r` and `theorem challenge_6` inside
 full layout.
 -/
 
-/- Import this module from your submission to reuse the definitions above — don't copy them. -/
 
 /-- The challenge parameter: for `r = 2·α`, finite planar graphs are
 `α`-well-quasi-ordered under the minor relation; for `r = 2·α + 1`, all

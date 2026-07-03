@@ -1,6 +1,7 @@
 name = "hadwiger-challenge"
 version = "0.1.0"
 keywords = ["math"]
+defaultTargets = ["Defs_and_Lems", "Challenges"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -18,9 +19,15 @@ name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.30.0-rc2"
 
+# Explicit globs: the root modules are empty/absent, so without these a bare
+# `lake build` (and hence CI) would compile none of the challenge files.
+# Each module is built separately; the challenge modules deliberately share
+# root-level names (e.g. `def r`) and must never be co-imported.
 [[lean_lib]]
 name = "Defs_and_Lems"
+globs = ["Defs_and_Lems.+"]
 
 [[lean_lib]]
 name = "Challenges"
+globs = ["Challenges", "Challenges.+"]
 
