@@ -52,12 +52,16 @@ def UnfriendlyAt {V : Type u} {σ : Type} (sideVal : Bool → σ)
       (neighboursInSide G f x (sideVal !b))
       (neighboursInSide G f x (sideVal b))
 
-/-- A total partition (`V → Bool`) unfriendly at every vertex. -/
-def IsUnfriendlyPartition {V : Type u} (G : SimpleGraph V) (f : V → Bool) : Prop :=
-  ∀ x : V, UnfriendlyAt id G f x
+/-- A partition that assigns every vertex a side and is unfriendly at every
+vertex.  The first conjunct is totality: for `sideVal = id` (a total
+`V → Bool` partition) it is automatic, and for `sideVal = some` (a partial
+`V → Option Bool` partition) it is `IsPartition f`. -/
+def IsUnfriendlyPartition {V : Type u} {σ : Type} (sideVal : Bool → σ)
+    (G : SimpleGraph V) (f : V → σ) : Prop :=
+  (∀ v : V, ∃ b : Bool, f v = sideVal b) ∧ ∀ x : V, UnfriendlyAt sideVal G f x
 
 /-- **The Unfriendly Partition Conjecture** (Cowan and Emerson): every
 countable graph has a partition that is unfriendly at every vertex. -/
 def UnfriendlyPartitionConjecture : Prop :=
   ∀ {V : Type u}, Countable V → ∀ G : SimpleGraph V,
-    ∃ f : V → Bool, IsUnfriendlyPartition G f
+    ∃ f : V → Bool, IsUnfriendlyPartition id G f

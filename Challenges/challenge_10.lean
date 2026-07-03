@@ -43,19 +43,16 @@ def IsPartition {V : Type u} (f : PartialPartition V) : Prop :=
 def Extends {V : Type u} (f g : PartialPartition V) : Prop :=
   ∀ v b, f v = some b -> g v = some b
 
-/- `neighboursInSide`, `UnfriendlyAt`, `InjectsInto`, `AtLeastAsMany`, and
-`atLeastAsMany_refl` are shared with the plain conjecture
+/- `neighboursInSide`, `UnfriendlyAt`, `IsUnfriendlyPartition`, `InjectsInto`,
+`AtLeastAsMany`, and `atLeastAsMany_refl` are shared with the plain conjecture
 (`challenge_10_univ`/`challenge_10_disprove`) via
 `Defs_and_Lems.UnfriendlyPartition`.  They are generic over the assignment
 codomain; the game instantiates them at partial partitions
 `f : V → Option Bool` with `sideVal = some`, so `neighboursInSide G f x (some b)`
-is the set of neighbours on side `b` and `UnfriendlyAt some G f x` unfolds to
-`∃ b, f x = some b ∧ …` (the `some b` also witnessing that `x` is assigned). -/
-
-/-- A partial partition that is total and unfriendly at every vertex. -/
-def IsUnfriendlyPartition {V : Type u} (G : SimpleGraph V)
-    (f : PartialPartition V) : Prop :=
-  IsPartition f ∧ ∀ x : V, UnfriendlyAt some G f x
+is the set of neighbours on side `b`, `UnfriendlyAt some G f x` unfolds to
+`∃ b, f x = some b ∧ …`, and `IsUnfriendlyPartition some G f` unfolds to
+`IsPartition f ∧ ∀ x, UnfriendlyAt some G f x` (the totality conjunct is
+`IsPartition f` here). -/
 
 theorem unfriendlyAt_defined {V : Type u} {G : SimpleGraph V}
     {f : PartialPartition V} {x : V} (h : UnfriendlyAt some G f x) :
@@ -79,7 +76,7 @@ theorem unfriendlyAt_same_to_opposite_bound {V : Type u} {G : SimpleGraph V}
 every countable graph has an unfriendly partition. -/
 def UnfriendlyPartitionConjecture : Prop :=
   ∀ {V : Type u}, Countable V -> ∀ G : SimpleGraph V,
-    ∃ f : PartialPartition V, IsUnfriendlyPartition G f
+    ∃ f : PartialPartition V, IsUnfriendlyPartition some G f
 
 /-! ## The `r`-partitioning game
 
@@ -150,7 +147,7 @@ replaced by an unfriendly total partition. -/
 def CountablePartitionImprovement : Prop :=
   ∀ {V : Type u}, Countable V -> ∀ G : SimpleGraph V,
     (∃ f : PartialPartition V, IsPartition f) ->
-      ∃ g : PartialPartition V, IsUnfriendlyPartition G g
+      ∃ g : PartialPartition V, IsUnfriendlyPartition some G g
 
 theorem upstream_implies_unfriendlyPartitionConjecture
     (hpart : CountableGraphsAdmitPartitions.{u})
@@ -162,7 +159,7 @@ theorem upstream_implies_unfriendlyPartitionConjecture
 /-- A single upstream statement equivalent to the target conjecture. -/
 def CountableGraphsAdmitUnfriendlyPartitions : Prop :=
   ∀ {V : Type u}, Countable V -> ∀ G : SimpleGraph V,
-    ∃ f : PartialPartition V, IsUnfriendlyPartition G f
+    ∃ f : PartialPartition V, IsUnfriendlyPartition some G f
 
 theorem firstLayer_implies_target
     (h : CountableGraphsAdmitUnfriendlyPartitions.{u}) :
@@ -201,7 +198,7 @@ theorem target_gives_unfriendly_at_each_vertex {V : Type u}
 theorem target_gives_finite_graph_case {V : Type u}
     (h : UnfriendlyPartitionConjecture.{u}) (hV : Finite V)
     (G : SimpleGraph V) :
-    ∃ f : PartialPartition V, IsUnfriendlyPartition G f := by
+    ∃ f : PartialPartition V, IsUnfriendlyPartition some G f := by
   exact h (finiteType_countable hV) G
 
 theorem target_gives_neighbor_bound {V : Type u}
