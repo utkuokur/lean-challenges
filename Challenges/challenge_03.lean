@@ -2,6 +2,7 @@ import Mathlib.Combinatorics.SimpleGraph.Clique
 import Mathlib.Tactic
 
 open Filter
+
 /- --------------------------------------------------------------- -/
 /- # Diagonal Ramsey numbers and exponential bounds
  The diagonal Ramsey number `R(t)`: the smallest `n` such that every simple graph

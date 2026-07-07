@@ -1,31 +1,31 @@
 import Mathlib.Combinatorics.SimpleGraph.Basic
+import Mathlib.SetTheory.Ordinal.Arithmetic
 import Defs_and_Lems.Minor
 
 /-!
 # α-well-quasi-ordering (Nash–Williams hierarchy) and the minor order
 
-Shared by `challenge_06`, `challenge_06_univ`, and
-`challenge_06_disprove`.
+`VStar Q` is the cumulative hierarchy over a quasi-order `Q`, indexed by an
+*ordinal* exactly as in the TeX source of challenge 6:
 
-`V*_α(Q)` is the cumulative hierarchy over a quasi-order `Q`: level `0` is
-`Q` itself, and level `α + 1` consists of the nonempty subsets of level `α`
-(the TeX defines `V*_α` for every ordinal, with disjoint unions at limit
-stages; the challenge parameter ranges over finite ordinals, where plain
-recursion suffices).
+* `VStar Q 0 = Q`;
+* `VStar Q (succ o)` is the type of nonempty subsets of `VStar Q o`;
+* at a limit `o`, `VStar Q o` is the disjoint union `⨆_{o' < o} VStar Q o'`,
+  reindexed through `o.ToType` so it stays in `Type u`.
 
-`≤*` compares two elements of the hierarchy by a game: from a position
-`(X, Y)`, Player I names `X' ∈ X`, Player II answers `Y' ∈ Y`, and play
-continues from `(X', Y')`; once both sides are in `Q`, Player II wins iff
-`X ≤ Y`. Starting from two elements of the *same* finite level, the two
-sides descend in lockstep, so the winning-strategy predicate unfolds into
-the simple recursion `leStar` below.
+`leStar` is the Nash–Williams game relation `≤*`: from `(X, Y)`, Player I
+names a move from `X`, Player II answers from `Y`, and once both sides are
+in `Q` Player II wins iff `X ≤ Y`. Because the limit stage identifies a
+level-`o` element with its underlying lower-level element, `≤*` is naturally
+*heterogeneous* — it compares an element of level `a` with one of level `b`,
+unwrapping limit tags for free.
 
 `(Q, ≤)` is **α-well-quasi-ordered** if level `α` is well-quasi-ordered
 under `≤*`. Nash–Williams: `(Q, ≤)` is a better-quasi-order iff it is
-`α`-well-quasi-ordered for every countable ordinal `α`.
+`ω₁`-well-quasi-ordered (equivalently, `α`-wqo for every countable `α`).
 -/
 
-open SimpleGraph
+open SimpleGraph Ordinal
 
 universe u
 
@@ -34,63 +34,77 @@ contains an increasing pair. -/
 def IsWQO {Q : Type u} (le : Q → Q → Prop) : Prop :=
   ∀ f : ℕ → Q, ∃ i j : ℕ, i < j ∧ le (f i) (f j)
 
-/-- Level `n` of the cumulative hierarchy over `Q`: `VStar Q 0 = Q`, and
-`VStar Q (n + 1)` is the type of nonempty sets of elements of `VStar Q n`. -/
-def VStar (Q : Type u) : ℕ → Type u
-  | 0 => Q
-  | n + 1 => {S : Set (VStar Q n) // S.Nonempty}
+/-- Level `o` of the cumulative hierarchy over `Q`: `VStar Q 0 = Q`,
+`VStar Q (succ o)` is the nonempty subsets of `VStar Q o`, and at a limit
+`o` it is the disjoint union of all lower levels, reindexed through
+`o.ToType` to stay in `Type u`. -/
+noncomputable def VStar (Q : Type u) (o : Ordinal.{u}) : Type u :=
+  Ordinal.limitRecOn o
+    Q
+    (fun _ ih => {S : Set ih // S.Nonempty})
+    (fun o _ ih => Σ i : o.ToType, ih (Ordinal.typein (α := o.ToType) (· < ·) i)
+      (Ordinal.typein_lt_self i))
 
-/-- The Nash–Williams relation `≤*` on level `n` of the hierarchy, in its
-backward-induction form: at level `0` it is `le` itself, and
-`X ≤* Y` at level `n + 1` iff for every Player I move `x ∈ X` Player II has
-an answer `y ∈ Y` with `x ≤* y` at level `n`. -/
-def leStar {Q : Type u} (le : Q → Q → Prop) : ∀ n, VStar Q n → VStar Q n → Prop
-  | 0 => le
-  | n + 1 => fun X Y => ∀ x ∈ X.val, ∃ y ∈ Y.val, leStar le n x y
+@[simp] theorem VStar_zero (Q : Type u) : VStar Q 0 = Q :=
+  Ordinal.limitRecOn_zero ..
 
-/-- `(Q, le)` is `α`-well-quasi-ordered when level `α` of the cumulative
-hierarchy over `Q` is well-quasi-ordered under `≤*`. -/
-def IsAlphaWQO {Q : Type u} (le : Q → Q → Prop) (a : ℕ) : Prop :=
-  IsWQO (leStar le a)
+@[simp] theorem VStar_succ (Q : Type u) (o : Ordinal.{u}) :
+    VStar Q (Order.succ o) = {S : Set (VStar Q o) // S.Nonempty} :=
+  Ordinal.limitRecOn_succ ..
 
-theorem leStar_zero {Q : Type u} (le : Q → Q → Prop) : leStar le 0 = le := rfl
+theorem VStar_limit (Q : Type u) {o : Ordinal.{u}} (h : Order.IsSuccLimit o) :
+    VStar Q o = Σ i : o.ToType, VStar Q (Ordinal.typein (α := o.ToType) (· < ·) i) :=
+  Ordinal.limitRecOn_limit _ _ _ _ h
 
-theorem leStar_refl {Q : Type u} {le : Q → Q → Prop} (hle : ∀ a, le a a) :
-    ∀ n (X : VStar Q n), leStar le n X X := by
-  intro n
-  induction n with
-  | zero => exact hle
-  | succ k ih =>
-    intro X x hx
-    exact ⟨x, hx, ih x⟩
+/-- The Nash–Williams game relation `≤*`, as a *heterogeneous* relation
+comparing an element of level `a` with an element of level `b`.
 
-/-- `0`-well-quasi-ordering is well-quasi-ordering of `(Q, le)` itself. -/
-theorem isAlphaWQO_zero_iff {Q : Type u} (le : Q → Q → Prop) :
-    IsAlphaWQO le 0 ↔ IsWQO le :=
-  Iff.rfl
+A limit-level element is identified with its underlying lower-level element
+(the disjoint union is transparent), so `≤*` unwraps limit tags for free; at
+successor levels it is the `∀`-Player-I / `∃`-Player-II lift, and at level
+`0` it bottoms out in `le`. Well-founded because every unwrap/descent
+strictly decreases the ordinal level on the side it acts on. -/
+noncomputable def leStar {Q : Type u} (le : Q → Q → Prop) (a : Ordinal.{u}) :
+    VStar Q a → ∀ b : Ordinal.{u}, VStar Q b → Prop :=
+  Ordinal.limitRecOn (motive := fun a => VStar Q a → ∀ b : Ordinal.{u}, VStar Q b → Prop) a
+    -- a = 0 : X is in Q, Player I cannot move; recurse on b (Player II descends).
+    (fun X b => Ordinal.limitRecOn (motive := fun b => VStar Q b → Prop) b
+      (fun Y => le (cast (VStar_zero Q) X) (cast (VStar_zero Q) Y))
+      (fun β ibh Y => ∃ y ∈ (cast (VStar_succ Q β) Y).val, ibh y)
+      (fun β hb ibh Y =>
+        let Y' := cast (VStar_limit Q hb) Y
+        ibh (Ordinal.typein (α := β.ToType) (· < ·) Y'.1) (Ordinal.typein_lt_self _) Y'.2))
+    -- a = succ α : Player I picks x ∈ X, then Player II answers from b.
+    (fun α ih X b => Ordinal.limitRecOn (motive := fun b => VStar Q b → Prop) b
+      (fun Y => ∀ x ∈ (cast (VStar_succ Q α) X).val, ih x 0 Y)
+      (fun β _ Y => ∀ x ∈ (cast (VStar_succ Q α) X).val,
+        ∃ y ∈ (cast (VStar_succ Q β) Y).val, ih x β y)
+      (fun β hb ibh Y =>
+        let Y' := cast (VStar_limit Q hb) Y
+        ibh (Ordinal.typein (α := β.ToType) (· < ·) Y'.1) (Ordinal.typein_lt_self _) Y'.2))
+    -- a limit : X is a disjoint-union tag; unwrap to its underlying element.
+    (fun a ha iha X =>
+      let X' := cast (VStar_limit Q ha) X
+      iha (Ordinal.typein (α := a.ToType) (· < ·) X'.1) (Ordinal.typein_lt_self _) X'.2)
 
-/-! ## Finite graphs and the minor order -/
+/-- `(Q, le)` is `α`-well-quasi-ordered when level `α` of
+ the cumulative hierarchy over `Q` is well-quasi-ordered under `≤*`. -/
+def IsAlphaWQO {Q : Type u} (le : Q → Q → Prop) (a : Ordinal.{u}) : Prop :=
+  IsWQO (fun X Y : VStar Q a => leStar le a X a Y)
 
-/-- A finite simple graph, packaged with its vertex count. -/
-def FiniteGraph : Type :=
-  Σ n : ℕ, SimpleGraph (Fin n)
+structure FiniteGraph where
+  V : Type
+  [fintypeV : Fintype V]
+  graph : SimpleGraph V
 
-/-- The minor order on finite graphs: `MinorLE G H` when `G` is a minor of
-`H`, witnessed by the shared branch-set `Minor` structure (the first
-argument of `Minor` is the minor, the second the host). -/
+attribute [instance] FiniteGraph.fintypeV
+
 def FiniteGraph.MinorLE (G H : FiniteGraph) : Prop :=
-  Nonempty (Minor G.2 H.2)
-
-/-- Planarity via Wagner's theorem: a finite graph is planar iff it has
-neither a `K₅` nor a `K₃,₃` minor. We adopt this combinatorial
-characterization as the definition. -/
-def FiniteGraph.IsPlanar (G : FiniteGraph) : Prop :=
-  ¬ Nonempty (Minor (completeGraph (Fin 5)) G.2) ∧
-    ¬ Nonempty (Minor (completeBipartiteGraph (Fin 3) (Fin 3)) G.2)
+  Nonempty (Minor G.graph H.graph)
 
 /-- A finite planar simple graph. -/
-def PlanarGraph : Type :=
-  {G : FiniteGraph // G.IsPlanar}
+def PlanarGraph : Type 1 :=
+  {G : FiniteGraph // G.graph.IsWagnerPlanar}
 
 /-- The minor order on finite planar graphs. -/
 def PlanarGraph.MinorLE (G H : PlanarGraph) : Prop :=

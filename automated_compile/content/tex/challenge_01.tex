@@ -2,8 +2,6 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
 
-\usepackage{minimalJ}
-
 \numberwithin{equation}{section}
 
 \usepackage[style=numeric,sorting=none,giveninits=true]{biblatex}
@@ -13,9 +11,6 @@
 \usepackage[margin=1in]{geometry}
 
 \DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
-
-%\usepackage[colorlinks, allcolors=blue, hypertexnames=false]{hyperref}
-%\usepackage[noabbrev, nameinlink]{cleveref}
 
 \usepackage{comment}
 
@@ -48,8 +43,6 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Document                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -63,32 +56,10 @@
 \section*{Challenge 1: The Hadwiger Conjecture}
 \refstepcounter{section}
 
-
-%Let $G= \ev{V,E}$ be a finite simple graph.
-\begin{comment}
-\begin{definition}[Graph Minor] 
-Given simple graphs $X$ and $G$, we say that $X$ is a \emph{minor} of $G$ if there is a function assigning to each vertex $x$ of $X$ a nonempty vertex set $V_x\subseteq V(G)$ such that 
-\begin{enumerate}
-\item the subgraph $G[V_x]$ induced by $G$ on $V_x$ is connected for each $x$;
-\item for different vertices  $x,y\in V\ev{X}$, the sets $V_x$ and $V_y$ are disjoint;
-\item for any two adjacent vertices $x,y\in V\ev{X}$, there are adjacent vertices $a\in V_x$ and $b\in V_y$ of $G$. 
-\end{enumerate}
-\end{definition}
-\end{comment}
-
-%COMMENT FROM NATHAN: maybe we can skip the definitions of minor and chromatic number
-
 \begin{definition}[Hadwiger Number]
 Given a graph $G$, the \textit{Hadwiger number} of $G$ is the largest integer $t$ such that the complete graph $K_t$ on $t$ vertices is a minor of $G$.
 We denote the Hadwiger number by $h\ev{G}$.
 \end{definition}
-
-\begin{comment}
-\begin{definition}[Chromatic number]
-Given a graph $G$  and $n\in \mathbb{N}$, 
-a \textit{proper coloring} of $G$ with $n$ colours is a function $f:[n] \rightarrow V\ev{G}$ so that adjacent vertices receive different $f$-values. The \textit{chromatic number} of $G$ is the minimum number $n$ such that there is a proper coloring of $G$ with $n$ colours. 
-\end{definition}
-\end{comment}
 
 
 \begin{conjecture}[Hadwiger's Conjecture

@@ -1,8 +1,7 @@
-
 \documentclass[12pt]{article}
 \usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
 
-\usepackage{minimalJ}
+% \usepackage{minimalJ}  % decoupled: unused in this file
 
 \numberwithin{equation}{section}
 
@@ -75,13 +74,13 @@ The maximal independent sets of $M$ are called the \emph{bases} of $M$.
 \end{definition}
 
 \begin{definition}[$\mathrm{GF}(p^m)$-representable matroid]
-Let $p$ be a prime number. Let $m$ be a positive integer. Let $\mathrm{GF}(p^m)$ denote the finite field with $p^m$ elements. A matroid $M$ is \emph{$\mathrm{GF}(p^m)$-representable} if there is a matrix $A$ whose entries are in $\mathrm{GF}(p^m)$ and whose columns are labelled with the elements of $M$ such that the independent sets of $M$ are exactly the sets of columns of $A$ which are linearly independent over $\mathrm{GF}(p^m)$.
+Let $p$ be a prime number. Let $m$ be a positive integer. Let $\mathrm{GF}(p^m)$ denote the finite field with $p^m$ elements. A matroid $M$ is \emph{$\mathrm{GF}(p^m)$-representable} if there is a matrix $A$  whose entries are in $\mathrm{GF}(p^m)$ and whose columns are labelled with the elements of $M$ such that the independent sets of $M$ are exactly the sets of columns of $A$ which are linearly independent over $\mathrm{GF}(p^m)$.
 \end{definition}
 
 \begin{definition}[Matroid minor]
-Let $M$ be a matroid with ground set $E$.
-Given a subset $D \subseteq E$, the \emph{deletion} of $D$ from $M$, denoted $M\setminus D$, is the restriction of $M$ to $E\setminus D$.
-The \textit{dual} of $M$, denoted $M^*$, is the matroid with the same ground set as $M$, where a set is independent whenever its complement includes a base of $M$. Given a subset $C\subseteq E$, the \emph{contraction} of $M$ onto $E\setminus C$ is the matroid $M/C := (M^* \setminus C)^*$.
+Let $M$ be a matroid with ground set $E$. 
+Given a subset $D \subseteq E$, the \emph{deletion} of $D$ from $M$, denoted $M\setminus D$, has as its ground set $E\setminus D$ and its independent sets are those of $M$ contained in $E\setminus D$.
+The \textit{dual} of $M$, denoted $M^*$, is the matroid with the same ground set as $M$, where a set is independent whenever its complement includes a base of $M$.  Given a subset $C\subseteq E$, the \emph{contraction} of $C$ from $M$ is the matroid $M/C := (M^* \setminus C)^*$.
 
 Given matroids $M,N$, then $N$ is a \emph{minor} of $M$ if there exist disjoint sets $C$ and $D$ such that $N = M/C \setminus D$. A minor of $M$ is \textit{proper} if it is not equal to $M$.
 \end{definition}
@@ -97,15 +96,14 @@ Let $p$ be a prime number. Let $m$ be a positive integer. List the minimal exclu
 \end{openproblem}
 
 For $p^m=2$, the excluded minor list is known: In 1958, Tutte proved that a matroid is representable over $\mathrm{GF}(2)$ if and only if it has no minor isomorphic to $U_{2,4}$ \cite{Tutte1958Homotopy}. For $p^m=3$, there is also a finite explicit list: In 1979, Bixby and Seymour proved that a matroid is representable over $\mathrm{GF}(3)$ if and only if it has no minor isomorphic to $U_{2,5}$, $U_{3,5}$, $F_7$, or $F_7^*$ \cite{Bixby1979Reid,Seymour1979GF3}.
-The excluded minors for $\mathrm{GF}(4)$-representable matroids have been determined by Geelen, Gerards and Kapoor \cite{GeelenGerardsKapoor2000GF4}.
-In general, Rota's excluded-minor conjecture, proven by Geelen, Gerards and Whittle, says that for every finite field $\mathrm{GF}(p^m)$ there are only finitely many excluded minors for the class of $\mathrm{GF}(p^m)$-representable matroids \cite{Rota1971Combinatorial, GeelenGerardsWhittle2014Solving}.
+The excluded minors for $GF(4)$-representable matroids have been determined by Geelen, Gerards and Kapoor \cite{GeelenGerardsKapoor2000GF4}.
+In general, Rota's excluded-minor conjecture, proven by Geelen, Gerards and Whittle, says that for every finite field $\mathrm{GF}(p^m)$ there are only finitely many excluded minors for the class of $\mathrm{GF}(p^m)$-representable matroids \cite{Rota1971Combinatorial, GeelenGerardsWhittle2014Solving}. 
 
-We consider the following parametrized version of the well-known open problem to determine, for every finite field $\mathrm{GF}(p^m)$, the finitely many excluded minors explicitly.
+We consider the following parametrized version of the well-known open problem to determine  for every finite field $\mathrm{GF}(p^m)$, the finitely many excluded minors explicitly.
 \begin{openproblem}
-Let $r = p^m$ be a prime power, where $p$ is a prime number and $m$ is a positive integer (the solver exhibits $p$ and $m$ together with a proof that $r = p^m$). List the excluded minors for the class of $\mathrm{GF}(p^m)$-representable matroids and prove that the list is complete up to isomorphism.
+Let $r$ be a positive integer. If there is a prime number $p$ and a positive integer $m$ such that $r=p^m$, then list the excluded minors for the class of $\mathrm{GF}(p^m)$-representable matroids and prove that the list is complete up to isomorphism.
 \end{openproblem}
 
-%In the formal statement, the list is given as a finite set $L$ of matroids: the members of $L$ are pairwise non-isomorphic excluded minors, and every finite matroid that is not $\mathrm{GF}(p^m)$-representable has a minor isomorphic to a member of $L$. This rules out indirect solutions that prove the existence of a complete list without exhibiting one.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printbibliography

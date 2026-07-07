@@ -1,5 +1,3 @@
-
-import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Data.Set.Card
 import Mathlib.Combinatorics.SimpleGraph.Paths
 
@@ -7,7 +5,8 @@ namespace SimpleGraph
 
 variable {V : Type*} (G : SimpleGraph V) (s : Set V)
 
-/-- Two vertices `u` and `v` are reachable in a graph `G` on `s` if there exists a walk from `u` to
+/-- Two vertices `u` and `v` are reachable in a graph `G` on `s`
+if there exists a walk from `u` to
 `v` in `G` whose vertices all lie within `s`. -/
 def ReachableOn (u v : V) : Prop := ∃ w : G.Walk u v, ∀ ⦃x⦄, x ∈ w.support → x ∈ s
 

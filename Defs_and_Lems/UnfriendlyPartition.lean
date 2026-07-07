@@ -18,8 +18,7 @@ sides:
   `sideVal = some` (so `f y = some b` selects side `b`, and the `∃ b, f x = some b`
   clause of `UnfriendlyAt` additionally witnesses that `x` is assigned).
 
-Neighbourhood sizes are compared by **injections**, so vertices of infinite
-degree are handled correctly.
+Neighbourhood sizes are compared by **injections**.
 -/
 
 universe u v
@@ -59,9 +58,3 @@ vertex.  The first conjunct is totality: for `sideVal = id` (a total
 def IsUnfriendlyPartition {V : Type u} {σ : Type} (sideVal : Bool → σ)
     (G : SimpleGraph V) (f : V → σ) : Prop :=
   (∀ v : V, ∃ b : Bool, f v = sideVal b) ∧ ∀ x : V, UnfriendlyAt sideVal G f x
-
-/-- **The Unfriendly Partition Conjecture** (Cowan and Emerson): every
-countable graph has a partition that is unfriendly at every vertex. -/
-def UnfriendlyPartitionConjecture : Prop :=
-  ∀ {V : Type u}, Countable V → ∀ G : SimpleGraph V,
-    ∃ f : V → Bool, IsUnfriendlyPartition id G f

@@ -1,10 +1,12 @@
-import Challenges.challenge_06_univ
+import Challenges.challenge_06
 
 /-!
-# BQO of Finite Graphs (Universal) — Disprove direction
-
-To win this slot, show that the class of all finite simple graphs is NOT
-better-quasi-ordered under the minor relation.
+# α-WQO of Finite Graphs
+# Disprove direction
 -/
 
-theorem challenge_6_disprove : ¬ IsBQO FiniteGraph.MinorLE := sorry
+theorem challenge_6_disprove :
+    ¬ ∀ r : Ordinal.{1},
+    if r % 2 = 0
+    then IsAlphaWQO PlanarGraph.MinorLE (r / 2)
+    else IsAlphaWQO FiniteGraph.MinorLE (r / 2) := sorry

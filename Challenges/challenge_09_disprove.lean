@@ -1,4 +1,4 @@
-import Challenges.challenge_09_univ
+import Challenges.challenge_09
 
 /-!
 # Union-Closed Sets Conjecture (Universal) — Disprove direction

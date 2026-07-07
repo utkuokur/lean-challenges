@@ -1,17 +1,13 @@
-import Challenges.challenge_04_univ
+import Challenges.challenge_04
 
 /-!
-# Sidorenko for Bounded-Side Bipartite Graphs (Universal) — Disprove direction
-
-To win this slot, exhibit a bound `r`, a bipartite graph `H` with both sides
-of size at most `r`, and a nonempty host graph `G` for which the
-Sidorenko-type density inequality fails — i.e. disprove Sidorenko's
-conjecture.
+# Sidorenko for Bounded-Side Bipartite Graphs — Disprove direction
 -/
 
 open SimpleGraph
 
+variable {W V : Type} [Fintype W] [Fintype V]
+
 theorem challenge_4_disprove :
-    ¬ ∀ {W V : Type} [Fintype W] [Fintype V] [Nonempty V],
-      ∀ r : ℕ, ∀ (H : SimpleGraph W) (G : SimpleGraph V),
-        BipartiteBoundedBy H r → SidorenkoFor H G := sorry
+    ¬ ∀ r : ℕ, ∀ (H : SimpleGraph W) (G : SimpleGraph V),
+    BipartiteBoundedBy H r → SidorenkoFor H G := sorry

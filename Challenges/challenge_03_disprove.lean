@@ -1,11 +1,7 @@
-import Challenges.challenge_03_univ
+import Challenges.challenge_03
 
 /-!
-# Ramsey Numbers (Universal) — Disprove direction
-
-To win this slot, exhibit an `r` for which no pair of real constants
-`d₁, d₂` with `|d₁ - d₂| ≤ (4 - √2) · (0.98)^r` satisfies the
-exponential Ramsey-number sandwich.
+# Ramsey Numbers  — Disprove direction
 -/
 
 open Filter

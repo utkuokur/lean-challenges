@@ -1,7 +1,7 @@
-import Challenges.challenge_01_univ
+import Challenges.challenge_01
 
 /-!
-# The Hadwiger Conjecture (Universal) — Disprove direction
+# The Hadwiger Conjecture — Disprove direction
 -/
 
 open SimpleGraph
