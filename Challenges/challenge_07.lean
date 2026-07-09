@@ -47,16 +47,10 @@ def latticePackingConstant (d : ℕ) : ℝ≥0∞ :=
 /-- In dimension `r`, the sphere-packing constant equals the lattice
 sphere-packing constant. The single named statement shared by the canonical
 theorem and the submission signature-shim. -/
-def SpherePackingEqLatticeFor (r : ℕ) : Prop :=
+def statement_07 (r : ℕ) : Prop :=
   spherePackingConstant r = latticePackingConstant r
-
-/-- Sphere-packing = lattice-packing constant in every dimension, universal in `r`.
-The single named statement shared by the canonical theorem, the disprove slot, and
-the shims. -/
-def SpherePackingEqLatticeUniv : Prop :=
-  ∀ r : ℕ, SpherePackingEqLatticeFor r
 
 /- The challenge parameter: the dimension. -/
 def r : ℕ := sorry
 
-theorem challenge_7 : SpherePackingEqLatticeFor r := sorry
+theorem challenge_7 : statement_07 r := sorry

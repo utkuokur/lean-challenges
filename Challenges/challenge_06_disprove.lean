@@ -1,8 +1,8 @@
-import Challenges.challenge_06_univ
+import Challenges.challenge_06
 
 /-!
 # α-WQO of Finite Graphs
 # Disprove direction
 -/
 
-theorem challenge_6_disprove : ¬ AlphaWQOMinorLadderUniv := sorry
+theorem challenge_6_disprove : ¬ ∀ r : Ordinal.{1}, statement_06 r := sorry

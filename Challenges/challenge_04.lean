@@ -22,7 +22,7 @@ variable {W V : Type} [Fintype W] [Fintype V] [Nonempty V]
 whose two sides are bounded by `r`, the Sidorenko density inequality holds against
 every host `G`. The single named statement shared by the canonical theorem and the
 submission signature-shim. -/
-def SidorenkoBoundedFor (r : ℕ) : Prop :=
+def statement_04 (r : ℕ) : Prop :=
   ∀ {W V : Type} [Fintype W] [Fintype V] [Nonempty V]
     (H : SimpleGraph W) (G : SimpleGraph V),
     BipartiteBoundedBy H r → SidorenkoFor H G
@@ -30,4 +30,4 @@ def SidorenkoBoundedFor (r : ℕ) : Prop :=
 /- The challenge parameter -/
 def r : ℕ := sorry
 
-theorem challenge_4 : SidorenkoBoundedFor r := sorry
+theorem challenge_4 : statement_04 r := sorry

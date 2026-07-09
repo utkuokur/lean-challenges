@@ -41,22 +41,16 @@ def PartitionerWins {V : Type u} (G : SimpleGraph V)
       IsLegalResponse G f g v ∧ PartitionerWins G g β
 termination_by α
 
-namespace UnfriendlyPartition
-
-/-- Scaled Unfriendly Partition Conjecture for a fixed ordinal parameter `r`: on
+/- Scaled Unfriendly Partition Conjecture for a fixed ordinal parameter `r`: on
 every countable graph, Partitioner has a winning strategy in the
-`r`-partitioning game. This is the single named statement shared by the
-canonical theorem and the submission signature-shim, so the two stay in
-lockstep. -/
-def ScaledUnfriendlyPartitionConjectureFor (r : Ordinal.{v}) : Prop :=
+`r`-partitioning game.  -/
+def statement_10 (r : Ordinal.{v}) : Prop :=
   ∀ {V : Type u}, Countable V -> ∀ G : SimpleGraph V,
     PartitionerWins G (emptyPartialPartition V) r
-
-end UnfriendlyPartition
 
 /- The challenge parameter -/
 def r : Ordinal.{v} := sorry
 
 theorem challenge_10 :
-    UnfriendlyPartition.ScaledUnfriendlyPartitionConjectureFor.{u, v} r := by
+    statement_10.{u, v} r := by
   sorry

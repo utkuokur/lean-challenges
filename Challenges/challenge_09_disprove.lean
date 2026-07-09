@@ -10,4 +10,4 @@ family `F` of subsets of some ground type, with no element of density
 
 universe u
 
-theorem challenge_9_disprove : ¬ UnionClosedDensityUniv.{u} := sorry
+theorem challenge_9_disprove : ¬ ∀ r : ℕ, statement_09.{u} r := sorry

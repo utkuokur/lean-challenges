@@ -77,7 +77,7 @@ the prime-power parameter `r` factors as `r = pᵐ`, and `L` is exactly the comp
 list of excluded minors for GF(pᵐ)-representability. The single named statement
 shared by the canonical theorem and the submission signature-shim, so the two stay
 in lockstep. -/
-def GFExcludedMinorConjectureFor (r : ℕ) (L : Finset FinMatroid) : Prop :=
+def statement_02 (r : ℕ) (L : Finset FinMatroid) : Prop :=
   ∃ m p, ∃ _hp : Nat.Prime p,
   haveI : Fact (Nat.Prime p) := ⟨_hp⟩
   0 < m ∧ r = p ^ m ∧
@@ -93,4 +93,4 @@ def r : ℕ := sorry
 /- **The excluded-minor list, as concrete data.**   -/
 def L : Finset FinMatroid := sorry
 
-theorem challenge_2 : GFExcludedMinorConjectureFor.{u} r L := sorry
+theorem challenge_2 : statement_02.{u} r L := sorry

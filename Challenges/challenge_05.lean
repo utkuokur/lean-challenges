@@ -18,13 +18,13 @@ def ErdosHajnalConjectureFor : Prop :=
     ∃ (t : ℕ), (t : ℝ) ≥ (Fintype.card V : ℝ) ^ (c : ℝ) ∧
     ∃ (s : Finset V), (G.IsNClique t s ∨ Gᶜ.IsNClique t s)
 
-/-- The Erdős–Hajnal conjecture for every path graph `P_r`, universal in `r`. The
-single named statement shared by the canonical `challenge_5_univ` theorem, the
-disprove slot, and their shims. -/
-def ErdosHajnalPathUniv : Prop :=
-  ∀ r : ℕ, ErdosHajnalConjectureFor (pathGraph r)
+/-- The Erdős–Hajnal conjecture for the path graph `P_r`, at parameter `r`. The
+single named statement shared by the canonical theorem and the submission
+signature-shim. -/
+def statement_05 (r : ℕ) : Prop :=
+  ErdosHajnalConjectureFor (pathGraph r)
 
 def r : ℕ := sorry  -- The challenge parameter
 
 /-- The Erdős–Hajnal conjecture for the path graph P_r. -/
-theorem challenge_5 : ErdosHajnalConjectureFor (pathGraph r) := sorry
+theorem challenge_5 : statement_05 r := sorry

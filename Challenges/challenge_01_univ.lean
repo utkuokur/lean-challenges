@@ -8,6 +8,4 @@ See the submission guide on the website for the full layout.
 
 import Challenges.challenge_01
 
-open SimpleGraph
-
-theorem challenge_1_univ : HadwigerColoringUniv := sorry
+theorem challenge_1_univ : ∀ r : ℕ, statement_01 r := sorry

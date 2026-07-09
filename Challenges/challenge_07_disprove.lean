@@ -5,4 +5,4 @@ import Challenges.challenge_07
 # Disprove option
 -/
 
-theorem challenge_7_disprove : ¬ SpherePackingEqLatticeUniv := sorry
+theorem challenge_7_disprove : ¬ ∀ r : ℕ, statement_07 r := sorry

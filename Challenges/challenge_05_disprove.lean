@@ -7,4 +7,4 @@ import Challenges.challenge_05
 
 open SimpleGraph
 
-theorem challenge_5_disprove : ¬ ErdosHajnalPathUniv := sorry
+theorem challenge_5_disprove : ¬ ∀ r : ℕ, statement_05 r := sorry

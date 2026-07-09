@@ -6,4 +6,4 @@ import Challenges.challenge_01
 
 open SimpleGraph
 
-theorem challenge_1_disprove : ¬ HadwigerColoringUniv := sorry
+theorem challenge_1_disprove : ¬ ∀ r : ℕ, statement_01 r := sorry

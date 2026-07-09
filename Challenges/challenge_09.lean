@@ -29,20 +29,13 @@ def Nondegenerate (F : Finset (Finset U)) : Prop :=
 finite union-closed family has an element of density at least `1/2 - 1/(r + 2)`.
 The single named statement shared by the canonical theorem and the submission
 signature-shim. -/
-def UnionClosedDensityFor (r : ℕ) : Prop :=
+def statement_09 (r : ℕ) : Prop :=
   ∀ {U : Type u} [DecidableEq U] {F : Finset (Finset U)},
     IsUnionClosed F → Nondegenerate F →
       ∃ x, InGround F x ∧ density F x ≥ (1 / 2 : Rat) - 1 / ((r : Rat) + 2)
 
-/-- The union-closed density conjecture, universal in `r`. As `r → ∞` the bound
-tends to `1/2`, so this is the full union-closed sets (Frankl) conjecture. The
-single named statement shared by the canonical theorem, the disprove slot, and the
-shims. -/
-def UnionClosedDensityUniv : Prop :=
-  ∀ r : ℕ, UnionClosedDensityFor.{u} r
-
 /- The challenge parameter. -/
 def r : Nat := sorry
 
-theorem challenge_9 : UnionClosedDensityFor.{u} r := by
+theorem challenge_9 : statement_09.{u} r := by
   sorry

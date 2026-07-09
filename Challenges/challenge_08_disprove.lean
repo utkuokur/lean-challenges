@@ -5,4 +5,4 @@ import Challenges.challenge_08
 # Disprove option
 -/
 
-theorem challenge_8_disprove : ¬ RyserHypergraphConjecture.{u} := sorry
+theorem challenge_8_disprove : ¬ ∀ r : ℕ, statement_08.{u} r := sorry

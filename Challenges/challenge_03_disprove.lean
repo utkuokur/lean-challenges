@@ -6,4 +6,4 @@ import Challenges.challenge_03
 
 open Filter
 
-theorem challenge_3_disprove : ¬ RamseyLadderUniv := sorry
+theorem challenge_3_disprove : ¬ ∀ r : ℕ, statement_03 r := sorry
