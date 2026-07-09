@@ -485,7 +485,11 @@ function App() {
           <h2 className="section-heading">Contact</h2>
           <p style={{ fontSize: 15, color: "#333", maxWidth: 720, lineHeight: 1.7 }}>
             For issues and recommendations, please email{" "}
-            <a href="mailto:utkuokur@gmail.com">utkuokur@gmail.com</a>.
+            <a href="mailto:utkuokur@gmail.com">utkuokur@gmail.com</a> or{" "}
+            <a href="mailto:vaibhav.bajpai@math.tu-freiberg.de">
+              vaibhav.bajpai@math.tu-freiberg.de
+            </a>
+            .
           </p>
         </section>
       </main>
