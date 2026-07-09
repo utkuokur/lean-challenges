@@ -10,8 +10,4 @@ family `F` of subsets of some ground type, with no element of density
 
 universe u
 
-theorem challenge_9_disprove :
-    ¬ ∀ r : ℕ, ∀ {U : Type u} [DecidableEq U] {F : Finset (Finset U)},
-      IsUnionClosed F → Nondegenerate F →
-        ∃ x, InGround F x ∧
-          density F x ≥ (1 / 2 : Rat) - 1 / ((r : Rat) + 2) := sorry
+theorem challenge_9_disprove : ¬ UnionClosedDensityUniv.{u} := sorry

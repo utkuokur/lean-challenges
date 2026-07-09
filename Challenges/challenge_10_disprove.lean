@@ -1,4 +1,4 @@
-import Challenges.challenge_10
+import Challenges.challenge_10_univ
 
 /-!
 # The Unfriendly Partition Conjecture (Universal) — Disprove direction
@@ -12,6 +12,4 @@ mathematics.
 
 universe u v
 
-theorem challenge_10_disprove :
-    ¬ ∀ r : Ordinal.{v}, ∀ {V : Type u}, Countable V → ∀ G : SimpleGraph V,
-      PartitionerWins G (emptyPartialPartition V) r := sorry
+theorem challenge_10_disprove : ¬ UnfriendlyPartitionConjecture.{u, v} := sorry

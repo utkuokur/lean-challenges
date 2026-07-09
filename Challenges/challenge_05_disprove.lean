@@ -7,5 +7,4 @@ import Challenges.challenge_05
 
 open SimpleGraph
 
-theorem challenge_5_disprove : ¬ ∀ r : ℕ,
-    ErdosHajnalConjectureFor (pathGraph r) := sorry
+theorem challenge_5_disprove : ¬ ErdosHajnalPathUniv := sorry

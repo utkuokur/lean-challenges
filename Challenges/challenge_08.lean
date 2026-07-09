@@ -66,9 +66,23 @@ def RyserConjectureFor (r : ℕ) : Prop :=
 
 end Hypergraph
 
+universe u
+
+/-- Ryser's hypergraph conjecture for a fixed parameter `r`, quantified over every
+hypergraph (with the necessary `2 ≤ r` hypothesis). The single named statement
+shared by the canonical theorem and the submission signature-shim. -/
+def RyserChallengeFor (r : ℕ) : Prop :=
+  ∀ {V : Type u} [DecidableEq V] (H : Hypergraph V),
+    2 ≤ r → Hypergraph.RyserConjectureFor H r
+
+/-- Ryser's hypergraph conjecture, universal in the parameter `r`. The single named
+statement shared by the canonical theorem, the disprove slot, and the shims. -/
+def RyserHypergraphConjecture : Prop :=
+  ∀ {V : Type u} [DecidableEq V] (H : Hypergraph V) (r : ℕ),
+    2 ≤ r → Hypergraph.RyserConjectureFor H r
+
 /- The challenge parameter. -/
 def r : ℕ := sorry
 
-theorem challenge_8 (hr : 2 ≤ r) :
-    Hypergraph.RyserConjectureFor H r := by
+theorem challenge_8 : RyserChallengeFor.{u} r := by
   sorry

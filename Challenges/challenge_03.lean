@@ -15,7 +15,18 @@ noncomputable def ramseyNumber (t : ℕ) : ℕ :=
     (∃ s : Finset (Fin n), G.IsNClique t s) ∨
     (∃ s : Finset (Fin n), (Gᶜ).IsNClique t s)}
 
+/-- Exponential two-sided bound on the diagonal Ramsey numbers, with the gap
+between the bases decaying like `(0.98)^r` in the parameter `r`. The single named
+statement shared by the canonical theorem and the submission signature-shim. -/
+def RamseyLadderFor (r : ℕ) : Prop :=
+  ∃ d₁ d₂ : ℝ, |d₁ - d₂| ≤ (4 - √2) * (0.98 : ℝ)^r ∧
+    ∀ᶠ t in atTop, d₁ ^ t ≤ ramseyNumber t ∧ ramseyNumber t ≤ d₂ ^ t
+
+/-- The Ramsey exponential-bound ladder, universal in the parameter `r`. The single
+named statement shared by the canonical theorem, the disprove slot, and the shims. -/
+def RamseyLadderUniv : Prop :=
+  ∀ r : ℕ, RamseyLadderFor r
+
 def r : ℕ := sorry
 
-theorem challenge_3 : ∃ d₁ d₂ : ℝ, |d₁ - d₂| ≤ (4 - √2) * (0.98 : ℝ)^r ∧
- ∀ᶠ t in atTop, d₁ ^ t ≤ ramseyNumber t ∧ ramseyNumber t ≤ d₂ ^ t := sorry
+theorem challenge_3 : RamseyLadderFor r := sorry

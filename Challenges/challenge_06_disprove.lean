@@ -1,12 +1,8 @@
-import Challenges.challenge_06
+import Challenges.challenge_06_univ
 
 /-!
 # α-WQO of Finite Graphs
 # Disprove direction
 -/
 
-theorem challenge_6_disprove :
-    ¬ ∀ r : Ordinal.{1},
-    if r % 2 = 0
-    then IsAlphaWQO PlanarGraph.MinorLE (r / 2)
-    else IsAlphaWQO FiniteGraph.MinorLE (r / 2) := sorry
+theorem challenge_6_disprove : ¬ AlphaWQOMinorLadderUniv := sorry

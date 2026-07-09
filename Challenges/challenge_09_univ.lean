@@ -18,8 +18,4 @@ universe u
 /-- The universal scaled union-closed sets conjecture: for every `r`, every
 nondegenerate finite union-closed family has an element of density at least
 `1/2 - 1/(r + 2)`.  Equivalent to the full union-closed sets conjecture. -/
-theorem challenge_9_univ :
-    ∀ r : ℕ, ∀ {U : Type u} [DecidableEq U] {F : Finset (Finset U)},
-      IsUnionClosed F → Nondegenerate F →
-        ∃ x, InGround F x ∧
-          density F x ≥ (1 / 2 : Rat) - 1 / ((r : Rat) + 2) := sorry
+theorem challenge_9_univ : UnionClosedDensityUniv.{u} := sorry

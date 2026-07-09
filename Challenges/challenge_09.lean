@@ -25,18 +25,24 @@ def density (F : Finset (Finset U)) (x : U) : Rat :=
 def Nondegenerate (F : Finset (Finset U)) : Prop :=
   F ≠ ∅ /\ F ≠ {∅}
 
+/-- Scaled union-closed sets conjecture for parameter `r`: every nondegenerate
+finite union-closed family has an element of density at least `1/2 - 1/(r + 2)`.
+The single named statement shared by the canonical theorem and the submission
+signature-shim. -/
+def UnionClosedDensityFor (r : ℕ) : Prop :=
+  ∀ {U : Type u} [DecidableEq U] {F : Finset (Finset U)},
+    IsUnionClosed F → Nondegenerate F →
+      ∃ x, InGround F x ∧ density F x ≥ (1 / 2 : Rat) - 1 / ((r : Rat) + 2)
+
+/-- The union-closed density conjecture, universal in `r`. As `r → ∞` the bound
+tends to `1/2`, so this is the full union-closed sets (Frankl) conjecture. The
+single named statement shared by the canonical theorem, the disprove slot, and the
+shims. -/
+def UnionClosedDensityUniv : Prop :=
+  ∀ r : ℕ, UnionClosedDensityFor.{u} r
+
 /- The challenge parameter. -/
 def r : Nat := sorry
 
-/-
-Scaled union-closed sets conjecture:
-for every nondegenerate finite union-closed family, some element has density at
-least `1 / 2 - 1 / (r + 2)`.
--/
-theorem challenge_9 {U : Type u} [DecidableEq U]
-    {F : Finset (Finset U)}
-    (h_union_closed : IsUnionClosed F)
-    (h_nontrivial : Nondegenerate F) :
-    exists x, InGround F x /\
-      density F x >= (1 / 2 : Rat) - 1 / ((r : Rat) + 2) := by
+theorem challenge_9 : UnionClosedDensityFor.{u} r := by
   sorry

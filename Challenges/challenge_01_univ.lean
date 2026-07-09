@@ -8,9 +8,6 @@ See the submission guide on the website for the full layout.
 
 import Challenges.challenge_01
 
-variable {V W : Type*} [Fintype V]
-
 open SimpleGraph
 
-theorem challenge_1_univ (G : SimpleGraph V) :
-  ∀ r, hadwigerNumber G ≤ r → G.Colorable r := sorry
+theorem challenge_1_univ : HadwigerColoringUniv := sorry

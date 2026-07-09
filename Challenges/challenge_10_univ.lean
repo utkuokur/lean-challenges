@@ -17,6 +17,12 @@ game.
 
 universe u v
 
-theorem challenge_10_univ :
-    ∀ r : Ordinal.{v}, ∀ {V : Type u}, Countable V → ∀ G : SimpleGraph V,
-      PartitionerWins G (emptyPartialPartition V) r := sorry
+/-- Unfriendly Partition Conjecture, universal in the ordinal parameter: for
+EVERY ordinal `r`, on every countable graph Partitioner has a winning strategy
+in the `r`-partitioning game. The single named statement shared by the
+canonical theorem, the disprove slot, and the submission signature-shims. -/
+def UnfriendlyPartitionConjecture : Prop :=
+  ∀ r : Ordinal.{v}, ∀ {V : Type u}, Countable V → ∀ G : SimpleGraph V,
+    PartitionerWins G (emptyPartialPartition V) r
+
+theorem challenge_10_univ : UnfriendlyPartitionConjecture.{u, v} := sorry
