@@ -1,13 +1,23 @@
 import Mathlib.Data.Finset.Card
+import Mathlib.Data.Nat.Lattice
 
 /-
 Ryser's hypergraph conjecture for the chosen `r` (with `2 ≤ r`):
-every `r`-partite `r`-uniform hypergraph satisfies `tau <= (r - 1) * nu`.
+every `r`-partite `r`-uniform hypergraph satisfies
+`coverNumber <= (r - 1) * matchingNumber`, where the cover number `τ` is the
+least size of a vertex cover and the matching number `ν` is the largest size
+of a matching (canonical `sInf`/`sSup` values over the achievable sizes).
 
 For `r = 2` this is a classical theorem of König, and for `r = 3` it was
 proved by Aharoni. The hypothesis `2 <= r` is necessary: for `r = 1` the
 bound reads `tau <= 0`, which already fails for the single-vertex
 single-edge hypergraph (where `tau = nu = 1`).
+
+Under the `IsUniform`/`IsPartite` hypotheses (with `2 <= r`) both invariants
+are attained: the vertex set is a cover (each edge meets part `0`), and the
+empty matching plus the powerset bound make the matching-size set nonempty
+and bounded. So the statement below coincides with the witness-level
+phrasing about minimum covers and maximum matchings.
 -/
 
 structure Hypergraph (α : Type*) where
@@ -45,24 +55,21 @@ def IsMatching (M : Finset (Finset V)) : Prop :=
     ∀ {e1 : Finset V}, e1 ∈ M ->
       ∀ {e2 : Finset V}, e2 ∈ M -> e1 ≠ e2 -> Disjoint e1 e2
 
-/- `tau` is the vertex-cover number of `H`, stated relationally. -/
-def IsCoverNumber (tau : ℕ) : Prop :=
-  (exists C : Finset V, H.IsVertexCover C ∧ C.card = tau) ∧
-    ∀ C : Finset V, H.IsVertexCover C -> tau <= C.card
+/- The cover number `τ(H)`: the least cardinality of a vertex cover, as an
+`sInf` over the achievable cover cardinalities (`0` if no cover exists). -/
+noncomputable def coverNumber : ℕ :=
+  sInf {n | exists C : Finset V, H.IsVertexCover C ∧ C.card = n}
 
-/- `nu` is the matching number of `H`, stated relationally. -/
-def IsMatchingNumber (nu : ℕ) : Prop :=
-  (exists M : Finset (Finset V), H.IsMatching M ∧ M.card = nu) ∧
-    ∀ M : Finset (Finset V), H.IsMatching M -> M.card <= nu
+/- The matching number `ν(H)`: the largest size of a matching, as an `sSup`
+over the achievable matching sizes. -/
+noncomputable def matchingNumber : ℕ :=
+  sSup {n | exists M : Finset (Finset V), H.IsMatching M ∧ M.card = n}
 
 /- Ryser's hypergraph conjecture for a fixed value of `r`. -/
 def RyserConjectureFor (r : ℕ) : Prop :=
   H.IsUniform r ->
     H.IsPartite r ->
-      ∀ tau nu : ℕ,
-        H.IsCoverNumber tau ->
-          H.IsMatchingNumber nu ->
-            tau <= (r - 1) * nu
+      H.coverNumber <= (r - 1) * H.matchingNumber
 
 end Hypergraph
 

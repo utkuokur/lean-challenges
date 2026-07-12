@@ -1,5 +1,5 @@
 import Mathlib.Data.Finset.Card
-import Mathlib.Algebra.Order.Field.Rat
+import Mathlib.Algebra.Order.Ring.Unbundled.Rat
 
 universe u
 
@@ -18,8 +18,8 @@ def occurrences (F : Finset (Finset U)) (x : U) : Nat :=
   (F.filter fun A => x ∈ A).card
 
 /-- The density of an element with respect to a finite family. -/
-def density (F : Finset (Finset U)) (x : U) : Rat :=
-  (occurrences F x : Rat) / F.card
+def density (F : Finset (Finset U)) (x : U) : ℚ :=
+  (occurrences F x : ℚ) / F.card
 
 /-- The two degenerate families excluded from the union-closed sets conjecture. -/
 def Nondegenerate (F : Finset (Finset U)) : Prop :=

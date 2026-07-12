@@ -1,40 +1,20 @@
-import Mathlib.Combinatorics.SimpleGraph.Basic
 import Mathlib.SetTheory.Ordinal.Arithmetic
 import Defs_and_Lems.Minor
 
 /-!
 # α-well-quasi-ordering (Nash–Williams hierarchy) and the minor order
-
-`VStar Q` is the cumulative hierarchy over a quasi-order `Q`, indexed by an
-*ordinal* exactly as in the TeX source of challenge 6:
-
-* `VStar Q 0 = Q`;
-* `VStar Q (succ o)` is the type of nonempty subsets of `VStar Q o`;
-* at a limit `o`, `VStar Q o` is the disjoint union `⨆_{o' < o} VStar Q o'`,
-  reindexed through `o.ToType` so it stays in `Type u`.
-
-`leStar` is the Nash–Williams game relation `≤*`: from `(X, Y)`, Player I
-names a move from `X`, Player II answers from `Y`, and once both sides are
-in `Q` Player II wins iff `X ≤ Y`. Because the limit stage identifies a
-level-`o` element with its underlying lower-level element, `≤*` is naturally
-*heterogeneous* — it compares an element of level `a` with one of level `b`,
-unwrapping limit tags for free.
-
-`(Q, ≤)` is **α-well-quasi-ordered** if level `α` is well-quasi-ordered
-under `≤*`. Nash–Williams: `(Q, ≤)` is a better-quasi-order iff it is
-`ω₁`-well-quasi-ordered (equivalently, `α`-wqo for every countable `α`).
 -/
 
 open SimpleGraph Ordinal
 
 universe u
 
-/-- A quasi-order is well-quasi-ordered when every infinite sequence
+/- A quasi-order is well-quasi-ordered when every infinite sequence
 contains an increasing pair. -/
 def IsWQO {Q : Type u} (le : Q → Q → Prop) : Prop :=
   ∀ f : ℕ → Q, ∃ i j : ℕ, i < j ∧ le (f i) (f j)
 
-/-- Level `o` of the cumulative hierarchy over `Q`: `VStar Q 0 = Q`,
+/- Level `o` of the cumulative hierarchy over `Q`: `VStar Q 0 = Q`,
 `VStar Q (succ o)` is the nonempty subsets of `VStar Q o`, and at a limit
 `o` it is the disjoint union of all lower levels, reindexed through
 `o.ToType` to stay in `Type u`. -/
@@ -56,7 +36,7 @@ theorem VStar_limit (Q : Type u) {o : Ordinal.{u}} (h : Order.IsSuccLimit o) :
     VStar Q o = Σ i : o.ToType, VStar Q (Ordinal.typein (α := o.ToType) (· < ·) i) :=
   Ordinal.limitRecOn_limit _ _ _ _ h
 
-/-- The Nash–Williams game relation `≤*`, as a *heterogeneous* relation
+/- The Nash–Williams game relation `≤*`, as a *heterogeneous* relation
 comparing an element of level `a` with an element of level `b`.
 
 A limit-level element is identified with its underlying lower-level element
