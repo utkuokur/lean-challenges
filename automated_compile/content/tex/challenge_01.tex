@@ -51,28 +51,30 @@
 \let\overbrace\LaTeXoverbrace
 
 
+\usepackage{parskip}
+
 \begin{document}
 
 \section*{Challenge 1: The Hadwiger Conjecture}
 \refstepcounter{section}
+
 
 \begin{definition}[Hadwiger Number]
 Given a graph $G$, the \textit{Hadwiger number} of $G$ is the largest integer $t$ such that the complete graph $K_t$ on $t$ vertices is a minor of $G$.
 We denote the Hadwiger number by $h\ev{G}$.
 \end{definition}
 
-
 \begin{conjecture}[Hadwiger's Conjecture
 \mbox{\cite[Conjecture 1]{steiner}}]\label{hadw}
 Let $r\in \mathbb{N}$.
 For every finite simple graph $G$, we have:
 $$
-r \leq \chi\ev{G} \ \Longrightarrow \  r \leq h\ev{G}
+r \leq \chi\ev{G} \ \Longrightarrow \  r \leq h\ev{G} 
 $$
-where $\chi\ev{G}$ denotes the chromatic number of $G$.
+where $\chi\ev{G}$ denotes the chromatic number of $G$. 
 \end{conjecture}
 
-While Conjecture \ref{hadw} is not difficult for values of $r\leq 3$, already for $r=4$ it is equivalent to the 4-colour theorem. 
+While Conjecture \ref{hadw} is not too difficult for values of $r\leq 3$, already for $r=4$ it is equivalent to the 4-colour theorem. 
 Robertson, Seymour and Thomas proved the above for $r= 5$ \cite{RobertsonSeymourThomas1993Hadwiger}. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

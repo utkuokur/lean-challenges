@@ -2,8 +2,6 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
 
-% \usepackage{minimalJ}  % decoupled: unused in this file
-
 \numberwithin{equation}{section}
 
 \usepackage[style=numeric,sorting=none,giveninits=true]{biblatex}
@@ -13,9 +11,6 @@
 \usepackage[margin=1in]{geometry}
 
 \DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
-
-%\usepackage[colorlinks, allcolors=blue, hypertexnames=false]{hyperref}
-%\usepackage[noabbrev, nameinlink]{cleveref}
 
 \usepackage{comment}
 
@@ -58,12 +53,12 @@
 \let\overbrace\LaTeXoverbrace
 
 
+\usepackage{parskip}
+
 \begin{document}
 
 \section*{Challenge 4: Sidorenko Conjecture for Bipartite Graphs with Bounded Sides}
 \refstepcounter{section}
-
-% \cite{ }
 
 \begin{definition}[Graph homomorphism density]
 Let $G$ and $H$ be simple graphs. 
@@ -87,16 +82,13 @@ t_H\ev{G} \geq t_{K_2}\ev{G}^{|E\ev{H}|}
 $$
 \end{conjecture}
 
-
-Since Sidorenko's conjecture is open in general, it is natural to seek a scalable weakening that recovers the full conjecture in the limit. We obtain such a weakening by bounding the sizes of the two sides of the bipartition: for a parameter $k$, we restrict attention to bipartite graphs in which each side has at most $k$ vertices. As $k$ grows, this class exhausts all bipartite graphs, so the family of statements below interpolates between small, tractable cases and the full conjecture.
-
-\begin{openproblem}[Sidorenko's Conjecture for bipartite graphs with bounded sides]
-Let $k \in \N$. Prove that Sidorenko's conjecture holds for every bipartite graph $H$ that admits a bipartition $V\ev{H} = X \cup Y$ with $|X| \leq k$ and $|Y| \leq k$; that is, for every such $H$ and any graph $G$, we have
+We are interested in the special case of the conjecture where $H$ is a bipartite graph in which each side has at most $r$ vertices.
+\begin{openproblem}[Scaled Sidorenko's Conjecture]
+Let $r \in \N$. For every bipartite graph $H$ that admits a bipartition $V\ev{H} = X \cup Y$ with $|X| \leq r$ and $|Y| \leq r$ and for any graph $G$, we have:
 $$
-t_H\ev{G} \geq t_{K_2}\ev{G}^{|E\ev{H}|}.
+t_H\ev{G} \geq t_{K_2}\ev{G}^{|E\ev{H}|}
 $$
 \end{openproblem}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printbibliography

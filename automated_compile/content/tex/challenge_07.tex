@@ -1,8 +1,5 @@
-
 \documentclass[12pt]{article}
 \usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
-
-% \usepackage{minimalJ}  % decoupled: unused in this file
 
 \numberwithin{equation}{section}
 
@@ -13,9 +10,6 @@
 \usepackage[margin=1in]{geometry}
 
 \DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
-
-%\usepackage[colorlinks, allcolors=blue, hypertexnames=false]{hyperref}
-%\usepackage[noabbrev, nameinlink]{cleveref}
 
 \usepackage{comment}
 
@@ -34,6 +28,7 @@
 \newtheorem{example}{Example}
 \newtheorem{conjecture}[theorem]{Conjecture}
 \newtheorem{openproblem}[theorem]{Open Problem}
+\newtheorem{openquestion}[theorem]{Open Question}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               New Commands            %
@@ -48,8 +43,6 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Document                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -58,28 +51,34 @@
 \let\overbrace\LaTeXoverbrace
 
 
+\usepackage{parskip}
+
 \begin{document}
 
 \section*{The Sphere Packing Problem}
 \refstepcounter{section}
 
-\begin{definition}[Packing, density, sphere-packing constant]
-Fix a dimension $d \in \N$.
+\begin{definition} 
+Fix a dimension $r \in \N$. Consider the vector space $\R^r$, equipped with Euclidean distance and Lebesgue measure $\mathrm{Vol}(\cdot)$. For $x \in \R^r$ and $\varepsilon >0$, let $B_r\ev{x,\varepsilon}$ denote the open ball in $\R^r$, with center $x$ and radius $\varepsilon$. 
 \begin{enumerate}
-\item A \emph{unit packing} of $\R^d$ is a set $C \subseteq \R^d$ of centers with $\lVert x - y \rVert \geq 2$ for all distinct $x,y \in C$; equivalently the open unit balls $B\ev{x,1}$, $x \in C$, are pairwise disjoint.
-\item The \emph{upper density} of $C$ is
+\item A \emph{sphere packing} of $\R^r$ is a set $C$ of points in $\R^r$ that have pairwise distance at least two. 
+\item The \emph{upper density} of a sphere packing $C$ is
 $$
-\bar\delta\ev{C} := \limsup_{R \to \infty} \frac{\mathrm{vol}\!\ew{\textstyle\bigcup_{x \in C} B\ev{x,1} \cap B\ev{0,R}}}{\mathrm{vol}\!\ev{B\ev{0,R}}}.
+\bar\delta_r\ev{C} := \limsup_{R \to \infty} \frac{\mathrm{Vol}\!\ew{\textstyle\bigcup_{x \in C} B\ev{x,1} \cap B\ev{0,R}}}{\mathrm{Vol}\!\ew{B\ev{0,R}}}.
 $$
-\item The \emph{sphere-packing constant} $\Delta_d := \sup_C \bar\delta\ev{C}$ is the supremum over all unit packings $C$; the supremum over packings whose centre set is a lattice is the \emph{lattice} packing constant $\Delta_d^{L}$.
+The \emph{sphere-packing constant} is $\Delta_r := \sup_C \bar\delta_r\ev{C}$ where the supremum ranges over all sphere packings $C$. 
+
+\item A \textit{lattice packing} of $\R^r$ is a sphere packing $C$ which is also a lattice in $\R^r$, i.e., $C = \{ \sum_{i=1}^{r} a_i v_i : a_1,\ldots, a_r \in \Z \} $ for some basis $\{ v_1, \dots, v_r \}$ of $\R^r$. The \emph{lattice-packing constant} is $\Delta_r^{L} := \sup_C \bar\delta_r\ev{C}$ where the supremum ranges over all lattice packings of $\R^r$.
 \end{enumerate}
 \end{definition}
 
-\begin{openproblem}[The sphere-packing problem]
-Given $r\geq 0$, show that $\Delta_r = \Delta_r^{L}$.
-\end{openproblem}
+The sphere packing problem is to determine $\Delta_r$. It is not even known whether densest sphere packings always need to be attained by lattices:
 
-The value of $\Delta_r$ is known only for $r \in \{1,2,3,8,24\}$. The case $r = 3$ is the Kepler conjecture, proven by \cite{hales2005kepler}. The cases $r = 8$ and $r = 24$ were settled by Viazovska \cite{viazovska2017eight} and by Cohn, Kumar, Miller, Radchenko and Viazovska \cite{cohn2017twentyfour}. In each solved case the optimum is attained by a lattice ($\Z$, $A_2$, the FCC lattice, $E_8$, and the Leech lattice). The largest dimension solved is $r = 24$.
+\begin{openquestion}
+Given $r\geq 1$, is it true that $\Delta_r = \Delta_r^{L}$?
+\end{openquestion}
+
+In the literature, the equation $\Delta_r = \Delta_r^{L}$ is only shown for $r \in \{1,2,3,8,24\}$. The case $r=3$ is known as the Kepler conjecture, proven by  Hales \cite{hales2005kepler}. The cases $r = 8$ and $r = 24$ were settled by Viazovska \cite{viazovska2017eight} and by Cohn, Kumar, Miller, Radchenko and Viazovska \cite{cohn2017twentyfour}, respectively. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printbibliography

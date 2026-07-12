@@ -1,8 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath, amsthm, amsfonts, mathtools, xcolor, caption}
 
-% \usepackage{minimalJ}  % decoupled: unused in this file
-
 \numberwithin{equation}{section}
 
 \usepackage[style=numeric,sorting=none,giveninits=true]{biblatex}
@@ -12,9 +10,6 @@
 \usepackage[margin=1in]{geometry}
 
 \DeclareMathAlphabet{\mymathbb}{U}{BOONDOX-ds}{m}{n}
-
-%\usepackage[colorlinks, allcolors=blue, hypertexnames=false]{hyperref}
-%\usepackage[noabbrev, nameinlink]{cleveref}
 
 \usepackage{comment}
 
@@ -56,6 +51,8 @@
 \let\underbrace\LaTeXunderbrace
 \let\overbrace\LaTeXoverbrace
 
+
+\usepackage{parskip}
 
 \begin{document}
 
@@ -103,7 +100,6 @@ We consider the following parametrized version of the well-known open problem to
 \begin{openproblem}
 Let $r$ be a positive integer. If there is a prime number $p$ and a positive integer $m$ such that $r=p^m$, then list the excluded minors for the class of $\mathrm{GF}(p^m)$-representable matroids and prove that the list is complete up to isomorphism.
 \end{openproblem}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \printbibliography
