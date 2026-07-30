@@ -63,7 +63,7 @@ A {\em partial partition} of the vertices of a graph $G$ is a partial function $
 \end{definition}
 
 \begin{definition}[Unfriendly]
-Let $v$ be a vertex of a graph $G$. A partial partition $f \colon V(G) \to \{0,1\}$ is {\em unfriendly at $v$} if $v$ has at least as many neighbours mapped by $f$ to the opposite partition class as it has neighbours mapped to the same partition class. Formally this means
+Let $v$ be a vertex of a graph $G$. A partial partition $f \colon V(G) \to \{0,1\}$ is {\em unfriendly at $v$} if $f$ is defined at $v$ and $v$ has at least as many neighbours mapped by $f$ to the opposite partition class as it has neighbours mapped to the same partition class. Formally this means that $f(v)$ is defined and
 $$|N(v) \cap f^{-1}[1 - f(v)]| \ge |N(v) \cap f^{-1}[f(v)]|.$$
 A partition is {\em unfriendly} if it is unfriendly at every vertex.
 \end{definition}
@@ -75,7 +75,7 @@ Every countable graph has an unfriendly partition.
 In order to pose a scaled version of this conjecture, we introduce the following game:
 
 \begin{definition}[The $r$-partitioning game.]
-Let $r$ be an ordinal number and let $G$ be a graph. The {\em $r$-partitioning game on $G$} is played between two players, Challenger and Partitioner, as follows. A position in the game is a pair $(f, \alpha)$ consisting of a partial partition $f$ of $G$ and an ordinal number $\alpha$. The initial position is $(\emptyset, r)$. In each turn, beginning in position $(f, \alpha)$, Challenger must name a vertex $v$ of $G$ and an ordinal $\beta < \alpha$ and Partitioner must then name a finite partial partition $g$ extending $f$ which is defined at $v$ and unfriendly at $v$. After this, the new position is $(g, \beta)$. If at any point some player is unable to move, the other player wins.
+Let $r$ be an ordinal number and let $G$ be a graph. The {\em $r$-partitioning game on $G$} is played between two players, Challenger and Partitioner, as follows. A position in the game is a pair $(f, \alpha)$ consisting of a partial partition $f$ of $G$ and an ordinal number $\alpha$. The initial position is $(\emptyset, r)$. In each turn, beginning in position $(f, \alpha)$, Challenger must name a vertex $v$ of $G$ and an ordinal $\beta < \alpha$ and Partitioner must then name a finite partial partition $g$ extending $f$ which is unfriendly at $v$. After this, the new position is $(g, \beta)$. If at any point some player is unable to move, the other player wins.
 \end{definition}
 
 Note that since there are no infinite decreasing sequences of ordinals this game must end after finitely many turns. The scaled conjecture is as follows:

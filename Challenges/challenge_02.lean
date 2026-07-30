@@ -78,8 +78,8 @@ list of excluded minors for GF(pᵐ)-representability. The single named statemen
 shared by the canonical theorem and the submission signature-shim, so the two stay
 in lockstep. -/
 def statement_02 (r : ℕ) (L : Finset FinMatroid) : Prop :=
-  ∃ m p, ∃ _hp : Nat.Prime p,
-  haveI : Fact (Nat.Prime p) := ⟨_hp⟩
+  ∃ m p, ∃ hp : Nat.Prime p,
+  haveI : Fact (Nat.Prime p) := ⟨hp⟩
   0 < m ∧ r = p ^ m ∧
   (∀ A ∈ L, IsMatroidData A) ∧
   (∀ A ∈ L, IsExcludedMinorFor (IsGFRepresentable p m) A.decode) ∧

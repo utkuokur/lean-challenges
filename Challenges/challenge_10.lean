@@ -22,11 +22,11 @@ def Extends {V : Type u} (f g : PartialPartition V) : Prop :=
 
 
 /- A legal response by Partitioner from position `f` to the challenged
-vertex `v`: a finite partial partition `g` extending `f` which is defined at
-`v` and unfriendly at `v`. -/
+vertex `v`: a finite partial partition `g` extending `f` which is unfriendly
+at `v` (`UnfriendlyAt` includes that `g` is defined at `v`). -/
 def IsLegalResponse {V : Type u} (G : SimpleGraph V)
     (f g : PartialPartition V) (v : V) : Prop :=
-  Extends f g ∧ HasFiniteDomain g ∧ g v ≠ none ∧ UnfriendlyAt some G g v
+  Extends f g ∧ HasFiniteDomain g ∧ UnfriendlyAt some G g v
 
 /- Partitioner has a winning strategy in the partitioning game from position
 `(f, α)`. Because every play of the game is finite, having a winning

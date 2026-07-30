@@ -34,10 +34,10 @@ def UnfriendlyAt {V : Type u} {σ : Type} (sideVal : Bool → σ)
       (neighboursInSide G f x (sideVal !b))
       (neighboursInSide G f x (sideVal b))
 
-/- A partition that assigns every vertex a side and is unfriendly at every
-vertex.  The first conjunct is totality: for `sideVal = id` (a total
-`V → Bool` partition) it is automatic, and for `sideVal = some` (a partial
-`V → Option Bool` partition) it is `IsPartition f`. -/
+/- A partition that is unfriendly at every vertex.  Totality is automatic:
+`UnfriendlyAt` already requires the vertex to be assigned a side
+(`∃ b, f x = sideVal b`), so every vertex of an unfriendly partition is
+assigned. -/
 def IsUnfriendlyPartition {V : Type u} {σ : Type} (sideVal : Bool → σ)
     (G : SimpleGraph V) (f : V → σ) : Prop :=
-  (∀ v : V, ∃ b : Bool, f v = sideVal b) ∧ ∀ x : V, UnfriendlyAt sideVal G f x
+  ∀ x : V, UnfriendlyAt sideVal G f x

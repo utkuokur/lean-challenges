@@ -6,7 +6,7 @@ open SimpleGraph
 variable {V W : Type*} [Fintype W] (H : SimpleGraph W)
 
 /-- A graph G is H-free if no induced subgraph of G is isomorphic to H. -/
-def SimpleGraph.IsHFree (G : SimpleGraph V) : Prop :=
+def SimpleGraph.IsHFree {V : Type*} (G : SimpleGraph V) (H : SimpleGraph W) : Prop :=
   ¬ ∃ (S : Set V), Nonempty (G.induce S ≃g H)
 
 /-- The Erdős–Hajnal conjecture for a fixed forbidden graph H:

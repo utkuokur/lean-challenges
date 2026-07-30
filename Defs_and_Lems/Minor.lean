@@ -5,6 +5,8 @@ open SimpleGraph
 
 variable {V W : Type*} [Fintype V]
 
+namespace SimpleGraph
+
 /-- The data witnessing that `H` is a minor of `G`, as simple graphs. -/
 structure Minor (H : SimpleGraph W) (G : SimpleGraph V) where
   /-- The branch sets of the minor.
@@ -20,6 +22,8 @@ structure Minor (H : SimpleGraph W) (G : SimpleGraph V) where
   -/
   exists_mem_branchSet_of_adj ⦃w₁ w₂ : W⦄ :
     H.Adj w₁ w₂ → ∃ v₁ ∈ branchSet w₁, ∃ v₂ ∈ branchSet w₂, G.Adj v₁ v₂
+
+end SimpleGraph
 
 /-- K₅ -/
 abbrev K5 := completeGraph (Fin 5)

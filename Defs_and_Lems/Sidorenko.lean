@@ -17,13 +17,6 @@ graphs.)
 
 open SimpleGraph
 
-/-- The half-graph `H_r` on `Fin r ⊕ Fin r`: `Sum.inl i` and `Sum.inr j` are
-adjacent iff `i ≤ j`, with no other edges. Built with `fromRel`, which
-symmetrizes the relation and removes self-loops. -/
-noncomputable def halfGraph (r : ℕ) : SimpleGraph (Sum (Fin r) (Fin r)) :=
-  SimpleGraph.fromRel fun a b =>
-    ∃ i j : Fin r, a = Sum.inl i ∧ b = Sum.inr j ∧ i ≤ j
-
 /-- The homomorphism density `t(H, G)`: the number of graph homomorphisms
 `H → G` (adjacency-preserving maps), divided by `|V(G)| ^ |V(H)|`. -/
 noncomputable def homDensity {W V : Type*} [Fintype W] [Fintype V]
