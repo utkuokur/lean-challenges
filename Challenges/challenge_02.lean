@@ -63,7 +63,7 @@ noncomputable def decode (D : FinMatroid) : Matroid ℕ :=
 lemma decode_finite (D : FinMatroid) : D.decode.Finite := by
   unfold decode
   split
-  · exact ⟨by simp [IndepMatroid.ofFinset_E, D.ground.finite_toSet]⟩
+  · exact ⟨D.ground.finite_toSet⟩
   · exact ⟨by simp⟩
 
 end FinMatroid
