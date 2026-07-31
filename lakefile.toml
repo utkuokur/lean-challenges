@@ -12,7 +12,7 @@ maxSynthPendingDepth = 3
 [[require]]
 name = "Matroid"
 git = "https://github.com/utkuokur/Matroid.git"
-rev = "921afea59d5579726070550a5268b425e1042294"
+rev = "e7c79a393598f085e4fce01f3769df70030f2658"
 
 [[require]]
 name = "mathlib"
