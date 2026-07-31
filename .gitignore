@@ -28,3 +28,6 @@ automated_compile/content/tex/*.fdb_latexmk
 # Generated LaTeX outputs
 automated_compile/content/tex/*.pdf
 automated_compile/content/tex/*.xdv
+
+# Theorem sandwich QC workspace (unpublished bounds)
+/Theorem_Sandwich/

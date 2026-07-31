@@ -31,3 +31,7 @@ globs = ["Defs_and_Lems.+"]
 name = "Challenges"
 globs = ["Challenges", "Challenges.+"]
 
+
+[[lean_lib]]
+name = "Theorem_Sandwich"
+globs = ["Theorem_Sandwich.+"]
